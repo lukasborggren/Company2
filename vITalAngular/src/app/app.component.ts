@@ -1,5 +1,4 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
-import {BarcodeScannerService} from './barcode-scanner.service';
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,12 +8,4 @@ import {BarcodeScannerService} from './barcode-scanner.service';
 export class AppComponent {
 
   title = 'vITalAngular';
-
-  constructor(
-      private barcodeScanner: BarcodeScannerService,
-  ) { }
-
-  startScanner() {
-    this.barcodeScanner.startScanner();
-  }
 }
