@@ -20,6 +20,9 @@
     "@angular/platform-browser-dynamic": "^8.2.10",
     "@angular/router": "^8.2.10",
     "bootstrap": "^4.3.1",
+    "@angular/cdk": "~8.2.3",
+    "@angular/material": "^8.2.3",
+    "quagga": "~0.12.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
