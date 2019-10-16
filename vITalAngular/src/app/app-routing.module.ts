@@ -12,9 +12,10 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
+  {path: 'scannerpage', component: BarcodeScannerPageComponent},
   { path: '**', redirectTo: 'login' },
-  {path: '', redirectTo: 'scannerpage', pathMatch: 'full'},
-  {path: 'scannerpage', component: BarcodeScannerPageComponent}
+  {path: '', redirectTo: 'scannerpage', pathMatch: 'full'}
+
 ];
 
 @NgModule({
