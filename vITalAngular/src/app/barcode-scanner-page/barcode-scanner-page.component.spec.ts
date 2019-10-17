@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatDialogModule} from '@angular/material';
 
 import { BarcodeScannerPageComponent } from './barcode-scanner-page.component';
-
 describe('BarcodeScannerPageComponent', () => {
   let component: BarcodeScannerPageComponent;
   let fixture: ComponentFixture<BarcodeScannerPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BarcodeScannerPageComponent ]
+      declarations: [ BarcodeScannerPageComponent ],
+      imports: [ MatDialogModule ],
     })
     .compileComponents();
   }));

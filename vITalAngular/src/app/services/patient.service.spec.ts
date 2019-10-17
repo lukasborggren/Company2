@@ -1,11 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
 import { PatientService } from './patient.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('PatientService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [ HttpClient ]
+    imports: [ HttpClientModule ],
+    providers: [ PatientService ]
   }));
 
   it('should be created', () => {
