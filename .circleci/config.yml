@@ -34,4 +34,4 @@ jobs:
             # Test the source code
             - run:
                 name: Testing
-                command: cd vITalAngular && npm run build
+                command: cd vITalAngular && npm run build && npm run test
