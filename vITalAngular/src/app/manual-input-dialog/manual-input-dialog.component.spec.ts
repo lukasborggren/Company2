@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ManualInputDialogComponent } from './manual-input-dialog.component';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 describe('ManualInputDialogComponent', () => {
   let component: ManualInputDialogComponent;
@@ -8,7 +9,8 @@ describe('ManualInputDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManualInputDialogComponent ]
+      declarations: [ ManualInputDialogComponent ],
+      imports: [FormBuilder, FormGroup]
     })
     .compileComponents();
   }));
