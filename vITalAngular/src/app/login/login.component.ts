@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
+  isInvalid: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
       username: [''],
       password: ['']
     });
+    this.isInvalid = false;
   }
   get f() {
     return this.loginForm.controls;
@@ -32,6 +34,8 @@ export class LoginComponent implements OnInit {
     if (true) {
       this.authService.login(this.loginForm.value);
       this.router.navigate(['/home']);
+    } else {
+      this.isInvalid = true;
     }
   }
 }

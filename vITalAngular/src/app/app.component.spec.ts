@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideRoutes, Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { BarcodeScannerPageComponent } from './barcode-scanner-page/barcode-scanner-page.component';
 
 
 
@@ -13,12 +14,13 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        LoginComponent
+        LoginComponent,
+        BarcodeScannerPageComponent
       ],
       imports: [
         RouterTestingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
       ]
     }).compileComponents();
   }));

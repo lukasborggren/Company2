@@ -20,7 +20,7 @@ import { LogoutComponent } from './logout/logout.component';
     ManualInputDialogComponent,
     HomeComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
