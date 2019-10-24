@@ -30,7 +30,11 @@ export class HomeComponent implements OnInit {
         subscribe.unsubscribe();
         this.authService.logout();
         this.router.navigate(['/login']);
-      };
+      }
     });
+  }
+
+  public goToScanning() {
+    this.router.navigate(['/scannerpage']);
   }
 }
