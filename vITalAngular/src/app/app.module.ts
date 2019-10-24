@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import {RouterModule} from '@angular/router';
 import { LogoutComponent } from './logout/logout.component';
+import { PatientOverviewComponent } from './patient-overview/patient-overview.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LogoutComponent } from './logout/logout.component';
     HomeComponent,
     LoginComponent,
     LogoutComponent,
+    PatientOverviewComponent,
   ],
   imports: [
     BrowserModule,

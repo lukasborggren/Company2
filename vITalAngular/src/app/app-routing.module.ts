@@ -8,15 +8,16 @@ import {HomeComponent} from './home/home.component';
 import {LoginComponent} from './login/login.component';
 import {LogoutComponent} from './logout/logout.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
+import { PatientOverviewComponent} from './patient-overview/patient-overview.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
-  {path: 'scannerpage', component: BarcodeScannerPageComponent },
+  { path: 'scannerpage', component: BarcodeScannerPageComponent },
+  { path: 'pid/:personid', component: PatientOverviewComponent},
   { path: '**', redirectTo: 'login' },
-  {path: '', redirectTo: 'scannerpage', pathMatch: 'full'}
-
+  { path: '', redirectTo: 'scannerpage', pathMatch: 'full'}
 ];
 
 @NgModule({
