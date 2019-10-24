@@ -10,6 +10,9 @@ import {ManualInputDialogComponent} from '../manual-input-dialog/manual-input-di
 })
 export class BarcodeScannerPageComponent implements OnInit {
   title: 'Scannerpage';
+  barcodevalue: string;
+  stopScanButtonVisible: boolean;
+  pid: string;
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -17,7 +20,14 @@ export class BarcodeScannerPageComponent implements OnInit {
   ) { }
 
   startScanner() {
+    this.barcodevalue = 'scanning';
+    this.stopScanButtonVisible = true;
     this.barcodeScanner.startScanner();
+  }
+
+  stopScanner() {
+    this.stopScanButtonVisible = false;
+    this.barcodeScanner.StopScanner();
   }
 
   openDialog() {
@@ -40,6 +50,14 @@ export class BarcodeScannerPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.stopScanButtonVisible = false;
+    this.barcodeScanner.barcodeObs.subscribe(barcode => {
+      this.barcodevalue = barcode;
+      console.log('barcode: ' + barcode);
+      if (this.barcodevalue) {
+        this.stopScanButtonVisible = false;
+      }
+    });
   }
 
 }

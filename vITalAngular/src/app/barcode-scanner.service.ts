@@ -1,43 +1,39 @@
 import {ChangeDetectorRef, Injectable} from '@angular/core';
 import Quagga from 'quagga';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BarcodeScannerService {
-  barcode = '';
+  private barcode: Subject<string> = new Subject<string>();
+  public barcodeObs = this.barcode.asObservable();
   configQuagga = {
     inputStream: {
-      name: 'Live',
-      type: 'LiveStream',
-      target: '#inputBarcode',
+      type : "LiveStream",
       constraints: {
-        width: { min: 640 },
-        height: { min: 480 },
-        aspectRatio: { min: 1, max: 100 },
-        facingMode: 'environment', // or user
-      },
-      singleChannel: false // true: only the red color-channel is read
+        width: {min: 640},
+        height: {min: 480},
+        facingMode: "environment",
+        aspectRatio: {min: 1, max: 2}
+      }
     },
     locator: {
-      patchSize: 'medium',
+      patchSize: "medium",
       halfSample: true
     },
     locate: true,
     numOfWorkers: 4,
     decoder: {
-      readers: ['code_128_reader']
-    }
+      readers : [{
+        format: "code_128_reader",
+        config: {}
+      }]
+    },
   };
 
-  barcodeResult = '';
-
-  testChangeValues() {
-    this.barcode = 'Barcode: 0123456789';
-  }
-
   startScanner() {
-    this.barcode = '';
+    this.barcode.next( '');
 
     Quagga.onProcessed((result) => this.onProcessed(result));
     Quagga.onDetected((result) => this.logCode(result));
@@ -54,32 +50,18 @@ export class BarcodeScannerService {
   private onProcessed(result: any) {
     const drawingCtx = Quagga.canvas.ctx.overlay;
     const drawingCanvas = Quagga.canvas.dom.overlay;
-    this.barcodeResult = JSON.stringify(result);
-    if (result) {
-      if (result.boxes) {
-        drawingCtx.clearRect(0, 0, parseInt(drawingCanvas.getAttribute('width'), 10), parseInt(drawingCanvas.getAttribute('height'), 10));
-        result.boxes.filter(function (box) {
-          return box !== result.box;
-        }).forEach(function (box) {
-          Quagga.ImageDebug.drawPath(box, { x: 0, y: 1 }, drawingCtx, { color: 'green', lineWidth: 2 });
-        });
-      }
-
-      if (result.box) {
-        Quagga.ImageDebug.drawPath(result.box, { x: 0, y: 1 }, drawingCtx, { color: '#00F', lineWidth: 2 });
-      }
-
-      if (result.codeResult && result.codeResult.code) {
-        Quagga.ImageDebug.drawPath(result.line, { x: 'x', y: 'y' }, drawingCtx, { color: 'red', lineWidth: 3 });
-      }
-    }
   }
+
+
+  StopScanner() {
+    Quagga.stop();
+  }
+
 
   private logCode(result) {
     const code = result.codeResult.code;
     if (this.barcode !== code) {
-      this.barcode = 'Barcode: ' + code;
-      console.log(this.barcode);
+      this.barcode.next(code);
       Quagga.stop();
     }
   }
