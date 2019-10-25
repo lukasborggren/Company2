@@ -15,6 +15,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   stopScanButtonVisible: boolean;
   pid: string;
   BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
+  PERSONID_PATTERN = /^([0-9]{6}-[0-9]{4})$/
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -52,7 +53,7 @@ export class BarcodeScannerPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
         data => {
           console.log('Dialog output:', data);
-          if (this.BARCODE_PATTERN.test(data.description)) {
+          if (this.PERSONID_PATTERN.test(data.description)) {
             this.router.navigate(['/pid/' + data.description]);
           }
         });

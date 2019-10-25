@@ -17,7 +17,7 @@ export class PatientOverviewComponent implements OnInit {
   ngOnInit() {
     const pid = this.route.snapshot.paramMap.get('personid');
     console.log('pid = ' + pid);
-    this.patientService.getPatientDataPid(pid.toString()).subscribe(info => this.patientinfo = JSON.stringify(info))
+    this.patientService.getPatientDataPid(pid).subscribe(info => this.patientinfo = JSON.stringify(info));
   }
 
 }
