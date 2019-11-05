@@ -24,9 +24,14 @@ export class HomeComponent implements OnInit {
   // Function logs data and ends the session after 15 seconds.
   public logData() {
     // Code for logging data
-    const source = timer(15000);
+    const source = timer(0, 100);
+    const token = localStorage.getItem('ACCESS_TOKEN');
     const subscribe = source.subscribe(val => {
-      if (val === 0) {
+      console.log(val);
+      if (this.authService.isLoggedIn() === false) {
+        subscribe.unsubscribe();
+      }
+      if (val === 150) {
         subscribe.unsubscribe();
         this.authService.logout();
         this.router.navigate(['/login']);
