@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
     const source = timer(0, 100);
     const token = localStorage.getItem('ACCESS_TOKEN');
     const subscribe = source.subscribe(val => {
-      console.log(val);
       if (this.authService.isLoggedIn() === false) {
         subscribe.unsubscribe();
       }
