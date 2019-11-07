@@ -15,7 +15,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   stopScanButtonVisible: boolean;
   pid: string;
   BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
-  PERSONID_PATTERN = /^([0-9]{6}-[0-9]{4})$/
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -57,6 +57,10 @@ export class BarcodeScannerPageComponent implements OnInit {
             this.router.navigate(['/pid/' + data.description]);
           }
         });
+  }
+
+  private goToHome() {
+    this.router.navigate(['/home']);
   }
 
   ngOnInit() {

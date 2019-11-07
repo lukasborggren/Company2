@@ -1,1 +1,17 @@
+<h2>Personnummer = {{this.personnumber}}</h2>
+<label>Andningsfrekvens = {{this.respiratoryRate}}</label>
+<br/>
+<label>Syremätnad = {{this.oxygenSaturation}}</label>
+<br/>
+<label>Systolic blodtryck = {{this.systolicBloodPressure}} {{this.systolicBloodPressureUnit}}</label>
+<br/>
+<label>Pulsfrekvens = {{this.pulseRate}}</label>
+<br/>
+<label>Kroppstemperatur = {{this.temperature}} {{this.temperatureUnit}}</label>
+<br/>
+<label *ngIf="supplementalOxygen">Tillförd syre = ja</label>
+<label *ngIf="!supplementalOxygen">Tillförd syre = nej</label>
+<br/>
+<label>Medvetenhet = {{this.consciousness}}</label>
+<br/>
 <label>Patient = {{this.patientinfo}}</label>
