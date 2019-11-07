@@ -13,7 +13,7 @@ export class AuthService {
     localStorage.setItem('ACCESS_TOKEN', 'access_token');
   }
 
-  public isLoggedIn()
+  public isLoggedIn(){
     return localStorage.getItem('ACCESS_TOKEN')!==null;
   }
 

@@ -59,6 +59,10 @@ export class BarcodeScannerPageComponent implements OnInit {
         });
   }
 
+  private goToHome() {
+    this.router.navigate(['/home']);
+  }
+
   ngOnInit() {
     this.stopScanButtonVisible = false;
     this.barcodeScanner.barcodeObs.subscribe(barcode => {
