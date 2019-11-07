@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PopupWindowComponent } from './popup-window.component';
+import { MatDialogModule, MatDialogRef } from '@angular/material';
 
 describe('PopupWindowComponent', () => {
   let component: PopupWindowComponent;
@@ -8,7 +9,9 @@ describe('PopupWindowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PopupWindowComponent ]
+      declarations: [ PopupWindowComponent ],
+      imports: [ MatDialogModule ],
+      providers: [{provide : MatDialogRef, useValue : {}}]
     })
     .compileComponents();
   }));
