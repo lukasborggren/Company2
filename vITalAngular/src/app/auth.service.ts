@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from './user';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -25,10 +25,19 @@ export class AuthService {
     localStorage.removeItem('ACCESS_TOKEN');
   }
 
-  public isValid(userInfo: User){
+  public isValid(userInfo: User) {
     //getta patientdata
-    const JSONQuery = {"username":userInfo.username,"password":userInfo.password}
-    this.http.get(this.baseUrl + '/authenticate',JSONQuery).subscribe((res) => {
+    const params = new HttpParams()
+        .set('username', userInfo.username)
+        .set('password', userInfo.password);
+
+    //const headers = new HttpHeaders()
+    //    .append('Content-Type', 'application/json');
+
+    this.http.get(this.baseUrl + '/authenticate', {
+      //headers: headers,
+      params: params
+    }).subscribe((res) => {
       console.log(res);
     });
     //Checka om username och userpw finns i databasen
