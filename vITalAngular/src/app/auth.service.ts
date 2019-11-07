@@ -17,7 +17,7 @@ export class AuthService {
     this.isValid(userInfo);
   }
 
-  public isLoggedIn() {
+  public isLoggedIn(){
     return localStorage.getItem('ACCESS_TOKEN')!==null;
   }
 
