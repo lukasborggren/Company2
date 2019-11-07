@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {BarcodeScannerService} from '../barcode-scanner.service';
+import {BarcodeScannerService} from '../../barcode-scanner.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
-import {ManualInputDialogComponent} from '../manual-input-dialog/manual-input-dialog.component';
+import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
 import {Router} from '@angular/router';
 
 @Component({
@@ -57,6 +57,10 @@ export class BarcodeScannerPageComponent implements OnInit {
             this.router.navigate(['/pid/' + data.description]);
           }
         });
+  }
+
+  private goToHome() {
+    this.router.navigate(['/home']);
   }
 
   ngOnInit() {

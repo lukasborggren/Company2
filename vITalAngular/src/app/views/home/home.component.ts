@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { timer } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -24,9 +24,12 @@ export class HomeComponent implements OnInit {
   // Function logs data and ends the session after 15 seconds.
   public logData() {
     // Code for logging data
-    const source = timer(15000);
+    const source = timer(0, 100);
     const subscribe = source.subscribe(val => {
-      if (val === 0) {
+      if (this.authService.isLoggedIn() === false) {
+        subscribe.unsubscribe();
+      }
+      if (val === 150) {
         subscribe.unsubscribe();
         this.authService.logout();
         this.router.navigate(['/login']);

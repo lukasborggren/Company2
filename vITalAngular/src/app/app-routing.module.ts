@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Router, RouterModule, Routes, CanActivate} from '@angular/router';
-import { BarcodeScannerPageComponent } from './barcode-scanner-page/barcode-scanner-page.component';
-import { ManualInputDialogComponent } from './manual-input-dialog/manual-input-dialog.component';
+import { BarcodeScannerPageComponent } from './views/barcode-scanner-page/barcode-scanner-page.component';
+import { ManualInputDialogComponent } from './views/shared-components/manual-input-dialog/manual-input-dialog.component';
 import {MatDialogModule} from '@angular/material';
-import {HomeComponent} from './home/home.component';
-import {LoginComponent} from './login/login.component';
-import {LogoutComponent} from './logout/logout.component';
+import {HomeComponent} from './views/home/home.component';
+import {LoginComponent} from './views/login/login.component';
+import {LogoutComponent} from './views/logout/logout.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
-import { PatientOverviewComponent} from './patient-overview/patient-overview.component';
+import { PatientOverviewComponent} from './views/patient-overview/patient-overview.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
