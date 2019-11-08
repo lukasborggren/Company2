@@ -10,7 +10,7 @@ import { AuthService } from '../../auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  isValid: boolean;
+  isInvalid: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,19 +23,27 @@ export class LoginComponent implements OnInit {
       username: [''],
       password: ['']
     });
-    this.isValid = false;
+    this.isInvalid = false;
   }
+
   get f() {
     return this.loginForm.controls;
   }
 
   onSubmit() {
-    // Call login validation here
-    if (true) {
-      this.authService.login(this.loginForm.value);
-      this.router.navigate(['/home']);
-    } else {
-      this.isValid = true;
-    }
+    this.authService.getUser(this.loginForm.value).subscribe((res) => {
+      const noOfKeys = Object.keys(res).length;
+      if (noOfKeys === 3) {
+        this.authService.login();
+        this.router.navigate(['/home']);
+      } else {
+        this.isInvalid = true;
+      }
+    },
+    err => {
+      this.isInvalid = true;
+    });
   }
+
+
 }
