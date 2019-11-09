@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-popup-window',
@@ -8,12 +8,14 @@ import { MatDialogRef } from '@angular/material';
 })
 export class PopupWindowComponent implements OnInit {
 
-  description: string;
-  errormessage: string;
+  dialogMessage: string;
 
   constructor(
       private dialogRef: MatDialogRef<PopupWindowComponent>,
-  ) { }
+      @Inject(MAT_DIALOG_DATA) data
+  ) {
+    this.dialogMessage = data.dialogMessage;
+  }
 
   ngOnInit() {
   }
@@ -23,3 +25,18 @@ export class PopupWindowComponent implements OnInit {
   }
 
 }
+
+//Below there is a code piece that you can use in the component from which you want to open the dialog,
+// i.e. where the button to open the dialog is. Imports and variables needed.
+
+/*
+  constructor(
+    private dialog: MatDialog
+  ) { }
+
+  openDialog(errorMessage: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dialogMessage: errorMessage
+    };
+    const dialogRef = this.dialog.open(PopupWindowComponent, dialogConfig);*/
