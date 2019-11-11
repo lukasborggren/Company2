@@ -11,8 +11,8 @@ export class AuthService {
       private http: HttpClient
   ) {}
 
-  public login() {
-    localStorage.setItem('ACCESS_TOKEN', 'access_token');
+  public login(accessToken: string) {
+    localStorage.setItem('ACCESS_TOKEN', accessToken);
   }
 
   public isLoggedIn() {
@@ -24,13 +24,11 @@ export class AuthService {
   }
 
   public getUser(userInfo: User): Observable<any> {
-    const url = 'http://134.209.226.62/api/authenticate';
+    const url = 'http://134.209.226.62/api/login';
     const userInfoJSON = {
       username: userInfo.username,
       password: userInfo.password
     };
-
     return this.http.post(url, userInfoJSON);
   }
-
 }
