@@ -31,6 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.authService.login();
+    this.router.navigate(['/home']);
+    /*
     this.authService.getUser(this.loginForm.value).subscribe((res) => {
       const noOfKeys = Object.keys(res).length;
       if (noOfKeys === 3) {
@@ -44,5 +47,6 @@ export class LoginComponent implements OnInit {
       this.isInvalid = true;
       console.error(err);
     });
+     */
   }
 }
