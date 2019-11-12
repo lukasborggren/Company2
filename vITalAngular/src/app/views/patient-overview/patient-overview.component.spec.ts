@@ -1,10 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { PatientOverviewComponent } from './patient-overview.component';
 import {ActivatedRoute, convertToParamMap, Data} from '@angular/router';
-import {PatientService} from '../../services/patient.service';
-import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {Observable} from 'rxjs';
+import {MatDialogModule} from '@angular/material';
 
 describe('PatientOverviewComponent', () => {
   let component: PatientOverviewComponent;
@@ -13,7 +11,7 @@ describe('PatientOverviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PatientOverviewComponent ],
-      imports: [ HttpClientTestingModule],
+      imports: [ MatDialogModule, HttpClientTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

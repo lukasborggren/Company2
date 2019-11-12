@@ -43,7 +43,8 @@ export class BarcodeScannerPageComponent implements OnInit {
 
     dialogConfig.data = {
       id: 1,
-      title: 'Angular For Beginners'
+      title: 'Angular For Beginners',
+      dialogmessage: 'Personnummer'
     };
 
     const dialogRef = this.dialog.open(ManualInputDialogComponent, dialogConfig);

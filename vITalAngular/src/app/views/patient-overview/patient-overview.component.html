@@ -1,17 +1,24 @@
 <h2>Personnummer = {{this.personnumber}}</h2>
-<label>Andningsfrekvens = {{this.respiratoryRate}}</label>
-<br/>
-<label>Syremätnad = {{this.oxygenSaturation}}</label>
-<br/>
-<label>Systolic blodtryck = {{this.systolicBloodPressure}} {{this.systolicBloodPressureUnit}}</label>
-<br/>
-<label>Pulsfrekvens = {{this.pulseRate}}</label>
-<br/>
-<label>Kroppstemperatur = {{this.temperature}} {{this.temperatureUnit}}</label>
-<br/>
-<label *ngIf="supplementalOxygen">Tillförd syre = ja</label>
-<label *ngIf="!supplementalOxygen">Tillförd syre = nej</label>
-<br/>
+<div>
+<label (click)="openDialog(this.respiratoryConst)">Andningsfrekvens = {{this.respiratoryRate}}</label>
+</div>
+<div>
+<label (click)="openDialog(this.saturationConst)">Syremätnad = {{this.oxygenSaturation}}</label>
+</div>
+<div>
+<label (click)="openDialog(this.pressureConst)">Systolic blodtryck = {{this.systolicBloodPressure}} {{this.systolicBloodPressureUnit}}</label>
+</div>
+<div>
+<label (click)="openDialog(this.pulseConst)">Pulsfrekvens = {{this.pulseRate}}</label>
+</div>
+<div>
+<label (click)="openDialog(this.temperatureConst)">Kroppstemperatur = {{this.temperature}} {{this.temperatureUnit}}</label>
+</div>
+<div>
+<label (click)="ChangeSupplementalOxygen()" *ngIf="supplementalOxygen">Tillförd syre = ja</label>
+<label (click)="ChangeSupplementalOxygen()" *ngIf="!supplementalOxygen">Tillförd syre = nej</label>
+</div>
+<div>
 <label>Medvetenhet = {{this.consciousness}}</label>
-<br/>
+</div>
 <label>Patient = {{this.patientinfo}}</label>

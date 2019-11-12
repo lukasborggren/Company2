@@ -9,14 +9,15 @@ import {Observable} from 'rxjs';
 export class AuthService {
   constructor(
       private http: HttpClient
-  ) {}
+  ) {
+  }
 
   public login(accessToken: string) {
     localStorage.setItem('ACCESS_TOKEN', accessToken);
   }
 
   public isLoggedIn() {
-    return localStorage.getItem('ACCESS_TOKEN')!==null;
+    return localStorage.getItem('ACCESS_TOKEN') !== null;
   }
 
   public logout() {
@@ -30,6 +31,5 @@ export class AuthService {
       password: userInfo.password
     };
     return this.http.post(url, userInfoJSON);
-
-}
+  }
 }

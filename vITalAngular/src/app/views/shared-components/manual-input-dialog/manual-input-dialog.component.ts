@@ -11,6 +11,7 @@ export class ManualInputDialogComponent implements OnInit {
 
   form: FormGroup;
   description: string;
+  dialogmessage: string;
 
   constructor(
       private dialogRef: MatDialogRef<ManualInputDialogComponent>,
@@ -18,6 +19,7 @@ export class ManualInputDialogComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA) data
   ) {
     this.description = data.description;
+    this.dialogmessage = data.dialogmessage;
     this.form = this.fb.group({
       description: [this.description, []],
     });
