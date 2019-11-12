@@ -13,6 +13,7 @@ import { LoginComponent } from './views/login/login.component';
 import {RouterModule} from '@angular/router';
 import { LogoutComponent } from './views/logout/logout.component';
 import { PatientOverviewComponent } from './views/patient-overview/patient-overview.component';
+import { PopupWindowComponent } from './views/shared-components/popup-window/popup-window.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { PatientOverviewComponent } from './views/patient-overview/patient-overv
     LoginComponent,
     LogoutComponent,
     PatientOverviewComponent,
+    PopupWindowComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,7 @@ import { PatientOverviewComponent } from './views/patient-overview/patient-overv
     HttpClientModule,
     RouterModule
   ],
-  entryComponents: [ManualInputDialogComponent],
+  entryComponents: [ManualInputDialogComponent, PopupWindowComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
