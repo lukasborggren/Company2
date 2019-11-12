@@ -46,8 +46,6 @@ export class BarcodeScannerPageComponent implements OnInit {
       title: 'Angular For Beginners'
     };
 
-    this.dialog.open(ManualInputDialogComponent, dialogConfig);
-
     const dialogRef = this.dialog.open(ManualInputDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
