@@ -31,9 +31,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.getUser(this.loginForm.value).subscribe((res) => {
-      if (res.status === 'success') {
-        this.authService.login(res.auth_token);
+    this.authService.login(this.loginForm.value).subscribe((valid) => {
+      if (valid) {
         this.router.navigate(['/home']);
       } else {
         this.isInvalid = true;

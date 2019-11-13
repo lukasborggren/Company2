@@ -10,11 +10,25 @@ import {catchError, map} from 'rxjs/operators';
 export class AuthService {
   constructor(
       private http: HttpClient
-  ) {
-  }
+  ) {}
 
-  public login(accessToken: string) {
-    localStorage.setItem('ACCESS_TOKEN', accessToken);
+  public login(userInfo: User): Observable<boolean> {
+    const url = 'http://134.209.226.62/api/login';
+    const userInfoJSON = {
+      username: userInfo.username,
+      password: userInfo.password
+    };
+    return this.http.post<boolean>(url, userInfoJSON)
+        .pipe(map((res: any) => {
+            const valid = res.status === 'success';
+            if (valid) {
+              localStorage.setItem('ACCESS_TOKEN', res.auth_token);
+            }
+            return valid;
+        }),
+        catchError(err => {
+          return of(false);
+        }));
   }
 
   public checkToken(): Observable<boolean> {
@@ -46,14 +60,5 @@ export class AuthService {
           console.error(err);
         });
     localStorage.removeItem('ACCESS_TOKEN');
-  }
-
-  public getUser(userInfo: User): Observable<any> {
-    const url = 'http://134.209.226.62/api/login';
-    const userInfoJSON = {
-      username: userInfo.username,
-      password: userInfo.password
-    };
-    return this.http.post(url, userInfoJSON);
   }
 }
