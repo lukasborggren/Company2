@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from './user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of, throwError} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
@@ -27,14 +27,24 @@ export class AuthService {
     return this.http.get<boolean>(url, {headers: headers})
         .pipe(map((res: any) => {
               return res.status === 'success';
-            }
-            ),
+            }),
             catchError(err => {
               return of(false);
             }));
   }
 
   public logout() {
+    const url = 'http://134.209.226.62/api/logout';
+    let headers = new HttpHeaders();
+    headers = headers.append(
+        'Authorization',
+        localStorage.getItem('ACCESS_TOKEN')
+    );
+    this.http.post(url, null, {headers: headers})
+        .subscribe((res) => {},
+        err => {
+          console.error(err);
+        });
     localStorage.removeItem('ACCESS_TOKEN');
   }
 
