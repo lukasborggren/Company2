@@ -13,9 +13,9 @@ import { PatientOverviewComponent} from './views/patient-overview/patient-overvi
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'logout', component: LogoutComponent },
-  { path: 'scannerpage', component: BarcodeScannerPageComponent },
-  { path: 'pid/:personid', component: PatientOverviewComponent},
+  { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
+  { path: 'scannerpage', component: BarcodeScannerPageComponent, canActivate: [AuthGuard] },
+  { path: 'pid/:personid', component: PatientOverviewComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' },
   { path: '', redirectTo: 'scannerpage', pathMatch: 'full'}
 ];

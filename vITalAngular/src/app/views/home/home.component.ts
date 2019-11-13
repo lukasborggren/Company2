@@ -25,14 +25,14 @@ export class HomeComponent implements OnInit {
   public logData() {
     // Code for logging data
     const source = timer(0, 100);
-    const subscribe = source.subscribe(val => {
-      if (this.authService.isLoggedIn() === false) {
+    const subscribe = source.subscribe(counter => {
+      if (localStorage.getItem('ACCESS_TOKEN') === null ) {
         subscribe.unsubscribe();
       }
-      if (val === 150) {
-        subscribe.unsubscribe();
+      if (counter >= 150) {
         this.authService.logout();
         this.router.navigate(['/login']);
+        subscribe.unsubscribe();
       }
     });
   }
