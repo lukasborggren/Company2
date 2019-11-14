@@ -133,6 +133,7 @@ export class PatientOverviewComponent implements OnInit {
               }
               console.log('Dialog output:', data.description);
             }
+        this.updateNEWS();
         });
   }
   ngOnInit() {
