@@ -27,6 +27,7 @@ export class PatientOverviewComponent implements OnInit {
   dialogMessageInput: string;
 
   newsScore: number;
+  newsAgg: number;
   news0: number;
   news1: number;
   news2: number;
@@ -153,13 +154,14 @@ export class PatientOverviewComponent implements OnInit {
     this.saturationConst = 'Saturation';
     this.pulseConst = 'Pulse';
     this.newsScore = 0;
+    this.updateNEWS();
   }
   updateNEWS() {
     this.news3 = 0;
     this.news2 = 0;
     this.news1 = 0;
     this.news0 = 0;
-
+//-----------------------------------respiratoryRate-----------------------------------
     if(this.respiratoryRate >= 25 || this.respiratoryRate <=8 ){
       this.news3 += 1;
     }
@@ -172,7 +174,9 @@ export class PatientOverviewComponent implements OnInit {
     else{
       this.news0 += 1;
     }
-  
+//-----------------------------------respiratoryRate-----------------------------------
+//-----------------------------------oxygenSaturation-----------------------------------
+
     if( this.oxygenSaturation <= 91 ){
       this.news3 += 1;
     }
@@ -185,7 +189,85 @@ export class PatientOverviewComponent implements OnInit {
     else{
       this.news0 += 1;
     }
+//-----------------------------------oxygenSaturation-----------------------------------
+//-----------------------------------supplementalOxygen-----------------------------------
 
-
+    if( this.supplementalOxygen == true ){
+      this.news2 += 1;
+    }
+    else{
+      this.news0 += 1;
+    }
+//-----------------------------------supplementalOxygen-----------------------------------
+//-----------------------------------systolicBloodPressure-----------------------------------
+    if( this.systolicBloodPressure <= 90 || this.systolicBloodPressure >= 220 ){
+      this.news3 += 1;
+    }
+    else if(this.systolicBloodPressure >= 91 && this.systolicBloodPressure <= 100 ){
+      this.news2 += 1;
+    }
+    else if(this.systolicBloodPressure >= 101 && this.systolicBloodPressure <= 110 ){
+      this.news1 += 1;
+    }
+    else{
+      this.news0 += 1;
+    }
+//-----------------------------------systolicBloodPressure-----------------------------------
+//-----------------------------------pulseRate-----------------------------------
+    if( this.pulseRate <= 31 || this.pulseRate >= 131 ){
+      this.news3 += 1;
+    }
+    else if(this.pulseRate >= 111 && this.pulseRate <= 130 ){
+      this.news2 += 1;
+    }
+    else if(this.pulseRate >= 91 && this.pulseRate <= 110 ){
+      this.news1 += 1;
+    }
+    else if(this.pulseRate >= 41 && this.pulseRate <= 50 ){
+      this.news1 += 1;
+    }
+    else{
+      this.news0 += 1;
+    }
+//-----------------------------------pulseRate-----------------------------------
+//-----------------------------------consciousness-----------------------------------
+  if( this.consciousness == "awake" ){
+    this.news0 += 1;
   }
+  else{
+    this.news3 += 1;
+  }
+//-----------------------------------consciousness-----------------------------------
+//-----------------------------------temperature-----------------------------------
+  if( this.temperature <= 35 ){
+    this.news3 += 1;
+  }
+  else if(this.temperature >= 39.1 ){
+    this.news2 += 1;
+  }
+  else if(this.temperature >= 38.1 && this.temperature <= 39 ){
+    this.news1 += 1;
+  }
+  else if(this.temperature >= 36 && this.temperature <= 35.1 ){
+    this.news1 += 1;
+  }
+  else{
+    this.news0 += 1;
+  }
+//-----------------------------------temperature-----------------------------------
+  this.newsAgg = (this.news1) + (this.news2 * 2) + (this.news3 * 3); 
+  if(this.newsAgg >= 7 ){
+    this.newsScore = 3;
+  }
+  else if(this.newsAgg == 6 || this.newsAgg == 5){
+    this.newsScore = 2;
+  }
+  else if(this.news3 >= 1){
+    this.newsScore = 1;
+  }
+  else{
+    this.newsScore = 0;
+  }
+  }
+
 }
