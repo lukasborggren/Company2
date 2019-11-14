@@ -25,6 +25,9 @@ export class PatientOverviewComponent implements OnInit {
   supplementalOxygen: boolean;
   consciousness: string;
   dialogMessageInput: string;
+
+  newsScore: number;
+
   private respiratoryConst: string;
   private pulseConst: string;
   private temperatureConst: string;
@@ -145,6 +148,7 @@ export class PatientOverviewComponent implements OnInit {
     this.pressureConst = 'Pressure';
     this.saturationConst = 'Saturation';
     this.pulseConst = 'Pulse';
+    this.newsScore = 0;
   }
 
 }
