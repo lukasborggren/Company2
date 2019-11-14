@@ -27,6 +27,10 @@ export class PatientOverviewComponent implements OnInit {
   dialogMessageInput: string;
 
   newsScore: number;
+  news0: number;
+  news1: number;
+  news2: number;
+  news3: number;
 
   private respiratoryConst: string;
   private pulseConst: string;
@@ -150,5 +154,38 @@ export class PatientOverviewComponent implements OnInit {
     this.pulseConst = 'Pulse';
     this.newsScore = 0;
   }
+  updateNEWS() {
+    this.news3 = 0;
+    this.news2 = 0;
+    this.news1 = 0;
+    this.news0 = 0;
 
+    if(this.respiratoryRate >= 25 || this.respiratoryRate <=8 ){
+      this.news3 += 1;
+    }
+    else if(this.respiratoryRate >= 21 && this.respiratoryRate <=24 ){
+      this.news2 += 1;
+    }
+    else if(this.respiratoryRate >= 9 && this.respiratoryRate <=11 ){
+      this.news1 += 1;
+    }
+    else{
+      this.news0 += 1;
+    }
+  
+    if( this.oxygenSaturation <= 91 ){
+      this.news3 += 1;
+    }
+    else if(this.oxygenSaturation >= 92 && this.oxygenSaturation <= 93 ){
+      this.news2 += 1;
+    }
+    else if(this.oxygenSaturation >= 94 && this.oxygenSaturation <= 95 ){
+      this.news1 += 1;
+    }
+    else{
+      this.news0 += 1;
+    }
+
+
+  }
 }
