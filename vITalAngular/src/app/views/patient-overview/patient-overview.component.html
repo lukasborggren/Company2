@@ -21,7 +21,16 @@
 <div>
 <label>Medvetenhet = {{this.consciousness}}</label>
 </div>
+<button (click)="RLSScale()">RLS 1-8</button>
+<div>
+</div>
 <div>
 <label>NEWS2 Score = {{this.newsScore}}</label>
 </div>
+<div>
+    <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
+</div>
 <label>Patient = {{this.patientinfo}}</label>
+<br/>
+<br/>
+<br/>

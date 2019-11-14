@@ -5,6 +5,7 @@ import {ManualInputDialogComponent} from '../shared-components/manual-input-dial
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
+import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
 
 @Component({
   selector: 'app-patient-overview',
@@ -97,6 +98,8 @@ export class PatientOverviewComponent implements OnInit {
       default:
         this.dialogMessageInput = '';
     }
+
+
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -245,6 +248,7 @@ export class PatientOverviewComponent implements OnInit {
   else if(this.temperature >= 39.1 ){
     this.news2 += 1;
   }
+
   else if(this.temperature >= 38.1 && this.temperature <= 39 ){
     this.news1 += 1;
   }
@@ -268,6 +272,15 @@ export class PatientOverviewComponent implements OnInit {
   else{
     this.newsScore = 0;
   }
+  }
+
+
+  openPopup(errorMessage: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dialogMessage: errorMessage
+    };
+    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
   }
 
 }

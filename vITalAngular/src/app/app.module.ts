@@ -15,6 +15,7 @@ import { LogoutComponent } from './views/logout/logout.component';
 import { PatientOverviewComponent } from './views/patient-overview/patient-overview.component';
 import { PopupWindowComponent } from './views/shared-components/popup-window/popup-window.component';
 import { DialogWindowComponent } from './views/shared-components/dialog-window/dialog-window.component';
+import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit/confirm-submit.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { DialogWindowComponent } from './views/shared-components/dialog-window/d
     PatientOverviewComponent,
     PopupWindowComponent,
     DialogWindowComponent,
+    ConfirmSubmitComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,7 @@ import { DialogWindowComponent } from './views/shared-components/dialog-window/d
     HttpClientModule,
     RouterModule
   ],
-  entryComponents: [ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent],
+  entryComponents: [ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent, ConfirmSubmitComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
