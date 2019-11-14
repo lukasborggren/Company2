@@ -14,6 +14,7 @@ import {RouterModule} from '@angular/router';
 import { LogoutComponent } from './views/logout/logout.component';
 import { PatientOverviewComponent } from './views/patient-overview/patient-overview.component';
 import { PopupWindowComponent } from './views/shared-components/popup-window/popup-window.component';
+import { DialogWindowComponent } from './views/shared-components/dialog-window/dialog-window.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PopupWindowComponent } from './views/shared-components/popup-window/pop
     LogoutComponent,
     PatientOverviewComponent,
     PopupWindowComponent,
+    DialogWindowComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,7 @@ import { PopupWindowComponent } from './views/shared-components/popup-window/pop
     HttpClientModule,
     RouterModule
   ],
-  entryComponents: [ManualInputDialogComponent, PopupWindowComponent],
+  entryComponents: [ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

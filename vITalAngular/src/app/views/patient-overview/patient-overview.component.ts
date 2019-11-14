@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {isNumeric} from 'rxjs/internal-compatibility';
+import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
 
 @Component({
   selector: 'app-patient-overview',
@@ -37,12 +38,33 @@ export class PatientOverviewComponent implements OnInit {
 ) {}
 
   ChangeSupplementalOxygen() {
+    /*
     if (confirm('Finns det tillförd syre?')) {
       this.supplementalOxygen = true;
     } else {
       this.supplementalOxygen = false;
     }
-    // this.supplementalOxygen = !this.supplementalOxygen;
+    */
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      dialogMessage: 'Finns det tillfört syre?',
+      firstOptionMessage: 'Ja',
+      secondOptionMessage: 'Nej'
+    }
+    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+        data => {
+          console.log(data);
+          if (data === 'Ja') {
+            this.supplementalOxygen = true;
+          } else {
+            this.supplementalOxygen = false;
+          }
+        }
+    );
   }
 
   openDialog(variable: string) {
