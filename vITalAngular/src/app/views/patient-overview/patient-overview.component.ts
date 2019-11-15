@@ -6,6 +6,7 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angula
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
 import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-patient-overview',
@@ -13,6 +14,7 @@ import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confir
   styleUrls: ['./patient-overview.component.css']
 })
 export class PatientOverviewComponent implements OnInit {
+  form: FormGroup;
   patientinfo: string;
   personnumber: string;
   info: string;
@@ -43,7 +45,8 @@ export class PatientOverviewComponent implements OnInit {
   constructor(
       private patientService: PatientService,
       private route: ActivatedRoute,
-      private dialog: MatDialog
+      private dialog: MatDialog,
+      private fb: FormBuilder
 ) {}
 
   ChangeSupplementalOxygen() {
@@ -133,11 +136,49 @@ export class PatientOverviewComponent implements OnInit {
               }
               console.log('Dialog output:', data.description);
             }
-        this.updateNEWS();
+            this.updateNEWS();
         });
   }
   ngOnInit() {
     const pid = this.route.snapshot.paramMap.get('personid');
+    this.form = this.fb.group({
+      respiratoryRate: ['', [
+        Validators.required,
+        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        ]
+      ],
+      oxygenSaturation: ['', [
+        Validators.required,
+        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        ]
+      ],
+      pulseRate: ['', [
+        Validators.required,
+        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        ]
+      ],
+      temperature: ['', [
+        Validators.required,
+        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        ]
+      ],
+      systolicBloodPressure: ['', [
+        Validators.required,
+        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        ]
+      ],
+      supplementalOxygen: ['', [
+        Validators.required,
+        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        ]
+      ],
+      consciousness: ['', [
+        Validators.required
+        ]
+      ]
+    });
+    // kolla på touched / invalid
+    this.form.value.oxygenSaturation = 'test';
     this.patientService.getPatientDataPid(pid).subscribe(info => {
       this.patientinfo = JSON.stringify(info);
       this.personnumber = info.demographics.additionalInfo.Personnummer;

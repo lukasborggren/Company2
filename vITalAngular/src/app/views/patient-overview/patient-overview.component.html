@@ -1,28 +1,41 @@
 <h2>Personnummer = {{this.personnumber}}</h2>
 <div>
-<label (click)="openDialog(this.respiratoryConst)">Andningsfrekvens = {{this.respiratoryRate}}</label>
-</div>
-<div>
-<label (click)="openDialog(this.saturationConst)">Syremätnad = {{this.oxygenSaturation}}</label>
-</div>
-<div>
-<label (click)="openDialog(this.pressureConst)">Systolic blodtryck = {{this.systolicBloodPressure}} {{this.systolicBloodPressureUnit}}</label>
-</div>
-<div>
-<label (click)="openDialog(this.pulseConst)">Pulsfrekvens = {{this.pulseRate}}</label>
-</div>
-<div>
-<label (click)="openDialog(this.temperatureConst)">Kroppstemperatur = {{this.temperature}} {{this.temperatureUnit}}</label>
-</div>
-<div>
-<label (click)="ChangeSupplementalOxygen()" *ngIf="supplementalOxygen">Tillfört syre = ja</label>
-<label (click)="ChangeSupplementalOxygen()" *ngIf="!supplementalOxygen">Tillfört syre = nej</label>
-</div>
-<div>
-<label>Medvetenhet = {{this.consciousness}}</label>
-</div>
-<button (click)="RLSScale()">RLS 1-8</button>
-<div>
+    <form [formGroup]="form">
+        <label>
+            andningsfrekvens
+            <input type="text" formControlName="respiratoryRate">
+        </label>
+        <br/>
+        <label>
+            Syremätnad
+            <input type="text" formControlName="oxygenSaturation">
+        </label>
+        <br/>
+        <label>
+            Pulsfrekvens
+            <input type="text" formControlName="pulseRate">
+        </label>
+        <br/>
+        <label>
+            Kroppstemperatur
+            <input type="text" formControlName="temperature">
+        </label>
+        <br/>
+        <label>
+            Systoliskt blodtryck
+            <input type="text" formControlName="systolicBloodPressure">
+        </label>
+        <br/>
+        <label>
+            Tillfört syre
+            <input type="text" formControlName="supplementalOxygen">
+        </label>
+        <br/>
+        <label>
+            Medvetenhet
+            <input type="text" formControlName="consciousness">
+        </label>
+    </form>
 </div>
 <div>
 <label>NEWS2 Score = {{this.newsScore}}</label>
@@ -30,7 +43,5 @@
 <div>
     <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
 </div>
-<label>Patient = {{this.patientinfo}}</label>
-<br/>
 <br/>
 <br/>
