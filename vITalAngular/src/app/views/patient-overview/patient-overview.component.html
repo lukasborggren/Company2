@@ -1,48 +1,86 @@
 <h2>Personnummer = {{this.personnumber}}</h2>
 <div>
     <form [formGroup]="form">
-
-      <div class="parameterRow d-flex align-items-center">
-        <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 1 </div>
-        <div class="parameterTitle mr-auto col-4">
-          Andningsfrekvens
+<!-----------------Andningsfrekvens----------------->
+      <div class="parameterRow">
+        <div class="d-flex align-items-center">
+          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews"> 1 </div>
+          <div class="parameterTitle mr-auto col-4">
+            Andningsfrekvens
+          </div>
+          <input type="text" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
+          <div class="collapseButton p-2">
+            <button (click)="toggleAccordion(0)" class="btn">  <!-- togglefunktion med koppling till ikonändring vid klick-->
+              <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
+              <i *ngIf="!isAccordionOpen(0)" class="fa fa-angle-double-down fa-2x"></i>
+            </button>
+          </div>
         </div>
-        <input type="text" formControlName="respiratoryRate" class=" inputField col-2 ml-auto form-control-lg p-2">
-        <div class="collapseButton p-2">
-          <button class="btn" data-toggle="collapse" data-target="#respCollapse"><i class="fa fa-angle-double-down fa-2x"></i></button> <!-- Här är Collapse-funktionen som är ur funktion, har även lagt ikonen i en knapp -->
-            <div class="collapse" id="respCollapse">
-              Lorem ipsum bla bla
+        <div *ngIf="isAccordionOpen(0)">
+          <div class="toggleRow"> <!-- Skapar en ny row som ett expandable field -->
+            <div class="d-flex p-2">
+              <button type="button" class="btn historikKnapp">Historik</button>
             </div>
-            <!--  <span class="fa fa-angle-double-down fa-2x"></span> -->
+          </div>
         </div>
       </div>
 
-        <div class="individualNews" id="saturationNews"> 0 </div>
+
+<!-----------------Syremättnad----------------->
+      <div class="parameterRow">
+        <div class="d-flex align-items-center">
+          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 2 </div>
+          <div class="parameterTitle mr-auto col-4">
+            Syremättnad
+          </div>
+          <input type="text" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
+          <div class="collapseButton p-2">
+            <button (click)="toggleAccordion(1)" class="btn">
+              <i *ngIf="isAccordionOpen(1)" class="fa fa-angle-double-up fa-2x"></i>
+              <i *ngIf="!isAccordionOpen(1)" class="fa fa-angle-double-down fa-2x"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+      </div>
+      <!--  <div class="individualNews" id="saturationNews"> 0 </div>
         <label>
-            Syremätnad
+            Syremättnad
             <input type="text" formControlName="oxygenSaturation">
         </label>
-        <br/>
+        <br/> -->
+
+
         <label>
             Tillförd syrgas
             <input type="text" formControlName="supplementalOxygen">
         </label>
         <br/>
+
+
         <label>
             Systoliskt blodtryck
             <input type="text" formControlName="systolicBloodPressure">
         </label>
         <br/>
+
+
         <label>
             Pulsfrekvens
             <input type="text" formControlName="pulseRate">
         </label>
         <br/>
+
+
         <label>
             Medvetandegrad
             <input type="text" formControlName="consciousness">
         </label>
         <br/>
+
+
         <label>
             Temperatur
             <input type="text" formControlName="temperature">

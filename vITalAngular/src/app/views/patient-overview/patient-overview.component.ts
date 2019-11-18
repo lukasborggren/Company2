@@ -36,6 +36,8 @@ export class PatientOverviewComponent implements OnInit {
   news2: number;
   news3: number;
 
+  accordionState: Array<boolean>; // Icon toggle for the accordion
+
   private respiratoryConst: string;
   private pulseConst: string;
   private temperatureConst: string;
@@ -178,6 +180,7 @@ export class PatientOverviewComponent implements OnInit {
       ]
     });
     // kolla på touched / invalid
+    this.accordionState = [false,false,false,false,false,false,false]; //Icon toggle for the accordion - lite osäker på var jag skulle lägga den
     this.form.value.oxygenSaturation = 'test';
     this.patientService.getPatientDataPid(pid).subscribe(info => {
       this.patientinfo = JSON.stringify(info);
@@ -301,7 +304,7 @@ export class PatientOverviewComponent implements OnInit {
     this.news0 += 1;
   }
 //-----------------------------------temperature-----------------------------------
-  this.newsAgg = (this.news1) + (this.news2 * 2) + (this.news3 * 3); 
+  this.newsAgg = (this.news1) + (this.news2 * 2) + (this.news3 * 3);
   if(this.newsAgg >= 7 ){
     this.newsScore = 3;
   }
@@ -317,6 +320,12 @@ export class PatientOverviewComponent implements OnInit {
   }
 
 
+  toggleAccordion(id: number) { // Icon toggle for the accordion
+    this.accordionState[id] = !this.accordionState[id];
+  }
+  isAccordionOpen(id: number) {
+    return this.accordionState[id];
+  }
   openPopup(errorMessage: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
