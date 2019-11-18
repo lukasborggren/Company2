@@ -1,8 +1,9 @@
 <h2>Personnummer = {{this.personnumber}}</h2>
 <div>
     <form [formGroup]="form">
+        <div class="individualNews" id="respNews"> 1</div>
         <label>
-            andningsfrekvens
+            Andningsfrekvens
             <input type="text" formControlName="respiratoryRate">
         </label>
         <br/>
@@ -12,13 +13,8 @@
         </label>
         <br/>
         <label>
-            Pulsfrekvens
-            <input type="text" formControlName="pulseRate">
-        </label>
-        <br/>
-        <label>
-            Kroppstemperatur
-            <input type="text" formControlName="temperature">
+            Tillförd syrgas
+            <input type="text" formControlName="supplementalOxygen">
         </label>
         <br/>
         <label>
@@ -27,14 +23,20 @@
         </label>
         <br/>
         <label>
-            Tillfört syre
-            <input type="text" formControlName="supplementalOxygen">
+            Pulsfrekvens
+            <input type="text" formControlName="pulseRate">
         </label>
         <br/>
         <label>
-            Medvetenhet
+            Medvetandegrad
             <input type="text" formControlName="consciousness">
         </label>
+        <br/>
+        <label>
+            Temperatur
+            <input type="text" formControlName="temperature">
+        </label>
+        <br/>
     </form>
 </div>
 <div>
