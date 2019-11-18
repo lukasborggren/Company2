@@ -1,12 +1,19 @@
 <h2>Personnummer = {{this.personnumber}}</h2>
 <div>
     <form [formGroup]="form">
-        <div class="individualNews" id="respNews"> 1</div>
-        <label>
-            Andningsfrekvens
-            <input type="text" formControlName="respiratoryRate">
-        </label>
-        <br/>
+
+      <div class="parameterRow d-flex align-items-center">
+        <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 1 </div>
+        <div class="parameterTitle mr-auto col-4">
+          Andningsfrekvens
+        </div>
+        <input type="text" formControlName="respiratoryRate" class=" inputField col-2 ml-auto form-control-lg p-2">
+        <div class="collapseButton p-2">
+          <span class="fa fa-angle-double-down fa-2x"></span>
+        </div>
+      </div>
+
+        <div class="individualNews" id="saturationNews"> 0 </div>
         <label>
             Syremätnad
             <input type="text" formControlName="oxygenSaturation">

@@ -1,0 +1,30 @@
+.parameterTitle {
+  /* Problematic font size when desktop mode.. */
+  font-size: 4vw;
+}
+
+.parameterRow {
+  background-color: #D8D8D8;
+  padding: 2%;
+  height: 70px;
+
+}
+.inputField {
+  border: solid 2px;
+  border-color: #000000;
+  border-radius: 0;
+}
+
+.alert {
+  margin: 0;
+  background-color: #D0D0D0;
+  border:solid 2px;
+  border-color: #909090;
+  border-radius: 9px;
+  width: 2.5em;
+  height: 2.5em;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
