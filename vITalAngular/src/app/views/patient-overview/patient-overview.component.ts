@@ -36,6 +36,13 @@ export class PatientOverviewComponent implements OnInit {
   news2: number;
   news3: number;
 
+  respiratoryScore:number;
+  saturationScore:number;
+  pulseScore:number;
+  temperatureScore:number;
+  systolicScore:number;
+  totalScore:number;
+
   accordionState: Array<boolean>; // Icon toggle for the accordion
 
   private respiratoryConst: string;
@@ -138,7 +145,7 @@ export class PatientOverviewComponent implements OnInit {
               }
               console.log('Dialog output:', data.description);
             }
-            this.updateNEWS();
+        //    this.updateNEWS();
         });
   }
   ngOnInit() {
@@ -202,8 +209,79 @@ export class PatientOverviewComponent implements OnInit {
     this.saturationConst = 'Saturation';
     this.pulseConst = 'Pulse';
     this.newsScore = 0;
-    this.updateNEWS();
   }
+
+
+  updateRespiratoryScore() {
+    if (this.respiratoryRate >= 25 || this.respiratoryRate <= 8) {
+      this.respiratoryScore = 3;
+    } else if (this.respiratoryRate >= 21 && this.respiratoryRate <= 24) {
+      this.respiratoryScore = 2;
+    } else if (this.respiratoryRate >= 9 && this.respiratoryRate <= 11) {
+      this.respiratoryScore = 1;
+    } else {
+      this.respiratoryScore = 0;
+    }
+    return this.respiratoryScore;
+  }
+
+  updateSaturationScore() {
+    if (this.oxygenSaturation <= 91) {
+      this.saturationScore = 3;
+    } else if (this.oxygenSaturation >= 92 && this.oxygenSaturation <= 93) {
+      this.saturationScore = 2;
+    } else if (this.oxygenSaturation >= 94 && this.oxygenSaturation <= 95) {
+      this.respiratoryScore = 1;
+    } else {
+      this.respiratoryScore = 0;
+    }
+    return this.updateSaturationScore();
+  }
+
+  updateSystolicScore() {
+    if (this.systolicBloodPressure <= 90 || this.systolicBloodPressure >= 220) {
+      this.systolicScore = 3;
+    } else if (this.systolicBloodPressure >= 91 && this.systolicBloodPressure <= 100) {
+      this.systolicScore = 2;
+    } else if (this.systolicBloodPressure >= 101 && this.systolicBloodPressure <= 110) {
+      this.systolicScore = 1;
+    } else {
+      this.systolicScore = 0;
+    }
+    return this.updateSystolicScore();
+  }
+
+  updatePulseScore() {
+    if (this.pulseRate <= 31 || this.pulseRate >= 131) {
+      this.pulseScore = 3;
+    } else if (this.pulseRate >= 111 && this.pulseRate <= 130) {
+      this.pulseScore = 2;
+    } else if (this.pulseRate >= 91 && this.pulseRate <= 110) {
+      this.pulseScore = 1;
+    } else if (this.pulseRate >= 41 && this.pulseRate <= 50) {
+      this.pulseScore = 1;
+    } else {
+      this.pulseScore = 0;
+    }
+    return this.pulseScore;
+  }
+
+  updateTemperatureScore() {
+    if (this.temperature <= 35) {
+      this.temperatureScore = 3;
+    } else if (this.temperature >= 39.1) {
+      this.temperatureScore = 2;
+    } else if (this.temperature >= 38.1 && this.temperature <= 39) {
+      this.temperatureScore = 1;
+    } else if (this.temperature >= 36 && this.temperature <= 35.1) {
+      this.temperatureScore = 1;
+    } else {
+      this.temperatureScore = 0;
+    }
+    return this.temperatureScore;
+  }
+
+  /*
   updateNEWS() {
     this.news3 = 0;
     this.news2 = 0;
@@ -318,7 +396,7 @@ export class PatientOverviewComponent implements OnInit {
     this.newsScore = 0;
   }
   }
-
+*/
 
   toggleAccordion(id: number) { // Icon toggle for the accordion
     this.accordionState[id] = !this.accordionState[id];
