@@ -114,20 +114,47 @@
   </div>
 </div>
 
+<!-----------------Medvetandegrad----------------->
+<div class="parameterRow">
+  <div class="d-flex align-items-center">
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 0 </div>
+    <div class="parameterTitle mr-auto col-4">
+      Medvetandegrad
+    </div>
+    <!-- This input shall have five check boxes for the alertness scale, see Prototype -->
+    <input type="text" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div class="collapseButton p-2">
+      <button (click)="toggleAccordion(5)" class="btn">
+        <i *ngIf="isAccordionOpen(5)" class="fa fa-angle-double-up fa-2x"></i>
+        <i *ngIf="!isAccordionOpen(5)" class="fa fa-angle-double-down fa-2x"></i>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isAccordionOpen(5)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+</div>
 
+<!-----------------Temperatur----------------->
+<div class="parameterRow">
+  <div class="d-flex align-items-center">
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 0 </div>
+    <div class="parameterTitle mr-auto col-4">
+      Temperatur
+    </div>
+    <input type="text" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div class="collapseButton p-2">
+      <button (click)="toggleAccordion(6)" class="btn">
+        <i *ngIf="isAccordionOpen(6)" class="fa fa-angle-double-up fa-2x"></i>
+        <i *ngIf="!isAccordionOpen(6)" class="fa fa-angle-double-down fa-2x"></i>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isAccordionOpen(6)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+</div>
 
-        <label>
-            Medvetandegrad
-            <input type="text" formControlName="consciousness">
-        </label>
-        <br/>
-
-
-        <label>
-            Temperatur
-            <input type="text" formControlName="temperature">
-        </label>
-        <br/>
     </form>
 </div>
 <div>
