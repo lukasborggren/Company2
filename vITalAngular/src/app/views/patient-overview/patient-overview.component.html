@@ -1,6 +1,8 @@
 <h2>Personnummer = {{this.personnumber}}</h2>
+
 <div>
     <form [formGroup]="form">
+
 <!-----------------Andningsfrekvens----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
@@ -24,7 +26,6 @@
           </div>
         </div>
       </div>
-
 
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
@@ -157,9 +158,13 @@
 
     </form>
 </div>
+
+<!-----------------Total NEWS2 score----------------->
 <div>
 <label>NEWS2 Score = {{this.newsScore}}</label>
 </div>
+
+<!-----------------Save button----------------->
 <div>
     <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
 </div>
