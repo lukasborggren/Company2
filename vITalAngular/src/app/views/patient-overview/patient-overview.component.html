@@ -59,6 +59,7 @@
             <div class="parameterTitle mr-auto col-4">
               Tillförd syrgas
             </div>
+            <!-- This input shall be "yes" or "no" options, not text -->
             <input type="text" formControlName="supplementalOxygen" class="inputField col-2 ml-auto form-control-lg p-2">
             <div class="collapseButton p-2">
               <button (click)="toggleAccordion(2)" class="btn">
@@ -72,20 +73,47 @@
           </div>
         </div>
 
+<!-----------------Blodtryck----------------->
+<div class="parameterRow">
+  <div class="d-flex align-items-center">
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 0 </div>
+    <div class="parameterTitle mr-auto col-4">
+      Blodtryck
+    </div>
+    <!-- This input shall have two input fields options, one for systolic and one for diastolic -->
+    <input type="text" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div class="collapseButton p-2">
+      <button (click)="toggleAccordion(3)" class="btn">
+        <i *ngIf="isAccordionOpen(3)" class="fa fa-angle-double-up fa-2x"></i>
+        <i *ngIf="!isAccordionOpen(3)" class="fa fa-angle-double-down fa-2x"></i>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isAccordionOpen(3)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+</div>
 
+<!-----------------Pulsfrekvens----------------->
+<div class="parameterRow">
+  <div class="d-flex align-items-center">
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 0 </div>
+    <div class="parameterTitle mr-auto col-4">
+      Pulsfrekvens
+    </div>
+    <input type="text" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div class="collapseButton p-2">
+      <button (click)="toggleAccordion(4)" class="btn">
+        <i *ngIf="isAccordionOpen(4)" class="fa fa-angle-double-up fa-2x"></i>
+        <i *ngIf="!isAccordionOpen(4)" class="fa fa-angle-double-down fa-2x"></i>
+      </button>
+    </div>
+  </div>
+  <div *ngIf="isAccordionOpen(4)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </div>
+</div>
 
-        <label>
-            Systoliskt blodtryck
-            <input type="text" formControlName="systolicBloodPressure">
-        </label>
-        <br/>
-
-
-        <label>
-            Pulsfrekvens
-            <input type="text" formControlName="pulseRate">
-        </label>
-        <br/>
 
 
         <label>
