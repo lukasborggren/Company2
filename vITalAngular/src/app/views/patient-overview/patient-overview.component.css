@@ -3,6 +3,11 @@
     font-size: 3vw;
 }
 
+.form-check-label{
+    position: relative;
+
+}
+
 .parameterRow {
     background-color: #D8D8D8;
     padding: .5rem 1rem;
