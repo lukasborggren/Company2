@@ -22,7 +22,9 @@ export class AuthService {
         .pipe(map((res: any) => {
             const valid = res.status === 'success';
             if (valid) {
-              localStorage.setItem('ACCESS_TOKEN', res.auth_token);
+                const encodedString = btoa(userInfo.username + ':' + userInfo.password);
+                localStorage.setItem('ENCODED_STRING', encodedString);
+                localStorage.setItem('ACCESS_TOKEN', res.auth_token);
             }
             return valid;
         }),
