@@ -41,6 +41,8 @@ export class PatientOverviewComponent implements OnInit {
   pulseScore:number;
   temperatureScore:number;
   systolicScore:number;
+  consciousnessScore: number;
+  supplementOxygenScore: number;
   totalScore:number;
 
   accordionState: Array<boolean>; // Icon toggle for the accordion
@@ -280,7 +282,23 @@ export class PatientOverviewComponent implements OnInit {
     }
     return this.temperatureScore;
   }
+  updateSupplementOxygenScore(e, score: number) {
+    if (e.target.checked) {
+      this.supplementOxygenScore = score;
+  }
+  }
+  updateConsciousnessScore(e, score: number) {
+    if (e.target.checked) {
+      this.consciousnessScore = score;
+    }
+  }
 
+  getConscniousnessScore() {
+    return this.consciousnessScore;
+  }
+  getSupplementOxygenScore() {
+    return this.supplementOxygenScore;
+  }
   /*
   updateNEWS() {
     this.news3 = 0;
