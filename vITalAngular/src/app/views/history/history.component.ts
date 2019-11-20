@@ -12,18 +12,20 @@ import * as pluginAnnotations from 'chartjs-plugin-annotation';
 })
 
 export class HistoryComponent implements OnInit {
+  constructor(private location: Location) { }
+
 
   public chartData: ChartDataSets[] = [
     { data: [140, 187, 170, 150, 155],
-     label: 'Systoliskt blodtryck', 
+     label: 'Systoliskt blodtryck',
      lineTension: 0,
-     pointStyle: "triangle",
+     pointStyle: 'triangle',
      pointRotation: 180,
      fill: false,
-     borderColor: 'rgba(20, 20, 250, 1)', //Change the color of the line
+     borderColor: 'rgba(20, 20, 250, 1)', // Change the color of the line
      borderWidth: 2,
      pointRadius: 4,
-     pointBackgroundColor: 'rgb(20, 20, 255)', //Change the color of the point
+     pointBackgroundColor: 'rgb(20, 20, 255)', // Change the color of the point
      pointBorderColor: 'rgb(20, 20, 255)',
      pointHoverBackgroundColor: '#000',
      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
@@ -34,15 +36,15 @@ export class HistoryComponent implements OnInit {
       lineTension: 0,
       pointStyle: 'triangle',
       fill: false,
-      borderColor: 'rgba(223, 128, 255, 1)', //Change the color of the line
+      borderColor: 'rgba(223, 128, 255, 1)', // Change the color of the line
       borderWidth: 2,
       pointRadius: 4,
-      pointBackgroundColor: 'rgba(223, 128, 255, 1)', //Change the color of the point
-      pointBorderColor: 'rgba(223, 128, 255, 1)',      
+      pointBackgroundColor: 'rgba(223, 128, 255, 1)', // Change the color of the point
+      pointBorderColor: 'rgba(223, 128, 255, 1)',
     },
   ];
-  public chartLabels: Label[] = ['1','2','3','4','5','6','7','8','9','10']
-  public chartOptions: (ChartOptions & { annotation: any })= {
+  public chartLabels: Label[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  public chartOptions: (ChartOptions & { annotation: any }) = {
     responsive: true,
     scales: {
       yAxes: [{
@@ -94,20 +96,19 @@ export class HistoryComponent implements OnInit {
       ],
     },
   };
-  
+
   public chartType = 'line';
-
-
-  constructor(private location: Location) { }  
-  ngOnInit() {
-  }
-  goBack(){
-    this.location.back();
-  }
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartPlugins = [pluginAnnotations];
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
+  ngOnInit() {
+  }
+  goBack() {
+    // om du ska använda denna måste du skapa den i konstruktorn som jag gjorde ovanför.
+    // pillade lite med unittests och detta crasha allt hela tiden ;)
+    this.location.back();
+ }
 
 }

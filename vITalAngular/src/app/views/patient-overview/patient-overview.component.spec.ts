@@ -4,6 +4,8 @@ import {ActivatedRoute, convertToParamMap, Data} from '@angular/router';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {MatDialogModule} from '@angular/material';
 import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
+
 
 describe('PatientOverviewComponent', () => {
   let component: PatientOverviewComponent;
@@ -12,7 +14,7 @@ describe('PatientOverviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PatientOverviewComponent ],
-      imports: [ MatDialogModule, HttpClientTestingModule, ReactiveFormsModule],
+      imports: [ MatDialogModule, HttpClientTestingModule, ReactiveFormsModule, RouterTestingModule],
       providers: [
         {
           provide: ActivatedRoute,

@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { HistoryComponent } from './history.component';
+import {ChartsModule} from 'ng2-charts';
+import { Location, LocationStrategy , PathLocationStrategy} from '@angular/common';
+
+
+
 
 describe('HistoryComponent', () => {
   let component: HistoryComponent;
@@ -8,7 +12,9 @@ describe('HistoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HistoryComponent ]
+      declarations: [ HistoryComponent ],
+      imports: [ChartsModule],
+      providers: [Location, { provide: LocationStrategy, useClass: PathLocationStrategy }]
     })
     .compileComponents();
   }));
