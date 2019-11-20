@@ -21,7 +21,7 @@
         <div *ngIf="isAccordionOpen(0)">
           <div class="toggleRow"> <!-- Skapar en ny row som ett expandable field -->
             <div class="d-flex p-2">
-              <button type="button" class="btn historikKnapp">Historik</button>
+              <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
             </div>
           </div>
         </div>

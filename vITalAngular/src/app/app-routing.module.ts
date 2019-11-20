@@ -9,11 +9,13 @@ import {LoginComponent} from './views/login/login.component';
 import {LogoutComponent} from './views/logout/logout.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
 import { PatientOverviewComponent} from './views/patient-overview/patient-overview.component';
+import { HistoryComponent } from './views/history/history.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
+  { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
   { path: 'scannerpage', component: BarcodeScannerPageComponent, canActivate: [AuthGuard] },
   { path: 'pid/:personid', component: PatientOverviewComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: 'login' },

@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
 import {isNumeric} from 'rxjs/internal-compatibility';
@@ -55,7 +55,8 @@ export class PatientOverviewComponent implements OnInit {
       private patientService: PatientService,
       private route: ActivatedRoute,
       private dialog: MatDialog,
-      private fb: FormBuilder
+      private fb: FormBuilder,
+      private router: Router
 ) {}
 
   ChangeSupplementalOxygen() {
@@ -410,6 +411,9 @@ export class PatientOverviewComponent implements OnInit {
       dialogMessage: errorMessage
     };
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
+  }
+  goToHistory() {
+    this.router.navigate(['history']);
   }
 
 }

@@ -16,6 +16,8 @@ import { PatientOverviewComponent } from './views/patient-overview/patient-overv
 import { PopupWindowComponent } from './views/shared-components/popup-window/popup-window.component';
 import { DialogWindowComponent } from './views/shared-components/dialog-window/dialog-window.component';
 import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit/confirm-submit.component';
+import { HistoryComponent } from './views/history/history.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit
     PopupWindowComponent,
     DialogWindowComponent,
     ConfirmSubmitComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit
     MatFormFieldModule,
     MatInputModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    ChartsModule
   ],
   entryComponents: [ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent, ConfirmSubmitComponent],
   providers: [],
