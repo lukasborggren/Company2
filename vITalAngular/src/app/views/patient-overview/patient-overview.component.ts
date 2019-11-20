@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute} from '@angular/router';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogConfig} from '@angular/material';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
 import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
@@ -46,6 +46,8 @@ export class PatientOverviewComponent implements OnInit {
   totalScore:number;
 
   accordionState: Array<boolean>; // Icon toggle for the accordion
+
+  
 
   private respiratoryConst: string;
   private pulseConst: string;
@@ -437,7 +439,6 @@ export class PatientOverviewComponent implements OnInit {
     dialogConfig.data = {
       dialogMessage: errorMessage
     };
-    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
   }
 
 }

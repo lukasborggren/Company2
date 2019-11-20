@@ -28,7 +28,8 @@ import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit
     PatientOverviewComponent,
     PopupWindowComponent,
     DialogWindowComponent,
-    ConfirmSubmitComponent,
+    ConfirmSubmitComponent
+   
   ],
   imports: [
     BrowserModule,
@@ -41,6 +42,7 @@ import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit
     MatInputModule,
     HttpClientModule,
     RouterModule
+    
   ],
   entryComponents: [ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent, ConfirmSubmitComponent],
   providers: [],

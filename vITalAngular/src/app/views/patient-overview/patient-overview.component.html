@@ -43,11 +43,15 @@
           </div>
         </div>
         <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
+          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          
         </div>
       </div>
       <!--  <div class="individualNews" id="saturationNews"> 0 </div>
         <label>
+          
             Syremättnad
             <input type="text" formControlName="oxygenSaturation">
         </label>
@@ -65,7 +69,7 @@
             <div class="collapseButton p-2"-->
               <!-- here i added the two radio check buttons instead of input-box -->
               <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-                  <label class="form-check-label" for="inlineRadio1">JA</label>
+                  <label class="form-check-label" for="inlineRadio1">Ja</label>
                   <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                          value="option1" (change)="updateSupplementOxygenScore($event, 2)">
                   <label class="form-check-label" for="inlineRadio1">Nej</label>
@@ -202,12 +206,26 @@
     </form>
 </div>
 
+<<<<<<< Updated upstream
 <!-----------------Total NEWS2 score----------------->
+=======
+>>>>>>> Stashed changes
 <div>
 <label>NEWS2 Score = {{this.newsScore}}</label>
 </div>
 
+<<<<<<< Updated upstream
 <!-----------------Save button----------------->
+=======
+<div>
+<label (click)="openDialog(this.saturationConst1)">Syremätnad 1 = {{this.oxygenSaturation}}</label>
+</div>
+
+<div>
+<label (click)="openDialog(this.saturationConst2)">Syremätnad 2 = {{this.oxygenSaturation1}}</label>
+</div>
+        
+>>>>>>> Stashed changes
 <div>
     <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
 </div>
