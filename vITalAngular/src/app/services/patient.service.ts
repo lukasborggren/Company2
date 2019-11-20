@@ -12,7 +12,10 @@ export class PatientService {
   private templateId = 'vital-news2-2019';
   private acvpuCodes = ['at0005', 'at0.15', 'at0006', 'at0007', 'at0008'];
   private rlsCodes = ['at0005', 'at0006', 'at0007', 'at0008', 'at0009', 'at0010', 'at0011', 'at0012'];
-
+  private headers= new HttpHeaders({
+    'Content-Type':  'application/json',
+    'Authorization': 'Basic ' + localStorage.getItem('ENCODED_STRING')
+  });
   constructor(private http: HttpClient) { }
 
   setAcvpuCode(acvpu) {
@@ -92,6 +95,18 @@ export class PatientService {
     return this.http.post(this.baseUrl + '/composition', jsonComp, httpOptions);
   }
 
+  public getPatientInformation(pId:string): Observable<any>{
+    const httpOptions = {
+      headers:this.headers};
+    return this.http.get(this.baseUrl + 'demographics/party/query/?personNumber=' + pId, httpOptions)
+  }
+
+  public getPatientEhrId(subjectId:string): Observable<any>{
+    const httpOptions = {
+      headers:this.headers};
+  return  this.http.get(this.baseUrl + 'ehr?subjectId=' + subjectId + '&subjectNamespace=default', httpOptions)
+}
+
   getPatientDataPid(pid: string): Observable<any> {
     return this.http.get(this.mockPatientsUrl + '/pid/' + pid);
   }
@@ -99,5 +114,7 @@ export class PatientService {
   getPatientDataEhr(ehrId: string): Observable<any> {
     return this.http.get(this.mockPatientsUrl + '/ehr/' + ehrId);
   }
+
+
 
 }

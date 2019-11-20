@@ -31,6 +31,7 @@ export class PatientOverviewComponent implements OnInit {
   supplementalOxygen: boolean;
   consciousness: string;
   dialogMessageInput: string;
+  patientInfoEhr: string;
 
   newsScore: number;
   newsAgg: number;
@@ -50,7 +51,7 @@ export class PatientOverviewComponent implements OnInit {
 
   accordionState: Array<boolean>; // Icon toggle for the accordion
 
-  
+
 
   private respiratoryConst: string;
   private pulseConst: string;
@@ -159,6 +160,8 @@ export class PatientOverviewComponent implements OnInit {
         });
   }
   ngOnInit() {
+
+
     const pid = this.route.snapshot.paramMap.get('personid');
     this.form = this.fb.group({
       respiratoryRate: ['', [
@@ -198,6 +201,14 @@ export class PatientOverviewComponent implements OnInit {
     });
     // kolla på touched / invalid
     this.accordionState = [false,false,false,false,false,false,false]; //Icon toggle for the accordion - lite osäker på var jag skulle lägga den
+
+    this.patientService.getPatientInformation(pid).subscribe(data=>{
+      this.patientInfoEhr=data;
+      localStorage.setItem('SUBJECTID', data.parties[0].id);
+      this.patientService.getPatientEhrId(localStorage.getItem('SUBJECTID')).subscribe(data =>{
+        localStorage.setItem('EHRID', data.ehrId);
+      });
+    });
 
     this.patientService.getPatientDataPid(pid).subscribe(info => {
       this.patientinfo = JSON.stringify(info);
@@ -352,7 +363,7 @@ export class PatientOverviewComponent implements OnInit {
     return this.supplementOxygenScore;
     this.updateNEWS();
   }
-  
+
   updateNEWS() {
     this.news3 = 0;
     this.news2 = 0;
