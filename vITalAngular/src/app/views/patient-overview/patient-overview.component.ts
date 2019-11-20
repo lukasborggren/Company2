@@ -147,7 +147,7 @@ export class PatientOverviewComponent implements OnInit {
               }
               console.log('Dialog output:', data.description);
             }
-        //    this.updateNEWS();
+            this.updateNEWS();
         });
   }
   ngOnInit() {
@@ -211,6 +211,7 @@ export class PatientOverviewComponent implements OnInit {
     this.saturationConst = 'Saturation';
     this.pulseConst = 'Pulse';
     this.newsScore = 0;
+    this.updateNEWS();
   }
 
 
@@ -224,6 +225,7 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.respiratoryScore = 0;
     }
+    this.updateNEWS();
     return this.respiratoryScore;
   }
 
@@ -237,6 +239,7 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.respiratoryScore = 0;
     }
+    this.updateNEWS();
     return this.updateSaturationScore();
   }
 
@@ -250,6 +253,7 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.systolicScore = 0;
     }
+    this.updateNEWS();
     return this.updateSystolicScore();
   }
 
@@ -265,6 +269,7 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.pulseScore = 0;
     }
+    this.updateNEWS();
     return this.pulseScore;
   }
 
@@ -280,26 +285,31 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.temperatureScore = 0;
     }
+    this.updateNEWS();
     return this.temperatureScore;
   }
   updateSupplementOxygenScore(e, score: number) {
     if (e.target.checked) {
       this.supplementOxygenScore = score;
-  }
+    }
+    this.updateNEWS();
   }
   updateConsciousnessScore(e, score: number) {
     if (e.target.checked) {
       this.consciousnessScore = score;
     }
+    this.updateNEWS();
   }
 
   getConscniousnessScore() {
     return this.consciousnessScore;
+    this.updateNEWS();
   }
   getSupplementOxygenScore() {
     return this.supplementOxygenScore;
+    this.updateNEWS();
   }
-  /*
+  
   updateNEWS() {
     this.news3 = 0;
     this.news2 = 0;
@@ -414,7 +424,7 @@ export class PatientOverviewComponent implements OnInit {
     this.newsScore = 0;
   }
   }
-*/
+
 
   toggleAccordion(id: number) { // Icon toggle for the accordion
     this.accordionState[id] = !this.accordionState[id];
