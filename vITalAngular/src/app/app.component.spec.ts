@@ -6,11 +6,7 @@ import { provideRoutes, Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { BarcodeScannerPageComponent } from './views/barcode-scanner-page/barcode-scanner-page.component';
-<<<<<<< HEAD
 import { HttpClientTestingModule  } from '@angular/common/http/testing';
-=======
-import { HttpClientTestingModule} from '@angular/common/http/testing';
->>>>>>> 40ab7e69e0e91fa523f55a0ba930386a76194a27
 
 
 
