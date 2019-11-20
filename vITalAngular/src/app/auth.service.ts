@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { User } from './user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+    private loggedIn = new BehaviorSubject<boolean>(false);
+
+    get isLoggedIn() {
+        return this.loggedIn.asObservable(); // {2}
+    }
+
   constructor(
       private http: HttpClient
   ) {}
@@ -25,6 +31,7 @@ export class AuthService {
                 const encodedString = btoa(userInfo.username + ':' + userInfo.password);
                 localStorage.setItem('ENCODED_STRING', encodedString);
                 localStorage.setItem('ACCESS_TOKEN', res.auth_token);
+                this.loggedIn.next(true);
             }
             return valid;
         }),
@@ -62,5 +69,6 @@ export class AuthService {
           console.error(err);
         });
     localStorage.removeItem('ACCESS_TOKEN');
+    this.loggedIn.next(false);
   }
 }

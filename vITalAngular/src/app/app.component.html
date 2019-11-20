@@ -1,3 +1,11 @@
 <div class="m-0">
-<router-outlet></router-outlet>
+<router-outlet>
+    <header *ngIf="isLoggedIn | async; else notLoggedIn">
+        <h1>HEADER logged in</h1>
+    </header>
+    <ng-template #notLoggedIn>
+        <h1>HEADER not logged in</h1>
+    </ng-template>
+</router-outlet>
 </div>
+
