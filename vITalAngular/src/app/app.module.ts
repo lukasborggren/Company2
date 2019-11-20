@@ -19,6 +19,7 @@ import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit
 import { HistoryComponent } from './views/history/history.component';
 import { ChartsModule } from 'ng2-charts';
 
+
 @NgModule({
   declarations: [
     AppComponent,
