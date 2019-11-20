@@ -46,7 +46,7 @@ export class PatientOverviewComponent implements OnInit {
   temperatureScore:number;
   systolicScore:number;
   consciousnessScore: number;
-  supplementOxygenScore: number;
+  supplementalOxygenScore: number;
   totalScore:number;
 
   accordionState: Array<boolean>; // Icon toggle for the accordion
@@ -245,22 +245,27 @@ export class PatientOverviewComponent implements OnInit {
     this.form.get('oxygenSaturation').valueChanges.subscribe( val => {
       console.log(val);
       this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
+      this.updateTotalNews2Score();
     });
     this.form.get('respiratoryRate').valueChanges.subscribe( val => {
       console.log(val);
       this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+      this.updateTotalNews2Score();
     });
     this.form.get('pulseRate').valueChanges.subscribe( val => {
       console.log(val);
       this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
+      this.updateTotalNews2Score();
     });
     this.form.get('temperature').valueChanges.subscribe( val => {
       console.log(val);
       this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
+      this.updateTotalNews2Score();
     });
     this.form.get('systolicBloodPressure').valueChanges.subscribe( val => {
       console.log(val);
       this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
+      this.updateTotalNews2Score();
     });
     /*
     this.form.get('diastolicBloodPressure').valueChanges.subscribe( val => {
@@ -344,24 +349,34 @@ export class PatientOverviewComponent implements OnInit {
   }
   updateSupplementOxygenScore(e, score: number) {
     if (e.target.checked) {
-      this.supplementOxygenScore = score;
+      this.supplementalOxygenScore = score;
     }
     this.updateNEWS();
+    this.updateTotalNews2Score();
   }
   updateConsciousnessScore(e, score: number) {
     if (e.target.checked) {
       this.consciousnessScore = score;
     }
     this.updateNEWS();
+    this.updateTotalNews2Score();
   }
 
-  getConscniousnessScore() {
+  getConsciousnessScore() {
     return this.consciousnessScore;
-    this.updateNEWS();
   }
   getSupplementOxygenScore() {
-    return this.supplementOxygenScore;
-    this.updateNEWS();
+    return this.supplementalOxygenScore;
+  }
+
+  updateTotalNews2Score() {
+    if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null) {
+      this.totalScore = this.consciousnessScore + this.pulseScore + this.temperatureScore + this.systolicScore;
+      this.totalScore = this.totalScore + this.respiratoryScore + this.saturationScore + this.supplementalOxygenScore;
+    }
+  }
+  getTotalNews2Score() {
+    return this.totalScore;
   }
 
   updateNEWS() {
