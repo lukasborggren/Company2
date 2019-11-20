@@ -7,6 +7,9 @@ import {isNumeric} from 'rxjs/internal-compatibility';
 import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
 import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
+import {throwMatDialogContentAlreadyAttachedError} from "@angular/material/dialog";
+import {PopupWindowComponent} from "../shared-components/popup-window/popup-window.component";
 
 @Component({
   selector: 'app-patient-overview',
@@ -54,12 +57,14 @@ export class PatientOverviewComponent implements OnInit {
   private temperatureConst: string;
   private saturationConst: string;
   private pressureConst: string;
+  private diastolicScore: number;
 
   constructor(
       private patientService: PatientService,
       private route: ActivatedRoute,
       private dialog: MatDialog,
-      private fb: FormBuilder
+      private fb: FormBuilder,
+      private newsScoreCalculator: NewsScoreCalculatorService
 ) {}
 
   ChangeSupplementalOxygen() {
@@ -157,32 +162,32 @@ export class PatientOverviewComponent implements OnInit {
     this.form = this.fb.group({
       respiratoryRate: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
         ]
       ],
       oxygenSaturation: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
         ]
       ],
       pulseRate: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
         ]
       ],
       temperature: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
         ]
       ],
       systolicBloodPressure: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
         ]
       ],
-      supplementalOxygen: ['', [
+      diastolicBloodPressure: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{1,2}')
+        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
         ]
       ],
       consciousness: ['', [
@@ -192,7 +197,7 @@ export class PatientOverviewComponent implements OnInit {
     });
     // kolla på touched / invalid
     this.accordionState = [false,false,false,false,false,false,false]; //Icon toggle for the accordion - lite osäker på var jag skulle lägga den
-    this.form.value.oxygenSaturation = 'test';
+
     this.patientService.getPatientDataPid(pid).subscribe(info => {
       this.patientinfo = JSON.stringify(info);
       this.personnumber = info.demographics.additionalInfo.Personnummer;
@@ -213,7 +218,44 @@ export class PatientOverviewComponent implements OnInit {
     this.saturationConst = 'Saturation';
     this.pulseConst = 'Pulse';
     this.newsScore = 0;
-    this.updateNEWS();
+
+    this.temperatureScore = 0;
+    this.respiratoryScore = 0;
+    this.saturationScore = 0;
+    this.respiratoryScore = 0;
+    this.pulseScore = 0;
+    this.systolicScore = 0;
+    this.diastolicScore = 0;
+    this.onChanges();
+  }
+
+  onChanges() {
+    this.form.get('oxygenSaturation').valueChanges.subscribe( val => {
+      console.log(val);
+      this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
+    });
+    this.form.get('respiratoryRate').valueChanges.subscribe( val => {
+      console.log(val);
+      this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+    });
+    this.form.get('pulseRate').valueChanges.subscribe( val => {
+      console.log(val);
+      this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
+    });
+    this.form.get('temperature').valueChanges.subscribe( val => {
+      console.log(val);
+      this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
+    });
+    this.form.get('systolicBloodPressure').valueChanges.subscribe( val => {
+      console.log(val);
+      this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
+    });
+    /*
+    this.form.get('diastolicBloodPressure').valueChanges.subscribe( val => {
+      console.log(val);
+      this.diastolicScore = this.newsScoreCalculator.getDiastolicScore(val);
+    });
+     */
   }
 
 
@@ -241,8 +283,7 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.respiratoryScore = 0;
     }
-    this.updateNEWS();
-    return this.updateSaturationScore();
+    return this.saturationScore;
   }
 
   updateSystolicScore() {
@@ -255,8 +296,7 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.systolicScore = 0;
     }
-    this.updateNEWS();
-    return this.updateSystolicScore();
+    return this.systolicScore;
   }
 
   updatePulseScore() {

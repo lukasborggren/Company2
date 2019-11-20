@@ -6,7 +6,7 @@
 <!-----------------Andningsfrekvens----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews"> 1 </div>
+          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews"> {{this.respiratoryScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Andningsfrekvens
           </div>
@@ -30,7 +30,7 @@
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 2 </div>
+          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.saturationScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Syremättnad
           </div>
@@ -91,7 +91,7 @@
 <!-----------------Blodtryck----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 0 </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.systolicScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Blodtryck
     </div>
@@ -112,7 +112,7 @@
 <!-----------------Pulsfrekvens----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 0 </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.pulseScore}}</div>
     <div class="parameterTitle mr-auto col-4">
       Pulsfrekvens
     </div>
@@ -186,7 +186,7 @@
 <!-----------------Temperatur----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> 0 </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.temperatureScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Temperatur
     </div>
@@ -206,26 +206,12 @@
     </form>
 </div>
 
-<<<<<<< Updated upstream
 <!-----------------Total NEWS2 score----------------->
-=======
->>>>>>> Stashed changes
 <div>
 <label>NEWS2 Score = {{this.newsScore}}</label>
 </div>
 
-<<<<<<< Updated upstream
 <!-----------------Save button----------------->
-=======
-<div>
-<label (click)="openDialog(this.saturationConst1)">Syremätnad 1 = {{this.oxygenSaturation}}</label>
-</div>
-
-<div>
-<label (click)="openDialog(this.saturationConst2)">Syremätnad 2 = {{this.oxygenSaturation1}}</label>
-</div>
-        
->>>>>>> Stashed changes
 <div>
     <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
 </div>
