@@ -10,6 +10,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
 import {throwMatDialogContentAlreadyAttachedError} from "@angular/material/dialog";
 import {PopupWindowComponent} from "../shared-components/popup-window/popup-window.component";
+import {BarcodeScannerService} from '../../barcode-scanner.service';
 
 @Component({
   selector: 'app-patient-overview',
@@ -32,6 +33,12 @@ export class PatientOverviewComponent implements OnInit {
   consciousness: string;
   dialogMessageInput: string;
   patientInfoEhr: string;
+
+  barcodevalue: string;
+  stopScanButtonVisible: boolean;
+  pid: string;
+  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
 
   newsScore: number;
   newsAgg: number;
@@ -66,8 +73,21 @@ export class PatientOverviewComponent implements OnInit {
       private dialog: MatDialog,
       private fb: FormBuilder,
       private router: Router,
-      private newsScoreCalculator: NewsScoreCalculatorService
+      private newsScoreCalculator: NewsScoreCalculatorService,
+      private barcodeScanner: BarcodeScannerService,
       ) {}
+
+    
+  startScanner() {
+    this.barcodevalue = 'scanning';
+    this.stopScanButtonVisible = true;
+    this.barcodeScanner.startScanner();
+  }
+
+  stopScanner() {
+    this.stopScanButtonVisible = false;
+    this.barcodeScanner.StopScanner();
+  }
 
   ChangeSupplementalOxygen() {
     /*
