@@ -186,36 +186,33 @@ export class PatientOverviewComponent implements OnInit {
     this.form = this.fb.group({
       respiratoryRate: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
         ]
       ],
       oxygenSaturation: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
         ]
       ],
       pulseRate: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
         ]
       ],
       temperature: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
         ]
       ],
       systolicBloodPressure: ['', [
-        Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
         ]
       ],
       diastolicBloodPressure: ['', [
-        Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
         ]
       ],
       consciousness: ['', [
-        Validators.required
         ]
       ]
     });
@@ -229,6 +226,7 @@ export class PatientOverviewComponent implements OnInit {
         localStorage.setItem('EHRID', data.ehrId);
       });
     });
+
 
     this.patientService.getPatientDataPid(pid).subscribe(info => {
       this.patientinfo = JSON.stringify(info);
@@ -251,41 +249,63 @@ export class PatientOverviewComponent implements OnInit {
     this.pulseConst = 'Pulse';
     this.newsScore = 0;
 
-    this.temperatureScore = 0;
-    this.respiratoryScore = 0;
-    this.saturationScore = 0;
-    this.respiratoryScore = 0;
-    this.pulseScore = 0;
-    this.systolicScore = 0;
-    this.diastolicScore = 0;
+    /*
+    this.temperatureScore;
+    this.respiratoryScore;
+    this.saturationScore ;
+    this.respiratoryScore;
+    this.pulseScore;
+    this.systolicScore;
+    this.diastolicScore;
+    */
     this.onChanges();
   }
 
   onChanges() {
     this.form.get('oxygenSaturation').valueChanges.subscribe( val => {
-      console.log(val);
-      this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
+      this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
       this.updateTotalNews2Score();
+      if (this.form.controls.oxygenSaturation.valid) {
+        this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
+      } else {
+        this.saturationScore = null;
+      }
     });
     this.form.get('respiratoryRate').valueChanges.subscribe( val => {
-      console.log(val);
-      this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+      this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
       this.updateTotalNews2Score();
+      if (this.form.controls.respiratoryRate.valid) {
+        this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+      } else {
+        this.respiratoryScore = null;
+      }
     });
     this.form.get('pulseRate').valueChanges.subscribe( val => {
-      console.log(val);
-      this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
+      this.form.controls.pulseRate.patchValue(val, {emitEvent: false});
       this.updateTotalNews2Score();
+      if (this.form.controls.pulseRate.valid) {
+        this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
+      } else {
+        this.pulseScore = null;
+      }
     });
     this.form.get('temperature').valueChanges.subscribe( val => {
-      console.log(val);
-      this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
+      this.form.controls.temperature.patchValue(val, {emitEvent: false});
       this.updateTotalNews2Score();
+      if (this.form.controls.temperature.valid) {
+        this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
+      } else {
+        this.temperatureScore = null;
+      }
     });
     this.form.get('systolicBloodPressure').valueChanges.subscribe( val => {
-      console.log(val);
-      this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
+      this.form.controls.systolicBloodPressure.patchValue(val, {emitEvent: false});
       this.updateTotalNews2Score();
+      if (this.form.controls.systolicBloodPressure.valid) {
+        this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
+      } else {
+        this.systolicScore = null;
+      }
     });
     /*
     this.form.get('diastolicBloodPressure').valueChanges.subscribe( val => {
@@ -390,9 +410,11 @@ export class PatientOverviewComponent implements OnInit {
   }
 
   updateTotalNews2Score() {
-    if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null) {
+    if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
       this.totalScore = this.consciousnessScore + this.pulseScore + this.temperatureScore + this.systolicScore;
       this.totalScore = this.totalScore + this.respiratoryScore + this.saturationScore + this.supplementalOxygenScore;
+    } else {
+      this.totalScore = null;
     }
   }
   getTotalNews2Score() {
