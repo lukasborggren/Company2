@@ -73,33 +73,35 @@ export class PatientOverviewComponent implements OnInit {
     this.form = this.fb.group({
       respiratoryRate: ['', [
         Validators.required,
-        Validators.pattern(/^([0-9]{1,3}[\.0-9]?)$/)
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       oxygenSaturation: ['', [
         Validators.required,
-        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
-      ]
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
+        ]
       ],
       pulseRate: ['', [
         Validators.required,
-        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
-      ]
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
+        ]
       ],
       temperature: ['', [
         Validators.required,
-        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
-      ]
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
+        ]
       ],
       systolicBloodPressure: ['', [
-        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
-      ]
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
+        ]
       ],
       diastolicBloodPressure: ['', [
-        Validators.pattern(/^([0-9]{1,3}\.?[0-9]?)$/)
-      ]
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
+        ]
       ],
-      consciousness: ['', []
+      consciousness: ['', [
+          Validators.pattern(/^[1-8]$/)
+        ]
       ]
     });
 
@@ -161,7 +163,7 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('systolicBloodPressure').valueChanges.subscribe(val => {
       this.form.controls.systolicBloodPressure.patchValue(val, {emitEvent: false});
-      if (this.form.controls.systolicBloodPressure.valid) {
+      if (this.form.controls.systolicBloodPressure.valid && this.form.controls.systolicBloodPressure.value) {
         this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
       } else {
         this.systolicScore = null;
