@@ -515,6 +515,7 @@ export class PatientOverviewComponent implements OnInit {
             data => console.log(data),
             error => console.log(error)
         );
+    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
 
   }
   goToHistory() {
