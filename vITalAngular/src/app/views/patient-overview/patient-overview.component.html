@@ -110,7 +110,8 @@
       Blodtryck
     </div>
     <!-- This input shall have two input fields options, one for systolic and one for diastolic -->
-    <input type="number" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
+    <input type="number" id=bloodPressureInput formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
+    <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(3)" class="btn">
         <i *ngIf="isAccordionOpen(3)" class="fa fa-angle-double-up fa-2x"></i>
