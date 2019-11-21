@@ -1,6 +1,12 @@
-<header *ngIf="isLoggedIn | async; else notLoggedIn">
+<header *ngIf="isLoggedIn; else notLoggedIn">
     <!-- When logged in elements go here -->
     <button type="button" class="btn btn-primary" (click)="goBack()" >Gå tillbaka</button>
+    <div *ngIf="showPatient; else dontShowPatient">
+        show patient
+    </div>
+    <ng-template #dontShowPatient>
+        dont show patient
+    </ng-template>
 </header>
 <ng-template #notLoggedIn>
     <!-- When logged out elements go here -->

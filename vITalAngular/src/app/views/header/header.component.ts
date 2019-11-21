@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
 import { AuthService } from '../../auth.service';
 import { Location } from '@angular/common';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +9,13 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn: Observable<boolean>;
+  isLoggedIn: boolean;
+  showPatient: boolean;
 
   constructor(
       private authService: AuthService,
-      private location: Location
+      private location: Location,
+      private router: Router
       ) { }
 
   private goBack() {
@@ -21,6 +23,19 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoggedIn = this.authService.isLoggedIn;
+    this.routeEvent();
   }
+
+  routeEvent(){
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        const currentLocation = event.url;
+        this.isLoggedIn = currentLocation !== '/login';
+        this.showPatient = currentLocation === '/history' || currentLocation.substring(0, 5) === '/pid/';
+      }
+    });
+  }
+
+
+
 }
