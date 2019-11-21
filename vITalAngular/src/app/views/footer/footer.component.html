@@ -1,0 +1,7 @@
+<header *ngIf="isLoggedIn | async; else notLoggedIn">
+    <h1>FOOTER logged in</h1>
+</header>
+<ng-template #notLoggedIn>
+    <h1>FOOTER not logged in</h1>
+</ng-template>
+
