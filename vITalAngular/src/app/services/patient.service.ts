@@ -10,12 +10,14 @@ export class PatientService {
   private mockPatientsUrl = 'http://134.209.226.62/api';  // URL to web api
   private baseUrl = 'https://rest.ehrscape.com/rest/v1';
   private templateId = 'vital-news2-2019';
+  private headers = new HttpHeaders({
+    ContentType:  'application/json',
+    Authorization: 'Basic ' + localStorage.getItem('ENCODED_STRING')
+  });
+
   private acvpuCodes = ['at0005', 'at0.15', 'at0006', 'at0007', 'at0008'];
   private rlsCodes = ['at0005', 'at0006', 'at0007', 'at0008', 'at0009', 'at0010', 'at0011', 'at0012'];
-  private headers= new HttpHeaders({
-    'Content-Type':  'application/json',
-    'Authorization': 'Basic ' + localStorage.getItem('ENCODED_STRING')
-  });
+
   constructor(private http: HttpClient) { }
 
   setAcvpuCode(acvpu) {
@@ -40,7 +42,8 @@ export class PatientService {
     return acvpuCode;
   }
 
-  postComposition(breathFreq, oxSat, oxSatScale, onAir, blPrSys, blPrDia, pulse, freq, acvpu, rls, temp, newsScore) {
+  postComposition(breathFreq, oxSat, oxSatScale, onAir, blPrSys, blPrDia,
+                  pulse, freq, acvpu, rls, temp, newsScore): Observable<any> {
 
     let scaleCom: string;
     let pulseCom: string;
@@ -48,10 +51,7 @@ export class PatientService {
     freq ? pulseCom = 'Hjärtfrekvens' : pulseCom = 'Ej hjärtfrekvens';
 
     const httpOptions = {
-      headers: new HttpHeaders({
-        ContentType:  'application/json',
-        Authorization: 'Basic ' + localStorage.getItem('ENCODED_STRING')
-      }),
+      headers: this.headers,
       params: new HttpParams()
           .set('templateId', this.templateId)
           .set('ehrId', 'c1e2c1ea-e295-4c59-92be-5e83534d6106') // Ändra så att session-aktuellt EHR ID används
@@ -95,18 +95,26 @@ export class PatientService {
     return this.http.post(this.baseUrl + '/composition', jsonComp, httpOptions);
   }
 
-  public getPatientInformation(pId:string): Observable<any>{
+  public getPatientInformation(pId: string): Observable<any> {
     const httpOptions = {
-      headers:this.headers};
-    return this.http.get(this.baseUrl + 'demographics/party/query/?personNumber=' + pId, httpOptions)
+      headers: this.headers,
+      params: new HttpParams()
+          .set('personNumber', pId)
+    };
+    return this.http.get(this.baseUrl + '/demographics/party/query', httpOptions);
   }
 
-  public getPatientEhrId(subjectId:string): Observable<any>{
+  public getPatientEhrId(subjectId: string): Observable<any> {
     const httpOptions = {
-      headers:this.headers};
-  return  this.http.get(this.baseUrl + 'ehr?subjectId=' + subjectId + '&subjectNamespace=default', httpOptions)
-}
+      headers: this.headers,
+      params: new HttpParams()
+          .set('subjectId', subjectId)
+          .set('subjectNamespace', 'default')
+    };
+    return  this.http.get(this.baseUrl + '/ehr', httpOptions);
+  }
 
+  // MOCK FUNCTIONS
   getPatientDataPid(pid: string): Observable<any> {
     return this.http.get(this.mockPatientsUrl + '/pid/' + pid);
   }

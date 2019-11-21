@@ -506,6 +506,16 @@ export class PatientOverviewComponent implements OnInit {
     dialogConfig.data = {
       dialogMessage: errorMessage
     };
+
+    // Example call to the function sending data to database
+    this.patientService.postComposition(
+        12, 12, 1, true, 30, 20,
+        70, true, 'A', 2, 37.1, 3)
+        .subscribe(
+            data => console.log(data),
+            error => console.log(error)
+        );
+
   }
   goToHistory() {
     this.router.navigate(['history']);

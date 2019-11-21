@@ -68,6 +68,7 @@ export class AuthService {
         err => {
           console.error(err);
         });
+    localStorage.removeItem('ENCODED_STRING');
     localStorage.removeItem('ACCESS_TOKEN');
     this.loggedIn.next(false);
   }
