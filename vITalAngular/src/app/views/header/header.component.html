@@ -1,6 +1,6 @@
 <header *ngIf="isLoggedIn | async; else notLoggedIn">
     <!-- When logged in elements go here -->
-    <button type="button" class="btn btn-primary">Gå tillbaka</button>
+    <button type="button" class="btn btn-primary" (click)="goBack()" >Gå tillbaka</button>
 </header>
 <ng-template #notLoggedIn>
     <!-- When logged out elements go here -->
