@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NewsScoreCalculatorService {
-
+  newsScore3: number;
   constructor() {
   }
 
@@ -43,20 +43,7 @@ export class NewsScoreCalculatorService {
       return 0;
     }
   }
-  /*
-  getDiastolicScore(diastolicBloodPressure: number) {
-    if (diastolicBloodPressure <= 90 || diastolicBloodPressure >= 220) {
-      return 3;
-    } else if (diastolicBloodPressure >= 91 && diastolicBloodPressure <= 100) {
-      return 2;
-    } else if (diastolicBloodPressure >= 101 && diastolicBloodPressure <= 110) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
 
-   */
   getPulseScore(pulseRate: number) {
     if (pulseRate <= 31 || pulseRate >= 131) {
       return 3;
@@ -84,5 +71,20 @@ export class NewsScoreCalculatorService {
       return 0;
     }
   }
-}
 
+  getTotalNEWS(respiratoryScore: number, saturationScore: number, supplementalOxygenScore: number,
+               systolicScore: number, pulseScore: number, consciousnessScore: number, temperatureScore: number): number {
+    const totalScore = respiratoryScore + saturationScore + supplementalOxygenScore + systolicScore + pulseScore +
+        consciousnessScore + temperatureScore;
+    if (totalScore >= 7) {
+      return 3;
+    } else if (totalScore >= 5) {
+      return 2;
+    } else if (respiratoryScore === 3 || saturationScore === 3 || supplementalOxygenScore === 3 || systolicScore === 3
+        || pulseScore === 3 || consciousnessScore === 3 || temperatureScore === 3) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+}

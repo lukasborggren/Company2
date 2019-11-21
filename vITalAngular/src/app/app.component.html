@@ -1,16 +1,6 @@
 <div class="m-0">
-    <header *ngIf="isLoggedIn | async; else notLoggedInHeader">
-        <h1>HEADER logged in</h1>
-    </header>
-    <ng-template #notLoggedInHeader>
-        <h1>HEADER not logged in</h1>
-    </ng-template>
+    <app-header></app-header>
     <router-outlet></router-outlet>
-    <footer *ngIf="isLoggedIn | async; else notLoggedInFooter">
-        <h1>FOOTER logged in</h1>
-    </footer>
-    <ng-template #notLoggedInFooter>
-        <h1>FOOTER not logged in</h1>
-    </ng-template>
+    <app-footer></app-footer>
 </div>
 

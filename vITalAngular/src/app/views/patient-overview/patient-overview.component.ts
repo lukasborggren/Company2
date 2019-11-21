@@ -8,8 +8,9 @@ import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-w
 import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
-import {throwMatDialogContentAlreadyAttachedError} from "@angular/material/dialog";
-import {PopupWindowComponent} from "../shared-components/popup-window/popup-window.component";
+import {throwMatDialogContentAlreadyAttachedError} from '@angular/material/dialog';
+import {PopupWindowComponent} from '../shared-components/popup-window/popup-window.component';
+import {BarcodeScannerService} from '../../barcode-scanner.service';
 
 @Component({
   selector: 'app-patient-overview',
@@ -21,44 +22,28 @@ export class PatientOverviewComponent implements OnInit {
   patientinfo: string;
   personnumber: string;
   info: string;
-  respiratoryRate: number;
-  oxygenSaturation: number;
-  systolicBloodPressure: number;
-  systolicBloodPressureUnit: string;
-  pulseRate: number;
-  temperature: number;
-  temperatureUnit: string;
-  supplementalOxygen: boolean;
-  consciousness: string;
-  dialogMessageInput: string;
   patientInfoEhr: string;
+  clinicalRisk: string;
 
-  newsScore: number;
-  newsAgg: number;
-  news0: number;
-  news1: number;
-  news2: number;
-  news3: number;
+  barcodevalue: string;
+  stopScanButtonVisible: boolean;
+  pid: string;
+  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
 
-  respiratoryScore:number;
-  saturationScore:number;
-  pulseScore:number;
-  temperatureScore:number;
-  systolicScore:number;
+  respiratoryScore: number;
+  saturationScore: number;
+  pulseScore: number;
+  temperatureScore: number;
+  systolicScore: number;
   consciousnessScore: number;
   supplementalOxygenScore: number;
-  totalScore:number;
+  totalScore: number;
+  tempTotal: number;
 
   accordionState: Array<boolean>; // Icon toggle for the accordion
 
 
-
-  private respiratoryConst: string;
-  private pulseConst: string;
-  private temperatureConst: string;
-  private saturationConst: string;
-  private pressureConst: string;
-  private diastolicScore: number;
 
   constructor(
       private patientService: PatientService,
@@ -66,427 +51,190 @@ export class PatientOverviewComponent implements OnInit {
       private dialog: MatDialog,
       private fb: FormBuilder,
       private router: Router,
-      private newsScoreCalculator: NewsScoreCalculatorService
-      ) {}
-
-  ChangeSupplementalOxygen() {
-    /*
-    if (confirm('Finns det tillförd syre?')) {
-      this.supplementalOxygen = true;
-    } else {
-      this.supplementalOxygen = false;
-    }
-    */
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      dialogMessage: 'Finns det tillfört syre?',
-      firstOptionMessage: 'Ja',
-      secondOptionMessage: 'Nej'
-    }
-    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-        data => {
-          console.log(data);
-          if (data === 'Ja') {
-            this.supplementalOxygen = true;
-          } else {
-            this.supplementalOxygen = false;
-          }
-        }
-    );
+      private newsScoreCalculator: NewsScoreCalculatorService,
+      private barcodeScanner: BarcodeScannerService,
+  ) {
+  }
+  startScanner() {
+    this.barcodevalue = 'scanning';
+    this.stopScanButtonVisible = true;
+    this.barcodeScanner.startScanner();
   }
 
-  openDialog(variable: string) {
-    const dialogConfig = new MatDialogConfig();
-
-    switch (variable) {
-      case (this.temperatureConst) :
-        this.dialogMessageInput = 'Kroppstemperatur';
-        break;
-      case (this.pulseConst):
-        this.dialogMessageInput = 'Pulsfrekvens';
-        break;
-      case (this.respiratoryConst):
-        this.dialogMessageInput = 'Andningsfrekvens';
-        break;
-      case (this.pressureConst):
-        this.dialogMessageInput = 'Systoliskt Blodtryck';
-        break;
-      case (this.saturationConst):
-        this.dialogMessageInput = 'Syremätnad';
-        break;
-      default:
-        this.dialogMessageInput = '';
-    }
-
-
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = {
-      id: 1,
-      title: 'Angular For Beginners',
-      dialogmessage: this.dialogMessageInput
-    };
-
-    const dialogRef = this.dialog.open(ManualInputDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-        data => {
-            if (isNumeric(data.description)) {
-              switch (variable) {
-                case (this.temperatureConst) :
-                  this.temperature = data.description;
-                  break;
-                case (this.pulseConst):
-                  this.pulseRate = data.description;
-                  break;
-                case (this.respiratoryConst):
-                  this.respiratoryRate = data.description;
-                  break;
-                case (this.pressureConst):
-                  this.systolicBloodPressure = data.description;
-                  break;
-                case (this.saturationConst):
-                  this.oxygenSaturation = data.description;
-                  break;
-              }
-              console.log('Dialog output:', data.description);
-            }
-            this.updateNEWS();
-        });
+  stopScanner() {
+    this.stopScanButtonVisible = false;
+    this.barcodeScanner.StopScanner();
   }
+
   ngOnInit() {
 
-
     const pid = this.route.snapshot.paramMap.get('personid');
+    this.personnumber = pid;
     this.form = this.fb.group({
       respiratoryRate: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       oxygenSaturation: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       pulseRate: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       temperature: ['', [
         Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       systolicBloodPressure: ['', [
-        Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       diastolicBloodPressure: ['', [
-        Validators.required,
-        Validators.pattern('\\-?\\d*\\.?\\d{0,1}')
+        Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       consciousness: ['', [
-        Validators.required
+          Validators.pattern(/^[1-8]$/)
         ]
       ]
     });
-    // kolla på touched / invalid
-    this.accordionState = [false,false,false,false,false,false,false]; //Icon toggle for the accordion - lite osäker på var jag skulle lägga den
-    this.patientService.getPatientDataPid(pid).subscribe(info => {
-      this.patientinfo = JSON.stringify(info);
-      this.personnumber = info.demographics.additionalInfo.Personnummer;
-      this.respiratoryRate = info.breathing_frequency;
-      this.systolicBloodPressure = (info.vital_signs.blood_pressure[0].any_event[0]).systolic[0]['|magnitude'];
-      this.systolicBloodPressureUnit = (info.vital_signs.blood_pressure[0].any_event[0].systolic[0]['|unit']);
-      this.oxygenSaturation = info.oxygen_saturation;
-      this.pulseRate = info.pulse;
-      this.temperature = info.vital_signs.body_temperature[0].any_event[0].temperature[0]['|magnitude'];
-      this.temperatureUnit = info.vital_signs.body_temperature[0].any_event[0].temperature[0]['|unit'];
-      // TODO: implement an actual check
-      this.supplementalOxygen = false;
-      this.consciousness = info.alertness;
-    });
-    this.respiratoryConst = 'Respiratory';
-    this.temperatureConst = 'Temperature';
-    this.pressureConst = 'Pressure';
-    this.saturationConst = 'Saturation';
-    this.pulseConst = 'Pulse';
-    this.newsScore = 0;
 
-    this.temperatureScore = 0;
-    this.respiratoryScore = 0;
-    this.saturationScore = 0;
-    this.respiratoryScore = 0;
-    this.pulseScore = 0;
-    this.systolicScore = 0;
-    this.diastolicScore = 0;
+    // kolla på touched / invalid
+
+    this.accordionState = [false, false, false, false, false, false, false]; // Icon toggle for the accordion - lite osäker på var jag skulle lägga den
+    this.patientService.getPatientInformation(pid).subscribe(data => {
+      this.patientInfoEhr = data;
+      localStorage.setItem('SUBJECTID', data.parties[0].id);
+      this.patientService.getPatientEhrId(localStorage.getItem('SUBJECTID')).subscribe( data => {
+        localStorage.setItem('EHRID', data.ehrId);
+      });
+    });
+
     this.onChanges();
   }
 
   onChanges() {
-    this.form.get('oxygenSaturation').valueChanges.subscribe( val => {
-      console.log(val);
-      this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
+    this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
+      this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
+      if (this.form.controls.oxygenSaturation.valid) {
+        this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
+      } else {
+        this.saturationScore = null;
+      }
       this.updateTotalNews2Score();
+      this.updateClinicalRisk();
     });
-    this.form.get('respiratoryRate').valueChanges.subscribe( val => {
-      console.log(val);
-      this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+    this.form.get('respiratoryRate').valueChanges.subscribe(val => {
+      this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
+      if (this.form.controls.respiratoryRate.valid) {
+        this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+      } else {
+        this.respiratoryScore = null;
+      }
       this.updateTotalNews2Score();
+      this.updateClinicalRisk();
     });
-    this.form.get('pulseRate').valueChanges.subscribe( val => {
-      console.log(val);
-      this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
+    this.form.get('pulseRate').valueChanges.subscribe(val => {
+      this.form.controls.pulseRate.patchValue(val, {emitEvent: false});
+      if (this.form.controls.pulseRate.valid) {
+        this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
+      } else {
+        this.pulseScore = null;
+      }
       this.updateTotalNews2Score();
+      this.updateClinicalRisk();
     });
-    this.form.get('temperature').valueChanges.subscribe( val => {
-      console.log(val);
-      this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
+    this.form.get('temperature').valueChanges.subscribe(val => {
+      this.form.controls.temperature.patchValue(val, {emitEvent: false});
+      if (this.form.controls.temperature.valid) {
+        this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
+      } else {
+        this.temperatureScore = null;
+      }
       this.updateTotalNews2Score();
+      this.updateClinicalRisk();
     });
-    this.form.get('systolicBloodPressure').valueChanges.subscribe( val => {
-      console.log(val);
-      this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
+    this.form.get('systolicBloodPressure').valueChanges.subscribe(val => {
+      this.form.controls.systolicBloodPressure.patchValue(val, {emitEvent: false});
+      if (this.form.controls.systolicBloodPressure.valid && this.form.controls.systolicBloodPressure.value) {
+        this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
+      } else {
+        this.systolicScore = null;
+      }
       this.updateTotalNews2Score();
+      this.updateClinicalRisk();
     });
-    /*
-    this.form.get('diastolicBloodPressure').valueChanges.subscribe( val => {
-      console.log(val);
-      this.diastolicScore = this.newsScoreCalculator.getDiastolicScore(val);
-    });
-     */
   }
 
-
-  updateRespiratoryScore() {
-    if (this.respiratoryRate >= 25 || this.respiratoryRate <= 8) {
-      this.respiratoryScore = 3;
-    } else if (this.respiratoryRate >= 21 && this.respiratoryRate <= 24) {
-      this.respiratoryScore = 2;
-    } else if (this.respiratoryRate >= 9 && this.respiratoryRate <= 11) {
-      this.respiratoryScore = 1;
-    } else {
-      this.respiratoryScore = 0;
-    }
-    this.updateNEWS();
-    return this.respiratoryScore;
-  }
-
-  updateSaturationScore() {
-    if (this.oxygenSaturation <= 91) {
-      this.saturationScore = 3;
-    } else if (this.oxygenSaturation >= 92 && this.oxygenSaturation <= 93) {
-      this.saturationScore = 2;
-    } else if (this.oxygenSaturation >= 94 && this.oxygenSaturation <= 95) {
-      this.respiratoryScore = 1;
-    } else {
-      this.respiratoryScore = 0;
-    }
-    return this.saturationScore;
-  }
-
-  updateSystolicScore() {
-    if (this.systolicBloodPressure <= 90 || this.systolicBloodPressure >= 220) {
-      this.systolicScore = 3;
-    } else if (this.systolicBloodPressure >= 91 && this.systolicBloodPressure <= 100) {
-      this.systolicScore = 2;
-    } else if (this.systolicBloodPressure >= 101 && this.systolicBloodPressure <= 110) {
-      this.systolicScore = 1;
-    } else {
-      this.systolicScore = 0;
-    }
-    return this.systolicScore;
-  }
-
-  updatePulseScore() {
-    if (this.pulseRate <= 31 || this.pulseRate >= 131) {
-      this.pulseScore = 3;
-    } else if (this.pulseRate >= 111 && this.pulseRate <= 130) {
-      this.pulseScore = 2;
-    } else if (this.pulseRate >= 91 && this.pulseRate <= 110) {
-      this.pulseScore = 1;
-    } else if (this.pulseRate >= 41 && this.pulseRate <= 50) {
-      this.pulseScore = 1;
-    } else {
-      this.pulseScore = 0;
-    }
-    this.updateNEWS();
-    return this.pulseScore;
-  }
-
-  updateTemperatureScore() {
-    if (this.temperature <= 35) {
-      this.temperatureScore = 3;
-    } else if (this.temperature >= 39.1) {
-      this.temperatureScore = 2;
-    } else if (this.temperature >= 38.1 && this.temperature <= 39) {
-      this.temperatureScore = 1;
-    } else if (this.temperature >= 36 && this.temperature <= 35.1) {
-      this.temperatureScore = 1;
-    } else {
-      this.temperatureScore = 0;
-    }
-    this.updateNEWS();
-    return this.temperatureScore;
-  }
   updateSupplementOxygenScore(e, score: number) {
     if (e.target.checked) {
       this.supplementalOxygenScore = score;
     }
-    this.updateNEWS();
     this.updateTotalNews2Score();
+    this.updateClinicalRisk();
   }
+
   updateConsciousnessScore(e, score: number) {
     if (e.target.checked) {
       this.consciousnessScore = score;
     }
-    this.updateNEWS();
     this.updateTotalNews2Score();
+    this.updateClinicalRisk();
   }
 
   getConsciousnessScore() {
     return this.consciousnessScore;
   }
+
   getSupplementOxygenScore() {
     return this.supplementalOxygenScore;
   }
 
   updateTotalNews2Score() {
-    if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null) {
-      this.totalScore = this.consciousnessScore + this.pulseScore + this.temperatureScore + this.systolicScore;
-      this.totalScore = this.totalScore + this.respiratoryScore + this.saturationScore + this.supplementalOxygenScore;
+    if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
+      this.totalScore = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
+          this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
+          this.temperatureScore);
+      this.updateClinicalRisk();
+    } else {
+      this.totalScore = null;
     }
   }
+
   getTotalNews2Score() {
-    return this.totalScore;
+  return this.totalScore;
   }
 
-  updateNEWS() {
-    this.news3 = 0;
-    this.news2 = 0;
-    this.news1 = 0;
-    this.news0 = 0;
-//-----------------------------------respiratoryRate-----------------------------------
-    if(this.respiratoryRate >= 25 || this.respiratoryRate <=8 ){
-      this.news3 += 1;
+  updateClinicalRisk() {
+    if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
+      const temp = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
+          this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
+          this.temperatureScore);
+      if (temp === 0) {
+        this.clinicalRisk = 'Låg';
+      } else if (temp === 1) {
+        this.clinicalRisk = 'Låg/medium';
+      } else if (temp === 2) {
+        this.clinicalRisk = 'Medium';
+      } else if (temp === 3) {
+        this.clinicalRisk = 'Hög';
+      }
+    } else {
+      this.clinicalRisk = null;
     }
-    else if(this.respiratoryRate >= 21 && this.respiratoryRate <=24 ){
-      this.news2 += 1;
-    }
-    else if(this.respiratoryRate >= 9 && this.respiratoryRate <=11 ){
-      this.news1 += 1;
-    }
-    else{
-      this.news0 += 1;
-    }
-//-----------------------------------respiratoryRate-----------------------------------
-//-----------------------------------oxygenSaturation-----------------------------------
-
-    if( this.oxygenSaturation <= 91 ){
-      this.news3 += 1;
-    }
-    else if(this.oxygenSaturation >= 92 && this.oxygenSaturation <= 93 ){
-      this.news2 += 1;
-    }
-    else if(this.oxygenSaturation >= 94 && this.oxygenSaturation <= 95 ){
-      this.news1 += 1;
-    }
-    else{
-      this.news0 += 1;
-    }
-//-----------------------------------oxygenSaturation-----------------------------------
-//-----------------------------------supplementalOxygen-----------------------------------
-
-    if( this.supplementalOxygen == true ){
-      this.news2 += 1;
-    }
-    else{
-      this.news0 += 1;
-    }
-//-----------------------------------supplementalOxygen-----------------------------------
-//-----------------------------------systolicBloodPressure-----------------------------------
-    if( this.systolicBloodPressure <= 90 || this.systolicBloodPressure >= 220 ){
-      this.news3 += 1;
-    }
-    else if(this.systolicBloodPressure >= 91 && this.systolicBloodPressure <= 100 ){
-      this.news2 += 1;
-    }
-    else if(this.systolicBloodPressure >= 101 && this.systolicBloodPressure <= 110 ){
-      this.news1 += 1;
-    }
-    else{
-      this.news0 += 1;
-    }
-//-----------------------------------systolicBloodPressure-----------------------------------
-//-----------------------------------pulseRate-----------------------------------
-    if( this.pulseRate <= 31 || this.pulseRate >= 131 ){
-      this.news3 += 1;
-    }
-    else if(this.pulseRate >= 111 && this.pulseRate <= 130 ){
-      this.news2 += 1;
-    }
-    else if(this.pulseRate >= 91 && this.pulseRate <= 110 ){
-      this.news1 += 1;
-    }
-    else if(this.pulseRate >= 41 && this.pulseRate <= 50 ){
-      this.news1 += 1;
-    }
-    else{
-      this.news0 += 1;
-    }
-//-----------------------------------pulseRate-----------------------------------
-//-----------------------------------consciousness-----------------------------------
-  if( this.consciousness == "awake" ){
-    this.news0 += 1;
-  }
-  else{
-    this.news3 += 1;
-  }
-//-----------------------------------consciousness-----------------------------------
-//-----------------------------------temperature-----------------------------------
-  if( this.temperature <= 35 ){
-    this.news3 += 1;
-  }
-  else if(this.temperature >= 39.1 ){
-    this.news2 += 1;
   }
 
-  else if(this.temperature >= 38.1 && this.temperature <= 39 ){
-    this.news1 += 1;
-  }
-  else if(this.temperature >= 36 && this.temperature <= 35.1 ){
-    this.news1 += 1;
-  }
-  else{
-    this.news0 += 1;
-  }
-//-----------------------------------temperature-----------------------------------
-  this.newsAgg = (this.news1) + (this.news2 * 2) + (this.news3 * 3);
-  if(this.newsAgg >= 7 ){
-    this.newsScore = 3;
-  }
-  else if(this.newsAgg == 6 || this.newsAgg == 5){
-    this.newsScore = 2;
-  }
-  else if(this.news3 >= 1){
-    this.newsScore = 1;
-  }
-  else{
-    this.newsScore = 0;
-  }
+  getClinicalRisk() {
+    return this.clinicalRisk;
   }
 
-
-  toggleAccordion(id: number) { // Icon toggle for the accordion
+toggleAccordion(id: number) { // Icon toggle for the accordion
     this.accordionState[id] = !this.accordionState[id];
   }
   isAccordionOpen(id: number) {
@@ -506,6 +254,7 @@ export class PatientOverviewComponent implements OnInit {
             data => console.log(data),
             error => console.log(error)
         );
+    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
 
   }
   goToHistory() {

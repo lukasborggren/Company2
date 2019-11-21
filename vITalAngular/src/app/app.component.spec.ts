@@ -6,7 +6,9 @@ import { provideRoutes, Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { BarcodeScannerPageComponent } from './views/barcode-scanner-page/barcode-scanner-page.component';
-import { HttpClientTestingModule  } from '@angular/common/http/testing';
+import { FooterComponent } from './views/footer/footer.component';
+import { HeaderComponent } from './views/header/header.component';
+import { HttpClientTestingModule} from '@angular/common/http/testing';
 
 
 
@@ -16,7 +18,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         LoginComponent,
-        BarcodeScannerPageComponent
+        BarcodeScannerPageComponent,
+        FooterComponent,
+        HeaderComponent
       ],
       imports: [
         RouterTestingModule,

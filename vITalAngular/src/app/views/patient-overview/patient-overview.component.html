@@ -10,7 +10,11 @@
           <div class="parameterTitle mr-auto col-4">
             Andningsfrekvens
           </div>
-          <input type="text" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
+          <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
+          <div *ngIf="form.controls.respiratoryRate.invalid && !form.controls.respiratoryRate.pristine" class="alert-danger">
+            <div *ngIf="form.controls.respiratoryRate.errors.required"> Andningsfrekvens krävs</div>
+            <div *ngIf="form.controls.respiratoryRate.errors.pattern">Mata in ett värde mellan 0 och 100</div>
+          </div>
           <div class="collapseButton p-2">
             <button (click)="toggleAccordion(0)" class="btn">  <!-- togglefunktion med koppling till ikonändring vid klick-->
               <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
@@ -19,13 +23,17 @@
           </div>
         </div>
         <div *ngIf="isAccordionOpen(0)">
-          <div class="toggleRow"> <!-- Skapar en ny row som ett expandable field -->
-            <div class="d-flex p-2">
-              <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+          <div class="accordion">
+            <div class="card" style="height: 10rem" >
+              <div class="card-body ml-auto">
+                <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+
 
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
@@ -34,7 +42,11 @@
           <div class="parameterTitle mr-auto col-4">
             Syremättnad
           </div>
-          <input type="text" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
+          <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
+          <div *ngIf="form.controls.oxygenSaturation.invalid && !form.controls.oxygenSaturation.pristine" class="alert-danger">
+            <div *ngIf="form.controls.oxygenSaturation.errors.required"> Syremättnad krävs</div>
+            <div *ngIf="form.controls.oxygenSaturation.errors.pattern">Mata in ett värde mellan 0 och 100</div>
+          </div>
           <div class="collapseButton p-2">
             <button (click)="toggleAccordion(1)" class="btn">
               <i *ngIf="isAccordionOpen(1)" class="fa fa-angle-double-up fa-2x"></i>
@@ -43,15 +55,18 @@
           </div>
         </div>
         <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          
+          <div class="accordion">
+            <div class="card" style="height: 10rem" >
+              <div class="card-body ml-auto">
+                <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!--  <div class="individualNews" id="saturationNews"> 0 </div>
         <label>
-          
+
             Syremättnad
             <input type="text" formControlName="oxygenSaturation">
         </label>
@@ -68,25 +83,33 @@
             <!--input type="text" formControlName="supplementalOxygen" class="inputField col-2 ml-auto form-control-lg p-2">
             <div class="collapseButton p-2"-->
               <!-- here i added the two radio check buttons instead of input-box -->
-              <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-                  <label class="form-check-label" for="inlineRadio1">Ja</label>
-                  <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
-                         value="option1" (change)="updateSupplementOxygenScore($event, 2)">
-                  <label class="form-check-label" for="inlineRadio1">Nej</label>
-                  <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
-                         value="option2" (change)="updateSupplementOxygenScore($event, 0)">
-              </div>
+                <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
+                    <label class="form-check-label" for="inlineRadio1">Ja</label>
+                    <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
+                           value="option1" (change)="updateSupplementOxygenScore($event, 2)">
+                    <label class="form-check-label" for="inlineRadio1">Nej</label>
+                    <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
+                           value="option2" (change)="updateSupplementOxygenScore($event, 0)">
+                </div>
 
+            <div class="accordion p-2">
               <button (click)="toggleAccordion(2)" class="btn">
                 <i *ngIf="isAccordionOpen(2)" class="fa fa-angle-double-up fa-2x"></i>
                 <i *ngIf="!isAccordionOpen(2)" class="fa fa-angle-double-down fa-2x"></i>
               </button>
             </div>
-          </div>
-          <div *ngIf="isAccordionOpen(2)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </div>
+            </div>
 
+          <div *ngIf="isAccordionOpen(2)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+            <div class="accordion">
+              <div class="card" style="height: 10rem" >
+                <div class="card-body ml-auto">
+                  <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 <!-----------------Blodtryck----------------->
 <div class="parameterRow">
@@ -96,7 +119,14 @@
       Blodtryck
     </div>
     <!-- This input shall have two input fields options, one for systolic and one for diastolic -->
-    <input type="text" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
+    <input type="number" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div *ngIf="form.controls.systolicBloodPressure.invalid && !form.controls.systolicBloodPressure.pristine" class="alert-danger">
+      <div *ngIf="form.controls.systolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
+    </div>
+    <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div *ngIf="form.controls.diastolicBloodPressure.invalid && !form.controls.diastolicBloodPressure.pristine" class="alert-danger">
+      <div *ngIf="form.controls.diastolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
+    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(3)" class="btn">
         <i *ngIf="isAccordionOpen(3)" class="fa fa-angle-double-up fa-2x"></i>
@@ -105,7 +135,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(3)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -116,7 +152,11 @@
     <div class="parameterTitle mr-auto col-4">
       Pulsfrekvens
     </div>
-    <input type="text" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
+    <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div *ngIf="form.controls.pulseRate.invalid && !form.controls.pulseRate.pristine" class="alert-danger">
+      <div *ngIf="form.controls.pulseRate.errors.required"> Pulsfrekvens krävs</div>
+      <div *ngIf="form.controls.pulseRate.errors.pattern">Mata in ett värde mellan 0 och 999</div>
+    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(4)" class="btn">
         <i *ngIf="isAccordionOpen(4)" class="fa fa-angle-double-up fa-2x"></i>
@@ -125,7 +165,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(4)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -170,7 +216,10 @@
           <!--/div-->
     </div>
 
-      <input type="text" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+      <input type="number" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div *ngIf="form.controls.consciousness.invalid && !form.controls.consciousness.pristine" class="alert-danger">
+      <div *ngIf="form.controls.consciousness.errors.pattern">Mata in ett värde mellan 1 och 8</div>
+    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(5)" class="btn">
         <i *ngIf="isAccordionOpen(5)" class="fa fa-angle-double-up fa-2x"></i>
@@ -179,7 +228,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(5)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -190,7 +245,11 @@
     <div class="parameterTitle mr-auto col-4">
       Temperatur
     </div>
-    <input type="text" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
+    <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
+    <div *ngIf="form.controls.temperature.invalid && !form.controls.temperature.pristine" class="alert-danger">
+      <div *ngIf="form.controls.temperature.errors.required"> Kroppstemperatur krävs</div>
+      <div *ngIf="form.controls.temperature.errors.pattern">Mata in ett värde mellan 0 och 100</div>
+    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(6)" class="btn">
         <i *ngIf="isAccordionOpen(6)" class="fa fa-angle-double-up fa-2x"></i>
@@ -199,7 +258,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(6)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -209,6 +274,8 @@
 <!-----------------Total NEWS2 score----------------->
 <div>
 <label>NEWS2 Score = {{this.getTotalNews2Score()}}</label>
+    <div>
+        <label>Klinisk risk = {{this.getClinicalRisk()}}</label>
 </div>
 
 <!-----------------Save button----------------->
