@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NewsScoreCalculatorService {
-
+  newsScore3: number;
   constructor() {
   }
 
@@ -44,20 +44,6 @@ export class NewsScoreCalculatorService {
     }
   }
 
-  /*
-  getDiastolicScore(diastolicBloodPressure: number) {
-    if (diastolicBloodPressure <= 90 || diastolicBloodPressure >= 220) {
-      return 3;
-    } else if (diastolicBloodPressure >= 91 && diastolicBloodPressure <= 100) {
-      return 2;
-    } else if (diastolicBloodPressure >= 101 && diastolicBloodPressure <= 110) {
-      return 1;
-    } else {
-      return 0;
-    }
-  }
-
-   */
   getPulseScore(pulseRate: number) {
     if (pulseRate <= 31 || pulseRate >= 131) {
       return 3;
