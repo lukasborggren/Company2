@@ -11,7 +11,7 @@
             Andningsfrekvens
           </div>
           <input type="text" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
-          <div class="collapseButton p-2">
+          <div class="accordion p-2">
             <button (click)="toggleAccordion(0)" class="btn">  <!-- togglefunktion med koppling till ikonändring vid klick-->
               <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(0)" class="fa fa-angle-double-down fa-2x"></i>
@@ -19,13 +19,17 @@
           </div>
         </div>
         <div *ngIf="isAccordionOpen(0)">
-          <div class="toggleRow"> <!-- Skapar en ny row som ett expandable field -->
-            <div class="d-flex p-2">
-              <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+          <div class="accordion">
+            <div class="card" style="height: 10rem" >
+              <div class="card-body ml-auto">
+                <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+
 
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
@@ -35,7 +39,7 @@
             Syremättnad
           </div>
           <input type="text" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
-          <div class="collapseButton p-2">
+          <div class="accordion p-2">
             <button (click)="toggleAccordion(1)" class="btn">
               <i *ngIf="isAccordionOpen(1)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(1)" class="fa fa-angle-double-down fa-2x"></i>
@@ -43,15 +47,18 @@
           </div>
         </div>
         <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum 
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          
+          <div class="accordion">
+            <div class="card" style="height: 10rem" >
+              <div class="card-body ml-auto">
+                <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <!--  <div class="individualNews" id="saturationNews"> 0 </div>
         <label>
-          
+
             Syremättnad
             <input type="text" formControlName="oxygenSaturation">
         </label>
@@ -76,15 +83,22 @@
                   <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                          value="option2" (change)="updateSupplementOxygenScore($event, 0)">
               </div>
-
+            <div class="accordion p-2">
               <button (click)="toggleAccordion(2)" class="btn">
                 <i *ngIf="isAccordionOpen(2)" class="fa fa-angle-double-up fa-2x"></i>
                 <i *ngIf="!isAccordionOpen(2)" class="fa fa-angle-double-down fa-2x"></i>
               </button>
             </div>
+            </div>
           </div>
           <div *ngIf="isAccordionOpen(2)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            <div class="accordion">
+              <div class="card" style="height: 10rem" >
+                <div class="card-body ml-auto">
+                  <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+                </div>
+              </div>
+            </div>
           </div>
 
 
@@ -97,7 +111,7 @@
     </div>
     <!-- This input shall have two input fields options, one for systolic and one for diastolic -->
     <input type="text" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div class="collapseButton p-2">
+    <div class="accordion p-2">
       <button (click)="toggleAccordion(3)" class="btn">
         <i *ngIf="isAccordionOpen(3)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(3)" class="fa fa-angle-double-down fa-2x"></i>
@@ -105,7 +119,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(3)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -117,7 +137,7 @@
       Pulsfrekvens
     </div>
     <input type="text" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div class="collapseButton p-2">
+    <div class="accordion p-2">
       <button (click)="toggleAccordion(4)" class="btn">
         <i *ngIf="isAccordionOpen(4)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(4)" class="fa fa-angle-double-down fa-2x"></i>
@@ -125,7 +145,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(4)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -171,7 +197,7 @@
     </div>
 
       <input type="text" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div class="collapseButton p-2">
+    <div class="accordion p-2">
       <button (click)="toggleAccordion(5)" class="btn">
         <i *ngIf="isAccordionOpen(5)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(5)" class="fa fa-angle-double-down fa-2x"></i>
@@ -179,7 +205,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(5)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -191,7 +223,7 @@
       Temperatur
     </div>
     <input type="text" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div class="collapseButton p-2">
+    <div class="accordion p-2">
       <button (click)="toggleAccordion(6)" class="btn">
         <i *ngIf="isAccordionOpen(6)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(6)" class="fa fa-angle-double-down fa-2x"></i>
@@ -199,7 +231,13 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(6)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    <div class="accordion">
+      <div class="card" style="height: 10rem" >
+        <div class="card-body ml-auto">
+          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
