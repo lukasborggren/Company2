@@ -75,14 +75,15 @@
             <!--input type="text" formControlName="supplementalOxygen" class="inputField col-2 ml-auto form-control-lg p-2">
             <div class="collapseButton p-2"-->
               <!-- here i added the two radio check buttons instead of input-box -->
-              <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-                  <label class="form-check-label" for="inlineRadio1">Ja</label>
-                  <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
-                         value="option1" (change)="updateSupplementOxygenScore($event, 2)">
-                  <label class="form-check-label" for="inlineRadio1">Nej</label>
-                  <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
-                         value="option2" (change)="updateSupplementOxygenScore($event, 0)">
-              </div>
+                <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
+                    <label class="form-check-label" for="inlineRadio1">Ja</label>
+                    <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
+                           value="option1" (change)="updateSupplementOxygenScore($event, 2)">
+                    <label class="form-check-label" for="inlineRadio1">Nej</label>
+                    <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
+                           value="option2" (change)="updateSupplementOxygenScore($event, 0)">
+                </div>
+
             <div class="accordion p-2">
               <button (click)="toggleAccordion(2)" class="btn">
                 <i *ngIf="isAccordionOpen(2)" class="fa fa-angle-double-up fa-2x"></i>
@@ -90,7 +91,7 @@
               </button>
             </div>
             </div>
-          </div>
+
           <div *ngIf="isAccordionOpen(2)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
             <div class="accordion">
               <div class="card" style="height: 10rem" >
@@ -100,7 +101,7 @@
               </div>
             </div>
           </div>
-
+        </div>
 
 <!-----------------Blodtryck----------------->
 <div class="parameterRow">
