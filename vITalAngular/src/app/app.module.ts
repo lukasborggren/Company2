@@ -18,6 +18,8 @@ import { DialogWindowComponent } from './views/shared-components/dialog-window/d
 import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit/confirm-submit.component';
 import { HistoryComponent } from './views/history/history.component';
 import { ChartsModule } from 'ng2-charts';
+import { HeaderComponent } from './views/header/header.component';
+import { FooterComponent } from './views/footer/footer.component';
 
 
 @NgModule({
@@ -32,7 +34,9 @@ import { ChartsModule } from 'ng2-charts';
     PopupWindowComponent,
     DialogWindowComponent,
     ConfirmSubmitComponent,
-    HistoryComponent
+    HistoryComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
