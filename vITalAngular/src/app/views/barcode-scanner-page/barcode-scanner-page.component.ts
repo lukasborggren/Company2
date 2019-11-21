@@ -3,6 +3,7 @@ import {BarcodeScannerService} from '../../barcode-scanner.service';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
 import {Router} from '@angular/router';
+import {PatientService} from '../../services/patient.service';
 
 @Component({
   selector: 'app-barcode-scanner-page',
@@ -20,7 +21,8 @@ export class BarcodeScannerPageComponent implements OnInit {
   constructor(
       private barcodeScanner: BarcodeScannerService,
       private dialog: MatDialog,
-      private router: Router
+      private router: Router,
+      private patientService: PatientService
   ) {
   }
 
@@ -54,6 +56,14 @@ export class BarcodeScannerPageComponent implements OnInit {
           console.log('Dialog output:', data);
           if (this.PERSONID_PATTERN.test(data.description)) {
             this.router.navigate(['/pid/' + data.description]);
+            this.patientService.getPatientInformation(data.description).subscribe(
+                response => {
+                  const ehrId = response.parties[0].additionalInfo.ehrId;
+                  console.log(response);
+                  localStorage.setItem('EHR_ID', ehrId);
+                },
+                error => console.log(error)
+            );
           }
         });
   }

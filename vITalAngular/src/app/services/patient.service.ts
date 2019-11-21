@@ -54,7 +54,7 @@ export class PatientService {
       headers: this.headers,
       params: new HttpParams()
           .set('templateId', this.templateId)
-          .set('ehrId', 'c1e2c1ea-e295-4c59-92be-5e83534d6106') // Ändra så att session-aktuellt EHR ID används
+          .set('ehrId', localStorage.getItem('EHR_ID'))
           .set('format', 'FLAT')
     };
 
@@ -99,7 +99,7 @@ export class PatientService {
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
-          .set('personNumber', pId)
+          .set('Personnummer', pId)
     };
     return this.http.get(this.baseUrl + '/demographics/party/query', httpOptions);
   }

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatDialogModule} from '@angular/material';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { BarcodeScannerPageComponent } from './barcode-scanner-page.component';
 import {RouterTestingModule} from '@angular/router/testing';
@@ -11,7 +12,7 @@ describe('BarcodeScannerPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ BarcodeScannerPageComponent ],
-      imports: [ MatDialogModule, RouterTestingModule ],
+      imports: [ MatDialogModule, RouterTestingModule, HttpClientTestingModule ],
     })
     .compileComponents();
   }));

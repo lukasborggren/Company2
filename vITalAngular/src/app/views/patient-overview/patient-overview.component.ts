@@ -201,15 +201,6 @@ export class PatientOverviewComponent implements OnInit {
     });
     // kolla på touched / invalid
     this.accordionState = [false,false,false,false,false,false,false]; //Icon toggle for the accordion - lite osäker på var jag skulle lägga den
-
-    this.patientService.getPatientInformation(pid).subscribe(data=>{
-      this.patientInfoEhr=data;
-      localStorage.setItem('SUBJECTID', data.parties[0].id);
-      this.patientService.getPatientEhrId(localStorage.getItem('SUBJECTID')).subscribe(data =>{
-        localStorage.setItem('EHRID', data.ehrId);
-      });
-    });
-
     this.patientService.getPatientDataPid(pid).subscribe(info => {
       this.patientinfo = JSON.stringify(info);
       this.personnumber = info.demographics.additionalInfo.Personnummer;
