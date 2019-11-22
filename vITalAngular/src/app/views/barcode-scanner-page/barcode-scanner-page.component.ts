@@ -38,6 +38,9 @@ export class BarcodeScannerPageComponent implements OnInit {
   }
 
   openDialog() {
+    if (this.stopScanButtonVisible) {
+      this.stopScanner();
+    }
     const dialogConfig = new MatDialogConfig();
 
     dialogConfig.disableClose = true;
