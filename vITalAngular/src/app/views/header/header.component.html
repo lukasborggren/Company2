@@ -1,15 +1,19 @@
 <header *ngIf="isLoggedIn; else notLoggedIn">
     <!-- When logged in elements go here -->
-    <button type="button" class="btn btn-primary" (click)="goBack()" >Gå tillbaka</button>
+  <div class="header d-flex flex-row align-items-center p-1">
+
+    <button type="button" class="btn fa fa-angle-left" (click)="goBack()" ></button>
     <div *ngIf="showPatient; else dontShowPatient">
-        show patient
+      <p class= "patient-name">John-Karl Doe Johansson</p>
+      <p class = "person-number">19791111-0017</p>
     </div>
+  </div>
     <ng-template #dontShowPatient>
-        dont show patient
+
     </ng-template>
 </header>
 <ng-template #notLoggedIn>
     <!-- When logged out elements go here -->
+    <!-- There should not be a header when logged out.. -->
     <h1>HEADER not logged in</h1>
 </ng-template>
-
