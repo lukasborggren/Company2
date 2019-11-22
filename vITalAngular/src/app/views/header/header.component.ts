@@ -24,6 +24,10 @@ export class HeaderComponent implements OnInit {
     this.routeEvent();
   }
 
+  public goToLogout() {
+    this.router.navigate(['/logout']);
+  }
+
   routeEvent(){
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
