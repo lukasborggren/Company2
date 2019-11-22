@@ -4,6 +4,8 @@ import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
 import {Router} from '@angular/router';
 import {PatientService} from '../../services/patient.service';
+import {FeedDataService} from '../../services/feed-data.service';
+
 
 @Component({
   selector: 'app-barcode-scanner-page',
@@ -22,7 +24,8 @@ export class BarcodeScannerPageComponent implements OnInit {
       private barcodeScanner: BarcodeScannerService,
       private dialog: MatDialog,
       private router: Router,
-      private patientService: PatientService
+      private patientService: PatientService,
+      private feedData: FeedDataService
   ) {
   }
 
@@ -58,6 +61,7 @@ export class BarcodeScannerPageComponent implements OnInit {
         data => {
           console.log('Dialog output:', data);
           if (this.PERSONID_PATTERN.test(data.description)) {
+            this.feedData.nextPid(data.description);
             this.router.navigate(['/pid/' + data.description]);
             this.patientService.getPatientInformation(data.description).subscribe(
                 response => {
@@ -81,6 +85,7 @@ export class BarcodeScannerPageComponent implements OnInit {
           console.log('Invalid input format');
         } else {
           this.pid = barcode.substr(0, 8) + '-' + barcode.substr(9, 4);
+          this.feedData.nextPid(this.pid);
           this.router.navigate(['/pid/' + this.pid]);
         }
       }

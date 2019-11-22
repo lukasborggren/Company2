@@ -5,7 +5,7 @@
     <button type="button" class="btn fa fa-angle-left" (click)="goBack()" ></button>
     <div *ngIf="showPatient">
       <p class= "patient-name">John-Karl Doe Johansson</p>
-      <p class = "person-number">19791111-0017</p>
+      <p class = "person-number">{{pid}}</p>
     </div>
 
       <button type="button" class="btn btn-info ml-auto" (click)="goToLogout()">Logga ut</button>
