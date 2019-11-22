@@ -22,7 +22,7 @@ export class LogoutComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
-  goToHome() {
-    this.router.navigate(['/home']);
+  goToScannerPage() {
+    this.router.navigate(['/scannerpage']);
   }
 }
