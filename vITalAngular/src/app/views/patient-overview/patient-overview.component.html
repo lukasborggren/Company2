@@ -216,7 +216,9 @@
           <!--/div-->
     </div>
 
-      <input type="number" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+    <!--  This is the old input field for this parameter using a text input, may be removed if teh new input works as desired
+          <input type="number" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+          -->
     <div *ngIf="form.controls.consciousness.invalid && !form.controls.consciousness.pristine" class="alert-danger">
       <div *ngIf="form.controls.consciousness.errors.pattern">Mata in ett värde mellan 1 och 8</div>
     </div>
