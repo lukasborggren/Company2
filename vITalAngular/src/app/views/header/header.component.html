@@ -1,15 +1,12 @@
-<header *ngIf="isLoggedIn">
+<header class = "fix-top" *ngIf="isLoggedIn">
     <!-- When logged in elements go here -->
   <div class="header d-flex flex-row align-items-center p-1">
 
     <button type="button" class="btn fa fa-angle-left" (click)="goBack()" ></button>
-    <div *ngIf="showPatient; else dontShowPatient">
+    <div *ngIf="showPatient">
       <p class= "patient-name">John-Karl Doe Johansson</p>
       <p class = "person-number">19791111-0017</p>
     </div>
   </div>
-    <ng-template #dontShowPatient>
-
-    </ng-template>
 </header>
 
