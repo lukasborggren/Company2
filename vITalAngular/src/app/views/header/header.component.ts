@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.routeEvent();
     this.getPid();
-    this.h = 'bla';
   }
 
   public goToLogout() {
@@ -48,7 +47,6 @@ export class HeaderComponent implements OnInit {
   getPid() {
     this.feedData.getPid().subscribe(pid => {
       this.pid = pid;
-      console.log(pid);
     });
   }
 
