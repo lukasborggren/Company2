@@ -1,9 +1,10 @@
-<header *ngIf="isLoggedIn | async; else notLoggedIn">
-    <!-- When logged in elements go here -->
-    <h1>FOOTER logged in</h1>
+<header *ngIf="patientOverview">
+    <!-- When at patientOverview elements go here -->
+    <h1>Patient overview</h1>
 </header>
-<ng-template #notLoggedIn>
-    <!-- When logged out elements go here -->
-    <h1>FOOTER not logged in</h1>
-</ng-template>
+<header *ngIf="history">
+    <!-- When at history elements go here -->
+    <h1>History</h1>
+</header>
+
 

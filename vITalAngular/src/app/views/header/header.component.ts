@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../auth.service';
 import { Location } from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 
@@ -13,7 +12,6 @@ export class HeaderComponent implements OnInit {
   showPatient: boolean;
 
   constructor(
-      private authService: AuthService,
       private location: Location,
       private router: Router
       ) { }
@@ -30,7 +28,7 @@ export class HeaderComponent implements OnInit {
     this.router.events.subscribe(event => {
       if(event instanceof NavigationEnd) {
         const currentLocation = event.url;
-        this.isLoggedIn = currentLocation !== '/login';
+        this.isLoggedIn = !(currentLocation === '/login' || currentLocation === '/');
         this.showPatient = currentLocation === '/history' || currentLocation.substring(0, 5) === '/pid/';
       }
     });

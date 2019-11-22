@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
-import {AuthService} from '../../auth.service';
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-footer',
@@ -8,12 +7,25 @@ import {AuthService} from '../../auth.service';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  isLoggedIn: Observable<boolean>;
+  // isLoggedIn: boolean;
+  patientOverview: boolean;
+  history: boolean;
 
-  constructor(private authService: AuthService) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.isLoggedIn = this.authService.isLoggedIn;
+    this.routeEvent();
+  }
+
+  routeEvent(){
+    this.router.events.subscribe(event => {
+      if(event instanceof NavigationEnd) {
+        const currentLocation = event.url;
+        // this.isLoggedIn = currentLocation !== '/login';
+        this.patientOverview = currentLocation.substring(0, 5) === '/pid/';
+        this.history = currentLocation === '/history';
+      }
+    });
   }
 
 }
