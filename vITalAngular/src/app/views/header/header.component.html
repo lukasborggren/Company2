@@ -1,4 +1,4 @@
-<header *ngIf="isLoggedIn; else notLoggedIn">
+<header *ngIf="isLoggedIn">
     <!-- When logged in elements go here -->
   <div class="header d-flex flex-row align-items-center p-1">
 
@@ -12,8 +12,4 @@
 
     </ng-template>
 </header>
-<ng-template #notLoggedIn>
-    <!-- When logged out elements go here -->
-    <!-- There should not be a header when logged out.. -->
-    <h1>HEADER not logged in</h1>
-</ng-template>
+

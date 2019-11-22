@@ -1,5 +1,10 @@
 .header {
   background-color: #3A3938;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
 }
 
 .person-number {
