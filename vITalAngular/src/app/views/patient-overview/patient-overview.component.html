@@ -82,12 +82,16 @@
             <div class="collapseButton p-2"-->
               <!-- here i added the two radio check buttons instead of input-box -->
                 <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-                    <label class="form-check-label" for="inlineRadio1">Ja</label>
+                  <div class="vertical">
+                      <label class="form-check-label" for="inlineRadio1">Ja</label>
                     <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                            value="option1" (change)="updateSupplementOxygenScore($event, 2)">
+                           </div>
+                           <div class="vertical">
                     <label class="form-check-label" for="inlineRadio1">Nej</label>
                     <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                            value="option2" (change)="updateSupplementOxygenScore($event, 0)">
+                           </div>
                 </div>
 
             <div class="accordion p-2">
@@ -178,39 +182,50 @@
   <div class="d-flex align-items-center">
     <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{getConsciousnessScore()}} </div>
     <div class="parameterTitle mr-auto col-4">
-        Medvetandegrad </div>
+      Medvetandegrad </div>
         <!-- Default inline 1-->
     <!-- This input shall have five check boxes for the alertness scale, see Prototype -->
       <!-- this is the radio check-boxes code-->
       <!--div-->
       <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
+<div class="vertical">
           <label class="form-check-label" for="inlineRadio1">A</label>
           <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio1"
                  value="option1" (change)="updateConsciousnessScore($event, 0)">
+                 </div>
       <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
-              <label class="form-check-label" for="inlineRadio2">C</label>
+
+              <div class="vertical">
+                <label class="form-check-label" for="inlineRadio2">C</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio2"
                      value="option2" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check " style="display: inline-block;"-->
+<div class="vertical">
               <label class="form-check-label" for="inlineRadio3">V</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio3"
                      value="option3" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style= "display: inline-block;"-->
+<div class="vertical">
               <label class="form-check-label" for="inlineRadio4">P</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio4"
                      value="option4" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
+<div class="vertical">
               <label class="form-check-label" for="inlineRadio5">U</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio5"
                      value="option5" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
     </div>
 

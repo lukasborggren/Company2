@@ -3,9 +3,15 @@
     font-size: 3vw;
 }
 
+.vertical {
+    float: left;
+}
+.vertical  > *{
+    display :block;
+}
+
 .form-check-label{
     position: relative;
-
 }
 
 .parameterRow {
