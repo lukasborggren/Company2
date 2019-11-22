@@ -234,7 +234,7 @@ export class PatientOverviewComponent implements OnInit {
     return this.clinicalRisk;
   }
 
-toggleAccordion(id: number) { // Icon toggle for the accordion
+  toggleAccordion(id: number) { // Icon toggle for the accordion
     this.accordionState[id] = !this.accordionState[id];
   }
   isAccordionOpen(id: number) {
@@ -246,13 +246,24 @@ toggleAccordion(id: number) { // Icon toggle for the accordion
       dialogMessage: errorMessage
     };
 
-    // Example call to the function sending data to database
+    // Example call to the function sending data to database, move to where it's needed.
+    // ACVPU is denoted A = 1, B = 2 etc.
+    // If a vital parameter has not been entered by the user, pass a 0 for that parameter
+    // and it will be excluded from the dataset sent to the database.
     this.patientService.postComposition(
         12, 12, 1, true, 30, 20,
-        70, true, 'A', 2, 37.1, 3)
+        70, true, 1, 2, 37.1, 3)
         .subscribe(
-            data => console.log(data),
-            error => console.log(error)
+            data => {
+              // Confirmation alert here
+              console.log(data);
+              console.log('Submission successful');
+            },
+            error => {
+              // Error alert here
+              console.log(error);
+              console.log('Submission failed');
+            }
         );
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
 
