@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {NavigationEnd, Router} from "@angular/router";
+import {NavigationEnd, Router} from '@angular/router';
+import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
+
 
 @Component({
   selector: 'app-footer',
@@ -11,15 +13,20 @@ export class FooterComponent implements OnInit {
   patientOverview: boolean;
   history: boolean;
 
-  constructor(private router: Router) { }
+
+  constructor(
+      private router: Router,
+      private newsScoreCalculator: NewsScoreCalculatorService,
+  ) { }
+
 
   ngOnInit() {
     this.routeEvent();
   }
 
-  routeEvent(){
+  routeEvent() {
     this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd) {
+      if (event instanceof NavigationEnd) {
         const currentLocation = event.url;
         // this.isLoggedIn = currentLocation !== '/login';
         this.patientOverview = currentLocation.substring(0, 5) === '/pid/';

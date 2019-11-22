@@ -1,10 +1,27 @@
 <footer class = "fix-bottom" *ngIf="patientOverview">
     <h1>footer patientOverview</h1>
     <!-- When at patientOverview elements go here -->
+
 </footer>
 <footer class = "fix-bottom" *ngIf="history">
     <h1>footer history</h1>
     <!-- When at history elements go here -->
 </footer>
 
+    <h1>Patient overview </h1>
+
+
+<header *ngIf="history">
+    <!-- When at history elements go here -->
+    <h1>History</h1>
+</header>
+
+
+<!-----------------Total NEWS2 score-------------
+    <div>
+    <label>NEWS2 Score = {{this.newsScoreCalculator.getTotalScore()}}</label>
+    <div>
+        <label>Klinisk risk = {{this.newsScoreCalculator.getClinicalRisk()}}</label>
+    </div>
+--->
 
