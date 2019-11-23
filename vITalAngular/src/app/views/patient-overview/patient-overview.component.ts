@@ -268,8 +268,8 @@ export class PatientOverviewComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
 
   }
-  goToHistory() {
-    this.router.navigate(['history']);
+  goToHistory(vitalParameter: string) {
+    this.router.navigate(['history'], {state: { outputVitalParameter: vitalParameter}});
   }
 
 }
