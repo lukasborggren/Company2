@@ -1,35 +1,30 @@
 <footer class = "fix-bottom" *ngIf="patientOverview">
-    <h1>footer patientOverview</h1>
     <!-- When at patientOverview elements go here -->
+  <div class = "d-flex align-items-center justify-content-between h-100 p-3">
+    <div class="text">Totalt<br>värde </div>
+    <div class="totalNews alert alert-secondary alert-sm">
+      {{this.newsScoreCalculator.getTotalScore()}} </div>
+    <div class=" clinical d-flex flex-column justify-content-center">
+    <div class="text">
+        Klinisk risk:
+      </div>
+      <div class="clinicalLabel alert alert-secondary alert-sm">
+        <p class="labelText">{{this.newsScoreCalculator.getClinicalRisk()}}</p>
+      </div>
+    </div>
     <button class=standardButton (click)="openPopup('error')">Spara</button>
-
-
-
+</div>
 </footer>
+
 <footer class = "fix-bottom" *ngIf="history">
-    <h1>footer history</h1>
     <!-- When at history elements go here -->
+    <!-- Footer at history view should not have any content -->
+    <!-- <h1>footer history</h1> -->
 </footer>
 
-    <h1>Patient overview </h1>
-
-
+<!-----------------old stuff right?-------------
 <header *ngIf="history">
-    <!-- When at history elements go here -->
+    When at history elements go here
     <h1>History</h1>
 </header>
-
-<div>
-    <label>NEWS2 Score = {{this.newsScoreCalculator.getTotalScore()}}</label>
-    <div>
-        <label>Klinisk risk = {{this.newsScoreCalculator.getClinicalRisk()}}</label>
-    </div>
-
-<!-----------------Total NEWS2 score-------------
-  <div>
-        <label>NEWS2 Score = {{this.newsScoreCalculator.getTotalScore()}}</label>
-        <div>
-            <label>Klinisk risk = {{this.newsScoreCalculator.getClinicalRisk()}}</label>
-        </div>
 --->
-
