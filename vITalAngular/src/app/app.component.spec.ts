@@ -8,6 +8,7 @@ import { BarcodeScannerPageComponent } from './views/barcode-scanner-page/barcod
 import { FooterComponent } from './views/footer/footer.component';
 import { HeaderComponent } from './views/header/header.component';
 import { HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatDialogModule} from '@angular/material';
 
 
 
@@ -25,7 +26,8 @@ describe('AppComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDialogModule
       ]
     }).compileComponents();
   }));

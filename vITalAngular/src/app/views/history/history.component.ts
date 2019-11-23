@@ -14,36 +14,15 @@ import {Router} from '@angular/router';
 })
 
 export class HistoryComponent implements OnInit {
-  private vitalSignsType: string;
-  private vitalSign: string;
-  private vitalArray: any[];
 
   constructor(private location: Location,
               private router: Router,
               private patientservice: PatientService) {
     this.vitalSign = this.router.getCurrentNavigation().extras.state.outputVitalParameter;
   }
-
-  public fetchDataApi() {
-    if (this.vitalSign === 'getHistoricBloodpressure') {
-      console.log(this.vitalSign + ' bloodpressure');
-      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
-      });
-    } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-      console.log(this.vitalSign + ' added resp');
-      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
-      });
-    } else if (this.vitalSign === 'getHistoricACVPU') {
-      console.log(this.vitalSign + ' ACVPU');
-      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
-      });
-    } else {
-      console.log(this.vitalSign + ' others');
-      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
-        this.vitalArray = data.resultSet.vitalsign;
-      });
-    }
-  }
+  private vitalSignsType: string;
+  private vitalSign: string;
+  private vitalArray: any[];
 
   public chartData: ChartDataSets[] = [
     { data: [140, 187, 170, 150, 155],
@@ -133,6 +112,27 @@ export class HistoryComponent implements OnInit {
   public lineChartPlugins = [pluginAnnotations];
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
+
+  public fetchDataApi() {
+    if (this.vitalSign === 'getHistoricBloodpressure') {
+      console.log(this.vitalSign + ' bloodpressure');
+      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+      });
+    } else if (this.vitalSign === 'getHistoricRespirationAdded') {
+      console.log(this.vitalSign + ' added resp');
+      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+      });
+    } else if (this.vitalSign === 'getHistoricACVPU') {
+      console.log(this.vitalSign + ' ACVPU');
+      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+      });
+    } else {
+      console.log(this.vitalSign + ' others');
+      this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+        this.vitalArray = data.resultSet.vitalsign;
+      });
+    }
+  }
   ngOnInit() {
   }
   goBack() {
