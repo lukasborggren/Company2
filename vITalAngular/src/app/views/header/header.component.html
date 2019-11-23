@@ -4,11 +4,10 @@
 
     <button type="button" class="btn fa fa-angle-left" (click)="goBack()" ></button>
     <div *ngIf="showPatient">
-      <p class= "patient-name">John-Karl Doe Johansson</p>
+      <p class= "patient-name">{{name}}</p>
       <p class = "person-number">{{pid}}</p>
     </div>
 
       <button type="button" class="btn btn-info ml-auto" (click)="goToLogout()">Logga ut</button>
   </div>
 </header>
-

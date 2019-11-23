@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 import {FeedDataService} from '../../services/feed-data.service';
-
+import {PatientService} from '../../services/patient.service';
 
 @Component({
   selector: 'app-header',
@@ -14,8 +14,10 @@ export class HeaderComponent implements OnInit {
   showPatient: boolean;
   pid: string;
   h: string;
+  name: string;
 
   constructor(
+      private patientdata: PatientService,
       private location: Location,
       private router: Router,
       private feedData: FeedDataService
@@ -47,8 +49,9 @@ export class HeaderComponent implements OnInit {
   getPid() {
     this.feedData.getPid().subscribe(pid => {
       this.pid = pid;
+      this.patientdata.getPatientInformation(this.pid).subscribe(data => {
+        this.name=data.parties[0].firstNames + " " + data.parties[0].lastNames;
+      });
     });
   }
-
-
 }
