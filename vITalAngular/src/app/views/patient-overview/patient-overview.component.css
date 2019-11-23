@@ -51,3 +51,10 @@
   background-color: white;
   height: 100px; /*hårdkodad storlek, inte bra*/
 }
+
+#between {
+    font-size: 40px;
+    position: relative;
+    padding: 1px;
+    font-weight: 100;
+}

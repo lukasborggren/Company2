@@ -125,6 +125,7 @@
     <div *ngIf="form.controls.systolicBloodPressure.invalid && !form.controls.systolicBloodPressure.pristine" class="alert-danger">
       <div *ngIf="form.controls.systolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
     </div>
+      <div class="ml-auto" id="between">/</div>
     <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.diastolicBloodPressure.invalid && !form.controls.diastolicBloodPressure.pristine" class="alert-danger">
       <div *ngIf="form.controls.diastolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
