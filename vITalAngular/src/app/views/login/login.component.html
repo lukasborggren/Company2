@@ -1,22 +1,39 @@
-<h3>Logga in</h3>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-        <label for="username">Användarnamn</label>
-        <input type="text" formControlName="username" class="form-control" id="username"/>
+<div class="m-4">
+
+<!-- The company logotype should be here
+  <div class="text-center">
+    <img src="" alt="vITal logotyp">
+  </div>
+-->
+
+  <div id="login" align="center">
+    <h3>Logga in</h3>
+
+    <div id=loginFields>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group" align="left">
+          <label for="username">Användarnamn</label>
+          <input type="text" formControlName="username" class="form-control" id="username"/>
+        </div>
+        <div class="form-group" align="left">
+          <label for="password">Lösenord</label>
+          <input type="password" formControlName="password" class="form-control" id="password"/>
+        </div>
+        <div *ngIf="isInvalid">
+          Invalid username or password!
+        </div>
+        <div class="form-group">
+          <button class="standardButton">Logga in</button>
+        </div>
+      </form>
     </div>
-    <div class="form-group">
-        <label for="password">Lösenord</label>
-        <input type="password" formControlName="password" class="form-control" id="password"/>
-    </div>
-    <div *ngIf="isInvalid">
-      Invalid username or password!
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary ">Logga in</button>
-    </div>
-</form>
-<div>
-    <h3>Use the following username and password to login:</h3>
-    <p>Username: useruser</p>
-    <p>Password: passpass</p>
+
+  </div>
+
+  <!-- Temporary username and password just for testing-->
+  <div>
+    <p>Username: cds@lio.se</p>
+    <p>Password: cds4ehr</p>
+  </div>
+
 </div>
