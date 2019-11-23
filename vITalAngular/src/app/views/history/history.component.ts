@@ -21,7 +21,6 @@ export class HistoryComponent implements OnInit {
   constructor(private location: Location,
               private router: Router,
               private patientservice: PatientService) {
-    this.vitalSign = this.router.getCurrentNavigation().extras.state.outputVitalParameter;
   }
 
   public fetchDataApi() {
@@ -40,8 +39,9 @@ export class HistoryComponent implements OnInit {
     } else {
       console.log(this.vitalSign + ' others');
       this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
-        this.vitalArray = data.resultSet.vitalsign;
+        this.vitalArray = data.resultSet[0].vitalsign;
       });
+      console.log(this.vitalArray);
     }
   }
 
@@ -134,6 +134,7 @@ export class HistoryComponent implements OnInit {
 
   @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
   ngOnInit() {
+    this.vitalSign = history.state.outputVitalParameter;
   }
   goBack() {
     // om du ska använda denna måste du skapa den i konstruktorn som jag gjorde ovanför.
