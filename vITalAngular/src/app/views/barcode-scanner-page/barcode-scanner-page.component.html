@@ -1,24 +1,28 @@
 <h1>{{title}}</h1>
-<button type="button" class="btn btn-warning" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
+
+<div align="center">
+
+  <button type="button" class="standardButton" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
     Skanna streckkod
-</button>
+  </button>
 
-<button type="button" class="btn btn-warning" *ngIf="stopScanButtonVisible" (click)="stopScanner()">
-    sluta skanna
-</button>
-<br>
-<label *ngIf="barcodevalue">Skannad streckkod = {{barcodevalue}}</label>
+  <button type="button" class="standardButton" *ngIf="stopScanButtonVisible" (click)="stopScanner()">
+    Sluta skanna
+  </button>
 
-<div class="input-group">
+  <label *ngIf="barcodevalue">Skannad streckkod = {{barcodevalue}}</label>
+
+  <div class="input-group">
     <div id="inputBarcode" style="position: static">
-        <div id="interactive" class="viewport">
-            <video autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
-        </div>
+      <div id="interactive" class="viewport">
+        <video autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+      </div>
     </div>
-</div>
+  </div>
 
-<div>
-    <button mat-raised-button color="accent" (click)="openDialog()">Manuell inmatning</button>
-    <p>Use 19791111-0017 in the manual input</p>
-</div>
+  <div>
+    <button class="standardButton" (click)="openDialog()">Manuell inmatning</button>
+    <p>19791111-0017</p>
+  </div>
 
+</div>
