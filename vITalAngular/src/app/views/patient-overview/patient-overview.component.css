@@ -20,7 +20,12 @@
     border: 1px solid black;
     /* height: 70px; */
 }
-
+.RLS-class {
+  font-size: 100%;
+  margin-bottom: 40px;
+  margin-left:10px;
+  /*margin-left: 250px;*/
+}
 .inputField {
     border: solid 2px;
     border-color: #000000;

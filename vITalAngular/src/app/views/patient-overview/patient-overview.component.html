@@ -247,12 +247,17 @@
     <div class="accordion">
       <div class="card" style="height: 10rem" >
         <div class="card-body ml-auto">
-          <button type="button" class="btn historikKnapp" (click)="goToHistory('getHistoricACVPU')">Historik</button>
+  <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+          </div>
+              <div class="RLS-class">
+                  RLS
+                  <input type="number" formControlName="consciousnessScore" class="inputField col-2 ml-auto form-control-lg p-2">
         </div>
       </div>
     </div>
   </div>
 </div>
+
 
 <!-----------------Temperatur----------------->
 <div class="parameterRow">
