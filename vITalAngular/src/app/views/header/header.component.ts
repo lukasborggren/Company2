@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
+import {FeedDataService} from '../../services/feed-data.service';
+
 
 @Component({
   selector: 'app-header',
@@ -10,10 +12,13 @@ import {NavigationEnd, Router} from '@angular/router';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
   showPatient: boolean;
+  pid: string;
+  h: string;
 
   constructor(
       private location: Location,
-      private router: Router
+      private router: Router,
+      private feedData: FeedDataService
       ) { }
 
   private goBack() {
@@ -22,6 +27,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.routeEvent();
+    this.getPid();
   }
 
   public goToLogout() {
@@ -38,6 +44,11 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  getPid() {
+    this.feedData.getPid().subscribe(pid => {
+      this.pid = pid;
+    });
+  }
 
 
 }

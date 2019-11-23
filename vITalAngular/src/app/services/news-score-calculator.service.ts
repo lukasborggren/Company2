@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NewsScoreCalculatorService {
-  newsScore3: number;
+    clinicalRisk: number;
+    totalScore: number;
   constructor() {
   }
 
@@ -74,17 +75,38 @@ export class NewsScoreCalculatorService {
 
   getTotalNEWS(respiratoryScore: number, saturationScore: number, supplementalOxygenScore: number,
                systolicScore: number, pulseScore: number, consciousnessScore: number, temperatureScore: number): number {
-    const totalScore = respiratoryScore + saturationScore + supplementalOxygenScore + systolicScore + pulseScore +
+    this.totalScore = respiratoryScore + saturationScore + supplementalOxygenScore + systolicScore + pulseScore +
         consciousnessScore + temperatureScore;
-    if (totalScore >= 7) {
+    if (this.totalScore >= 7) {
+      this.clinicalRisk = 3;
       return 3;
-    } else if (totalScore >= 5) {
-      return 2;
+    } else if (this.totalScore >= 5) {
+        this.clinicalRisk =  2;
+        return 2;
     } else if (respiratoryScore === 3 || saturationScore === 3 || supplementalOxygenScore === 3 || systolicScore === 3
         || pulseScore === 3 || consciousnessScore === 3 || temperatureScore === 3) {
-      return 1;
+        this.clinicalRisk =  1;
+        return 1;
     } else {
-      return 0;
+        this.clinicalRisk =  0;
+        return 1;
     }
   }
+    getClinicalRisk() {
+        if (this.clinicalRisk === 0) {
+            return 'Låg';
+        } else if (this.clinicalRisk === 1) {
+            return 'Låg/medium';
+        } else if (this.clinicalRisk === 2) {
+            return 'Medium';
+        } else if (this.clinicalRisk === 3) {
+            return 'Hög';
+        } else {
+    return null;
+}
+}
+
+getTotalScore() {
+      return this.totalScore;
+}
 }

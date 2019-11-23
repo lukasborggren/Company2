@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {ManualInputDialogComponent} from '../manual-input-dialog/manual-input-dialog.component';
+import {VerifyPatientDialogComponent} from '../verify-patient-dialog/verify-patient-dialog.component';
 import {PopupWindowComponent} from '../popup-window/popup-window.component';
 import {Router} from '@angular/router';
 
@@ -43,7 +44,7 @@ export class ConfirmSubmitComponent implements OnInit {
       dialogmessage: 'Personnummer'
     };
 
-    const dialogRef = this.dialog.open(ManualInputDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(VerifyPatientDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
         data => {
