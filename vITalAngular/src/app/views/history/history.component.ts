@@ -18,7 +18,6 @@ export class HistoryComponent implements OnInit {
   constructor(private location: Location,
               private router: Router,
               private patientservice: PatientService) {
-    this.vitalSign = this.router.getCurrentNavigation().extras.state.outputVitalParameter;
   }
   private vitalSignsType: string;
   private vitalSign: string;
@@ -134,6 +133,7 @@ export class HistoryComponent implements OnInit {
     }
   }
   ngOnInit() {
+    this.vitalSign = history.state.outputVitalParameter;
   }
   goBack() {
     // om du ska använda denna måste du skapa den i konstruktorn som jag gjorde ovanför.
