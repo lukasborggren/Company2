@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
+import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
+import {ConfirmSubmitComponent} from "../shared-components/confirm-submit/confirm-submit.component";
 
 
 @Component({
@@ -17,6 +19,7 @@ export class FooterComponent implements OnInit {
   constructor(
       private router: Router,
       private newsScoreCalculator: NewsScoreCalculatorService,
+      private dialog: MatDialog,
   ) { }
 
 
@@ -34,5 +37,14 @@ export class FooterComponent implements OnInit {
       }
     });
   }
+
+  openPopup(errorMessage: string) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dialogMessage: errorMessage
+    };
+    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
+  }
+
 
 }
