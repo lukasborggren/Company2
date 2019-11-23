@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { BarcodeScannerPageComponent} from './views/barcode-scanner-page/barcode-scanner-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ManualInputDialogComponent } from './views/shared-components/manual-input-dialog/manual-input-dialog.component';
+import {VerifyPatientDialogComponent} from './views/shared-components/verify-patient-dialog/verify-patient-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
@@ -27,6 +28,7 @@ import { FooterComponent } from './views/footer/footer.component';
     AppComponent,
     BarcodeScannerPageComponent,
     ManualInputDialogComponent,
+    VerifyPatientDialogComponent,
     HomeComponent,
     LoginComponent,
     LogoutComponent,
@@ -51,7 +53,7 @@ import { FooterComponent } from './views/footer/footer.component';
     RouterModule,
     ChartsModule
   ],
-  entryComponents: [ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent, ConfirmSubmitComponent],
+  entryComponents: [VerifyPatientDialogComponent, ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent, ConfirmSubmitComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

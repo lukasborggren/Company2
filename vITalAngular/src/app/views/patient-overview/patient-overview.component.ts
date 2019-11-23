@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
+import {VerifyPatientDialogComponent} from '../shared-components/verify-patient-dialog/verify-patient-dialog.component';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
