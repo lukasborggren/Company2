@@ -23,9 +23,9 @@ export class HistoryComponent implements OnInit {
     private vitalArray: any[] = [];
     private vitalArray2: any[] = [];
     private timeArray: any[] = [];
-    private chartLabel: any = 'asfasfasf';
-    private yaxisMax = 100;
-    private yaxisMin = 0;
+    private chartLabel: any = 'funkar inte vaf*n';
+    public yaxisMax: any;
+    public yaxisMin: any;
 
     public chartData: ChartDataSets[] = [
         { data: this.vitalArray,
@@ -116,12 +116,9 @@ export class HistoryComponent implements OnInit {
 
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
-
-    //Method is not complete yet!
     public fetchDataApi() {
         this.vitalSign = history.state.outputVitalParameter;
         if (this.vitalSign === 'getHistoricBloodpressure') {
-            console.log(this.vitalSign + ' bloodpressure');
             this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].systolic;
@@ -130,7 +127,6 @@ export class HistoryComponent implements OnInit {
                 }
             });
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-            console.log(this.vitalSign + ' added resp');
             return this.patientservice.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].syre;
@@ -138,7 +134,6 @@ export class HistoryComponent implements OnInit {
                 }
             });
         } else if (this.vitalSign === 'getHistoricACVPU') {
-            console.log(this.vitalSign + ' ACVPU');
             this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.timeArray[i] = data.resultSet[i].time;
@@ -156,7 +151,6 @@ export class HistoryComponent implements OnInit {
                 }
                 });
         } else {
-            console.log(this.vitalSign + ' others');
             this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].vitalsign;
