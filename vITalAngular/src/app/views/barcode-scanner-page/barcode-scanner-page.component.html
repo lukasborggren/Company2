@@ -1,6 +1,14 @@
-<h1>{{title}}</h1>
-
 <div align="center">
+
+  <!-- The new code that is replacing the one that is hidden by comments below, starts here:  -->
+
+  <div id="interactive" class="viewport">
+    <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+    <!-- The following line of code removes all the whitespace under the camera after the the button to stat scan have been clicked. -->
+    <canvas class="drawingBuffer" width="0" height="0"></canvas>
+  </div>
+
+  <!-- This is the end of the new code. -->
 
   <button type="button" class="standardButton" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
     Skanna streckkod
@@ -25,20 +33,12 @@
 
     -->
 
-  <!-- The new code that is replacing the one that is hidden by comments above, starts here:  -->
-
-  <div id="interactive" class="viewport">
-    <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
-    <!-- The following line of code removes all the whitespace under the camera after the the button to stat scan have been clicked. -->
-    <canvas class="drawingBuffer" width="0" height="0"></canvas>
-  </div>
-
-  <!-- This is the end of the new code. -->
-
-  <div>
+  <div id="manualButton">
     <button class="standardButton" (click)="openDialog()">Manuell inmatning</button>
-    <p>19791111-0017</p>
   </div>
 
   <button class="standardButton" (click)="goToLogout()">Logga ut</button>
+
+  <p>19791111-0017</p>
+
 </div>

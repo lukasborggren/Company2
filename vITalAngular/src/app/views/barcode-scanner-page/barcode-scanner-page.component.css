@@ -19,3 +19,8 @@
     max-width: 100%;
     width: 100%;
 }
+
+#manualButton {
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
