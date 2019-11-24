@@ -3,3 +3,10 @@
     width: 100vw;
     box-sizing: border-box;
 }
+
+
+.history-table  {
+    text-align: center;
+   font-size: small;
+
+}
