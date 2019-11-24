@@ -4,7 +4,7 @@
 <!-----------------Andningsfrekvens----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews"> {{this.respiratoryScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews" [ngClass]="{'bg-white': respiratoryScore == 0, 'newsscore1': respiratoryScore == 1, 'newsscore2': respiratoryScore == 2, 'newsscore3': respiratoryScore == 3}"> {{this.respiratoryScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Andningsfrekvens
           </div>
@@ -42,7 +42,7 @@
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.saturationScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': saturationScore == 0, 'newsscore1': saturationScore == 1, 'newsscore2': saturationScore == 2, 'newsscore3': saturationScore == 3}"> {{this.saturationScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Syremättnad
           </div>
@@ -98,7 +98,7 @@
 <!-----------------Tillförd syrgas----------------->
         <div class="parameterRow">
           <div class="d-flex align-items-center">
-            <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{getSupplementOxygenScore()}}</div>
+            <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getSupplementOxygenScore() == 0, 'newsscore1': getSupplementOxygenScore() == 1, 'newsscore2': getSupplementOxygenScore() == 2, 'newsscore3': getSupplementOxygenScore() == 3}"> {{getSupplementOxygenScore()}}</div>
             <div class="parameterTitle mr-auto col-4">
               Tillförd syrgas
             </div>
@@ -141,7 +141,7 @@
 <!-----------------Blodtryck----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.systolicScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': systolicScore == 0, 'newsscore1': systolicScore == 1, 'newsscore2': systolicScore == 2, 'newsscore3': systolicScore == 3}"> {{this.systolicScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Blodtryck
     </div>
@@ -176,7 +176,7 @@
 <!-----------------Pulsfrekvens----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.pulseScore}}</div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': pulseScore == 0, 'newsscore1': pulseScore == 1, 'newsscore2': pulseScore == 2, 'newsscore3': pulseScore == 3}"> {{this.pulseScore}}</div>
     <div class="parameterTitle mr-auto col-4">
       Pulsfrekvens
     </div>
@@ -205,7 +205,7 @@
 <!-----------------Medvetandegrad----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{getConsciousnessScore()}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessScore() == 0, 'newsscore1': getConsciousnessScore() == 1, 'newsscore2': getConsciousnessScore() == 2, 'newsscore3': getConsciousnessScore() == 3}"> {{getConsciousnessScore()}} </div>
     <div class="parameterTitle mr-auto col-4">
       Medvetandegrad </div>
         <!-- Default inline 1-->
@@ -286,7 +286,7 @@
 <!-----------------Temperatur----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.temperatureScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': temperatureScore == 0, 'newsscore1': temperatureScore == 1, 'newsscore2': temperatureScore == 2, 'newsscore3': temperatureScore == 3}"> {{this.temperatureScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Temperatur
     </div>
