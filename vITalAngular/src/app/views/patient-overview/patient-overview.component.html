@@ -10,7 +10,6 @@
           </div>
           <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
           <div *ngIf="form.controls.respiratoryRate.invalid && !form.controls.respiratoryRate.pristine" class="alert-danger">
-            <div *ngIf="form.controls.respiratoryRate.errors.required"> Andningsfrekvens krävs</div>
             <div *ngIf="form.controls.respiratoryRate.errors.pattern">Mata in ett värde mellan 0 och 100</div>
           </div>
           <div class="collapseButton p-2">
@@ -49,7 +48,6 @@
           </div>
           <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
           <div *ngIf="form.controls.oxygenSaturation.invalid && !form.controls.oxygenSaturation.pristine" class="alert-danger">
-            <div *ngIf="form.controls.oxygenSaturation.errors.required"> Syremättnad krävs</div>
             <div *ngIf="form.controls.oxygenSaturation.errors.pattern">Mata in ett värde mellan 0 och 100</div>
           </div>
           <div class="collapseButton p-2">
@@ -184,7 +182,6 @@
     </div>
     <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.pulseRate.invalid && !form.controls.pulseRate.pristine" class="alert-danger">
-      <div *ngIf="form.controls.pulseRate.errors.required"> Pulsfrekvens krävs</div>
       <div *ngIf="form.controls.pulseRate.errors.pattern">Mata in ett värde mellan 0 och 999</div>
     </div>
     <div class="collapseButton p-2">
@@ -295,7 +292,6 @@
     </div>
     <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.temperature.invalid && !form.controls.temperature.pristine" class="alert-danger">
-      <div *ngIf="form.controls.temperature.errors.required"> Kroppstemperatur krävs</div>
       <div *ngIf="form.controls.temperature.errors.pattern">Mata in ett värde mellan 0 och 100</div>
     </div>
     <div class="collapseButton p-2">
