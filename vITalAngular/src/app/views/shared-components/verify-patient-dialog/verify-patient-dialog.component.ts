@@ -65,7 +65,7 @@ export class VerifyPatientDialogComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogRef.close('close');
   }
 
   save() {
