@@ -63,7 +63,7 @@ export class PatientService {
       'ctx/health_care_facility|id': '9091'
     };
 
-    if (breathFreq !== 0) {
+    if (breathFreq !== '' && breathFreq !== null) {
       this.jsonComp = Object.assign(
           {
             'vital-parameters/andning:0/ospecificerad_händelse:0/frekvens|magnitude': breathFreq,
@@ -72,7 +72,7 @@ export class PatientService {
           }, this.jsonComp);
     }
 
-    if (oxSat !== 0) {
+    if (oxSat !== '' && oxSat !== null) {
       let scaleCom: string;
       oxSatScale === 1 ? scaleCom = 'Bedömning enligt skala 1' : scaleCom = 'Bedömning enligt skala 2';
       this.jsonComp = Object.assign(
@@ -83,7 +83,7 @@ export class PatientService {
           }, this.jsonComp);
     }
 
-    if (blPrDia !== 0 && blPrDia !== 0) {
+    if (blPrSys !== '' && blPrSys !== null && blPrDia !== '' && blPrDia !== null) {
       this.jsonComp = Object.assign(
           {
             'vital-parameters/blodtryck:0/ospecificerad_händelse:0/systoliskt|magnitude': blPrSys,
@@ -93,19 +93,19 @@ export class PatientService {
           }, this.jsonComp);
     }
 
-    if (acvpu !== 0) {
+    if (acvpu !== '' && acvpu !== null) {
       this.jsonComp = Object.assign(
           {
             'vital-parameters/acvpu:0/any_event:0/observation|code': this.acvpuCodes[acvpu - 1]
           }, this.jsonComp);
-    } else if (rls !== 0) {
+    } else if (rls !== '') {
       this.jsonComp = Object.assign(
           {
             'vital-parameters/rls-85:0/any_event:0/observation|code': this.rlsCodes[rls - 1]
           }, this.jsonComp);
     }
 
-    if (temp !== 0) {
+    if (temp !== '' && temp !== null) {
       this.jsonComp = Object.assign(
           {
             'vital-parameters/kroppstemperatur:0/ospecificerad_händelse:0/temperatur|magnitude': temp,
@@ -113,7 +113,7 @@ export class PatientService {
           }, this.jsonComp);
     }
 
-    if (pulse !== 0) {
+    if (pulse !== '' && temp !== null) {
       let pulseCom: string;
       freq ? pulseCom = 'Värdet erhållet genom att mäta hjärtfrekvens' : pulseCom = 'Värdet erhållet genom att ta puls';
       this.jsonComp = Object.assign(
@@ -124,13 +124,13 @@ export class PatientService {
           }, this.jsonComp);
     }
 
-    if (newsScore !== 0) {
+    if (newsScore !== 0 && newsScore !== null) {
       this.jsonComp = Object.assign(
           {
             'vital-parameters/news2:0/totalpoäng_news2': newsScore
           }, this.jsonComp);
     }
-
+    console.log(this.jsonComp);
   }
 
   postComposition(): Observable<any> {
