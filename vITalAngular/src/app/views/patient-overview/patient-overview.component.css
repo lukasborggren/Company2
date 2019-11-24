@@ -1,6 +1,6 @@
 .parameterTitle {
     /* Problematic font size when desktop mode.. */
-    font-size: 3vw;
+    font-size: 4vw;
 }
 
 .vertical {
@@ -57,7 +57,10 @@
   background-color: white;
   height: 100px; /*hårdkodad storlek, inte bra*/
 }
-
+.SO2scales-class {
+  padding-left:200px;
+  margin-bottom:150px;
+}
 #between {
     font-size: 40px;
     position: relative;

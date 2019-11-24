@@ -58,6 +58,26 @@
               <div class="card-body ml-auto">
                 <button type="button" class="btn historikKnapp" (click)="goToHistory('getHistoricOximetry')">Historik</button>
               </div>
+              <!-- KNAPPAR HÄR -->
+           <div class="SO2scales-class">
+           <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
+             <div class>
+                 <label class="form-check-label" for="inlineRadio1">Skala 1</label>
+               <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
+                      value="option1">
+                      </div>
+                      <div>
+               <label class="form-check-label" for="inlineRadio1">Skala 2</label>
+               <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
+                      value="option2">
+                      </div>
+           </div>
+           </div>
+           <!-- Knappar här
+
+           <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio3"
+                  value="option3" (change)="updateConsciousnessScore($event, 3)"> -->
+
             </div>
           </div>
         </div>
@@ -297,7 +317,7 @@
     <!-- This is the old button in the inaccurate style, can be removed when everything works as expected with the new button below.
     <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
     -->
-    
+
    <!-- Removing save-button as it is placed in footer instead
     <button class=standardButton (click)="openPopup('error')">Spara</button>
     -->
