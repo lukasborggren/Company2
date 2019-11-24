@@ -62,8 +62,8 @@ export class HistoryComponent implements OnInit {
             yAxes: [{
                 display: true,
                 ticks: {
-                    min: this.yaxisMin,
-                    max: this.yaxisMax,
+                    min: 0,
+                    max: 240,
                     stepSize: 20
                 }
             }],
