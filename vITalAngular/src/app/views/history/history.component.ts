@@ -24,8 +24,8 @@ export class HistoryComponent implements OnInit {
     private vitalArray2: any[] = [];
     private timeArray: any[] = [];
     private chartLabel: any = 'asfasfasf';
-    private yaxisMax: any;
-    private yaxisMin: any;
+    private yaxisMax = 100;
+    private yaxisMin = 0;
 
     public chartData: ChartDataSets[] = [
         { data: this.vitalArray,
@@ -64,7 +64,7 @@ export class HistoryComponent implements OnInit {
                 ticks: {
                     min: this.yaxisMin,
                     max: this.yaxisMax,
-                    stepSize: 30
+                    stepSize: 20
                 }
             }],
             xAxes: [{
@@ -132,29 +132,45 @@ export class HistoryComponent implements OnInit {
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
             console.log(this.vitalSign + ' added resp');
             return this.patientservice.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe( data => {
+                for (let i = 0; i < 10; i++) {
+                    this.vitalArray[i] = data.resultSet[i].syre;
+                    this.timeArray[i] = data.resultSet[i].time;
+                }
             });
         } else if (this.vitalSign === 'getHistoricACVPU') {
             console.log(this.vitalSign + ' ACVPU');
             this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
-                    this.vitalArray[i] = data.resultSet[i].acvpu;
+                    this.timeArray[i] = data.resultSet[i].time;
+                    if (data.resultSet[i].acvpu === 'Alert') {
+                        this.vitalArray[i] = 5;
+                    } else if (data.resultSet[i].acvpu === 'Confusion') {
+                        this.vitalArray[i] = 4;
+                    } else if (data.resultSet[i].acvpu === 'Verbal') {
+                        this.vitalArray[i] = 3;
+                    } else if (data.resultSet[i].acvpu === 'Pain') {
+                        this.vitalArray[i] = 2;
+                    } else if (data.resultSet[i].acvpu === 'Unresponsive') {
+                        this.vitalArray[i] = 1;
+                    }
                 }
-            });
+                });
         } else {
             console.log(this.vitalSign + ' others');
             this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].vitalsign;
                     this.timeArray[i] = data.resultSet[i].time;
-               }
+                }
             });
-         /*   if (this.vitalSign === 'getHistoricRespiration') {
-                this.chartLabel = 'Andningsfrekvens';
-            } else if (this.vitalSign === 'getHistoricTemperature') {
-                this.chartLabel = 'Temperatur';
-            } else if (this.vitalSign === 'getHistoricPulse') {
-                this.chartLabel = 'Puls'; }
-            console.log(this.chartLabel);*/
+            /*   if (this.vitalSign === 'getHistoricRespiration') {
+                   this.chartLabel = 'Andningsfrekvens';
+               } else if (this.vitalSign === 'getHistoricTemperature') {
+                   this.chartLabel = 'Temperatur';
+               } else if (this.
+               vitalSign === 'getHistoricPulse') {
+                   this.chartLabel = 'Puls'; }
+               console.log(this.chartLabel);*/
         }
     }
     ngOnInit() {

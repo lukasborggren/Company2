@@ -21,7 +21,7 @@
         </div>
         <div *ngIf="isAccordionOpen(0)">
           <div class="accordion">
-            <div class="card" style="height: 9rem" >
+            <div class="card collapseCard" style="height: 9rem" >
               <div class="card-head text-left">
                   <p class="card-text ml-2"><u>Senaste värde:</u></p>
                     <div class="btn-group-vertical ml-2">
@@ -59,9 +59,9 @@
         </div>
         <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
           <div class="accordion">
-            <div class="card" style="height: 10rem" >
+            <div class="card collapseCard" style="height: 9rem" >
               <div class="card-body ml-auto">
-                <button type="button" class="btn historikKnapp" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
+                <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
               </div>
               <!-- KNAPPAR HÄR -->
               <div class="SO2scales-class">
@@ -129,7 +129,7 @@
 
   <div *ngIf="isAccordionOpen(2)">
     <div class="accordion">
-      <div class="card" style="height: 9rem" >
+      <div class="card collapseCard" style="height: 9rem" >
         <div class="card-head text-left">
             <p class="card-text ml-2"><u>Senaste värde:</u></p>
               <div class="btn-group-vertical ml-2">
@@ -173,7 +173,7 @@
 
     <div *ngIf="isAccordionOpen(3)">
       <div class="accordion">
-        <div class="card" style="height: 9rem" >
+        <div class="card collapseCard" style="height: 9rem" >
           <div class="card-head text-left">
               <p class="card-text ml-2"><u>Senaste värde:</u></p>
                 <div class="btn-group-vertical ml-2">
@@ -211,7 +211,7 @@
 
   <div *ngIf="isAccordionOpen(4)">
     <div class="accordion">
-      <div class="card" style="height: 9rem" >
+      <div class="card collapseCard" style="height: 9rem" >
         <div class="card-head text-left">
             <p class="card-text ml-2"><u>Senaste värde:</u></p>
               <div class="btn-group-vertical ml-2">
@@ -294,9 +294,9 @@
   </div>
   <div *ngIf="isAccordionOpen(5)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
     <div class="accordion">
-      <div class="card" style="height: 10rem" >
+      <div class="card collapseCard" style="height: 10rem" >
         <div class="card-body ml-auto">
-  <button type="button" class="btn historikKnapp" (click)="goToHistory('getHistoricACVPU')">Historik</button>
+  <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricACVPU')">Mer historik</button>
           </div>
               <div class="RLS-class">
                   RLS
@@ -330,7 +330,7 @@
 
   <div *ngIf="isAccordionOpen(6)">
     <div class="accordion">
-      <div class="card" style="height: 9rem" >
+      <div class="card collapseCard" style="height: 9rem" >
         <div class="card-head text-left">
             <p class="card-text ml-2"><u>Senaste värde:</u></p>
               <div class="btn-group-vertical ml-2">
