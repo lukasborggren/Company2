@@ -62,12 +62,12 @@
            <div class="SO2scales-class">
            <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
              <div class>
-                 <label class="form-check-label" for="inlineRadio1">Skala 1</label>
+                 <label class="form-check-label2" for="inlineRadio1">Skala 1</label>
                <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
                       value="option1" (change)="this.newsScoreCalculator.oxygenSaturationScale1($event, true)">
                       </div>
                       <div>
-               <label class="form-check-label" for="inlineRadio1">Skala 2</label>
+               <label class="form-check-label2" for="inlineRadio1">Skala 2</label>
                <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
                       value="option2" (change)="this.newsScoreCalculator.oxygenSaturationScale1($event, false)">
                       </div>
@@ -102,12 +102,12 @@
             <div class="collapseButton p-2"-->
               <!-- here i added the two radio check buttons instead of input-box -->
                 <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-                  <div class="vertical">
+                  <div class="vertical2">
                       <label class="form-check-label" for="inlineRadio1">Ja</label>
                     <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                            value="option1" (change)="updateSupplementOxygenScore($event, 2)">
                            </div>
-                           <div class="vertical">
+                           <div class="vertical2">
                     <label class="form-check-label" for="inlineRadio1">Nej</label>
                     <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                            value="option2" (change)="updateSupplementOxygenScore($event, 0)">
