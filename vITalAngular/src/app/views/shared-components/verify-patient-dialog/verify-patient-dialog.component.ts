@@ -21,9 +21,9 @@ export class VerifyPatientDialogComponent implements OnInit {
   barcodevalue: string;
   stopScanButtonVisible: boolean;
   pid: string;
-  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
-  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
-  
+  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
+
 
   constructor(
       private dialogRef: MatDialogRef<VerifyPatientDialogComponent>,
@@ -76,12 +76,12 @@ export class VerifyPatientDialogComponent implements OnInit {
     this.stopScanButtonVisible = true;
     this.barcodeScanner.startScanner();
   }
-  stop(){
+  stop() {
     this.stopScanButtonVisible = false;
     this.barcodeScanner.StopScanner();
     this.dialogRef.close(this.form.value);
   }
-  
+
 
 
 
