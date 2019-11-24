@@ -54,6 +54,11 @@
   color:black;
 }
 
+.expandBtn {
+  background-color: #d8d8d8;
+  border: solid black 1px;
+}
+
 .toggleRow {
   background-color: white;
   height: 100px; /*hårdkodad storlek, inte bra*/
