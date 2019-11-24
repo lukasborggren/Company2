@@ -2,7 +2,7 @@
     <!-- When at patientOverview elements go here -->
   <div class = "d-flex align-items-center justify-content-between h-100 p-3">
     <div class="text">Totalt<br>värde </div>
-    <div class="totalNews alert alert-secondary alert-sm" [ngClass]="{'bg-white': newsScoreCalculator.getTotalScore() >= 0 && newsScoreCalculator.getTotalScore()  <= 4, 'newsscore2': newsScoreCalculator.getTotalScore() > 4 && newsScoreCalculator.getTotalScore()  <=6, 'newsscore3': newsScoreCalculator.getTotalScore() > 6}">
+    <div class="totalNews alert alert-secondary alert-sm" [ngClass]="{'bg-white': newsScoreCalculator.getClinicalRisk() == 'Låg', 'newsscore1': newsScoreCalculator.getClinicalRisk() == 'Låg/medium', 'newsscore2': newsScoreCalculator.getClinicalRisk() == 'Medium', 'newsscore3': newsScoreCalculator.getClinicalRisk() == 'Hög'}">
       {{this.newsScoreCalculator.getTotalScore()}} </div>
     <div class=" clinical d-flex flex-column justify-content-center">
     <div class="text">
