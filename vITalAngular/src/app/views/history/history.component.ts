@@ -19,15 +19,17 @@ export class HistoryComponent implements OnInit {
                 private router: Router,
                 private patientservice: PatientService) {
     }
-    private vitalSignsType: string;
     private vitalSign: string;
-    private resultArray: any[];
-    private vitalArray: any[]
-    private timeArray: any[];
+    private vitalArray: any[] = [];
+    private vitalArray2: any[] = [];
+    private timeArray: any[] = [];
+    private chartLabel: any = 'asfasfasf';
+    private yaxisMax: any;
+    private yaxisMin: any;
 
     public chartData: ChartDataSets[] = [
-        { data: [140, 187, 170, 150, 155],
-            label: 'Systoliskt blodtryck',
+        { data: this.vitalArray,
+            label: this.chartLabel,
             lineTension: 0,
             pointStyle: 'triangle',
             pointRotation: 180,
@@ -41,8 +43,8 @@ export class HistoryComponent implements OnInit {
             pointHoverBorderColor: 'rgba(148,159,177,0.8)'
         },
         {
-            data: [89, 92, 90, 95, 92],
-            label: 'Diastoliskt blodtryck',
+            data: this.vitalArray2,
+            label: this.chartLabel,
             lineTension: 0,
             pointStyle: 'triangle',
             fill: false,
@@ -53,16 +55,16 @@ export class HistoryComponent implements OnInit {
             pointBorderColor: 'rgba(223, 128, 255, 1)',
         },
     ];
-    public chartLabels: Label[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+    public chartLabels: Label[] = this.timeArray;
     public chartOptions: (ChartOptions & { annotation: any }) = {
         responsive: true,
         scales: {
             yAxes: [{
                 display: true,
                 ticks: {
-                    min: 50,
-                    max: 240,
-                    stepSize: 20
+                    min: this.yaxisMin,
+                    max: this.yaxisMax,
+                    stepSize: 30
                 }
             }],
             xAxes: [{
@@ -120,7 +122,12 @@ export class HistoryComponent implements OnInit {
         this.vitalSign = history.state.outputVitalParameter;
         if (this.vitalSign === 'getHistoricBloodpressure') {
             console.log(this.vitalSign + ' bloodpressure');
-            return this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+                for (let i = 0; i < 10; i++) {
+                    this.vitalArray[i] = data.resultSet[i].systolic;
+                    this.vitalArray2[i] = data.resultSet[i].diastolic;
+                    this.timeArray[i] = data.resultSet[i].time;
+                }
             });
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
             console.log(this.vitalSign + ' added resp');
@@ -128,16 +135,26 @@ export class HistoryComponent implements OnInit {
             });
         } else if (this.vitalSign === 'getHistoricACVPU') {
             console.log(this.vitalSign + ' ACVPU');
-            return this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+                for (let i = 0; i < 10; i++) {
+                    this.vitalArray[i] = data.resultSet[i].acvpu;
+                }
             });
         } else {
             console.log(this.vitalSign + ' others');
-            return this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
-                this.resultArray = data.resultSet;
+            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
-                    console.log(this.resultArray[i].time);
-                }
+                    this.vitalArray[i] = data.resultSet[i].vitalsign;
+                    this.timeArray[i] = data.resultSet[i].time;
+               }
             });
+         /*   if (this.vitalSign === 'getHistoricRespiration') {
+                this.chartLabel = 'Andningsfrekvens';
+            } else if (this.vitalSign === 'getHistoricTemperature') {
+                this.chartLabel = 'Temperatur';
+            } else if (this.vitalSign === 'getHistoricPulse') {
+                this.chartLabel = 'Puls'; }
+            console.log(this.chartLabel);*/
         }
     }
     ngOnInit() {
