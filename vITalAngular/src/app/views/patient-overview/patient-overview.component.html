@@ -25,8 +25,8 @@
               <div class="card-head text-left">
                   <p class="card-text ml-2"><u>Senaste värde:</u></p>
                     <div class="btn-group-vertical ml-2">
-                      <button type="button" class="btn btn-sm expandBtn"><strong>23:30 27-11-2019</strong></button>
-                      <button type="button" class="btn btn-sm expandBtn btn-block"><strong>17/MIN</strong></button>
+                      <button type="button" class="btn btn-sm expandBtn"><strong>{{latestRespirationTime| date:'short' }}</strong></button>
+                      <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestRespiration}}/MIN</strong></button>
                     </div>
                 <div class="d-flex justify-content-end">
                   <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricRespiration')">Mer historik</button>
@@ -59,25 +59,27 @@
         </div>
         <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
           <div class="accordion">
-            <div class="card" style="height: 10rem" >
+            <!-- Lägg till senaste värde med {{latestOxidation}} och {}{latestOxidationTime | date:'short'}} -->
+            <div class="card collapseCard" style="height: 9rem" >
               <div class="card-body ml-auto">
-                <button type="button" class="btn historikKnapp" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
+                <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
               </div>
+
               <!-- KNAPPAR HÄR -->
-           <div class="SO2scales-class">
-           <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-             <div class>
-                 <label class="form-check-label" for="inlineRadio1">Skala 1</label>
-               <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
-                      value="option1">
-                      </div>
-                      <div>
-               <label class="form-check-label" for="inlineRadio1">Skala 2</label>
-               <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
-                      value="option2">
-                      </div>
-           </div>
-           </div>
+              <div class="SO2scales-class">
+                  <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
+                  <div class = "mb-2">
+                     <label class="form-check-label mr-3" for="inlineRadio1">Skala 1</label>
+                   <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
+                          value="option1">
+                          </div>
+                          <div>
+                   <label class="form-check-label mr-3" for="inlineRadio1">Skala 2</label>
+                   <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
+                          value="option2">
+                          </div>
+                  </div>
+                  </div>
            <!-- Knappar här
 
            <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio3"
@@ -133,8 +135,8 @@
         <div class="card-head text-left">
             <p class="card-text ml-2"><u>Senaste värde:</u></p>
               <div class="btn-group-vertical ml-2">
-                <button type="button" class="btn btn-sm expandBtn"><strong>23:30 27-11-2019</strong></button>
-                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>AIR</strong></button>
+                <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime |date:'short'}}</strong></button>
+                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxygen}}</strong></button>
               </div>
           <div class="d-flex justify-content-end">
             <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricRespirationAdded')">Mer historik</button>
@@ -177,8 +179,8 @@
           <div class="card-head text-left">
               <p class="card-text ml-2"><u>Senaste värde:</u></p>
                 <div class="btn-group-vertical ml-2">
-                  <button type="button" class="btn btn-sm expandBtn"><strong>23:30 27-11-2019</strong></button>
-                  <button type="button" class="btn btn-sm expandBtn btn-block"><strong>128/80 mm Hg</strong></button>
+                  <button type="button" class="btn btn-sm expandBtn"><strong>{{latestBPTime| date:'short'}}</strong></button>
+                  <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestSystolic}}/{{latestDiastolic}} mm Hg</strong></button>
                 </div>
             <div class="d-flex justify-content-end">
               <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricBloodpressure')">Mer historik</button>
@@ -215,8 +217,8 @@
         <div class="card-head text-left">
             <p class="card-text ml-2"><u>Senaste värde:</u></p>
               <div class="btn-group-vertical ml-2">
-                <button type="button" class="btn btn-sm expandBtn"><strong>23:30 27-11-2019</strong></button>
-                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>81 Slag/min</strong></button>
+                <button type="button" class="btn btn-sm expandBtn"><strong>{{latestPulseTime | date: 'short'}}</strong></button>
+                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestPulse}}/min</strong></button>
               </div>
           <div class="d-flex justify-content-end">
             <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricPulse')">Mer historik</button>
@@ -293,6 +295,8 @@
     </div>
   </div>
   <div *ngIf="isAccordionOpen(5)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+
+    <!--Hämta senaaste mätvärde med {{latestAlertness}} och {{latestAlertnessTime |date:'short'}} -->
     <div class="accordion">
       <div class="card" style="height: 10rem" >
         <div class="card-body ml-auto">
@@ -334,8 +338,8 @@
         <div class="card-head text-left">
             <p class="card-text ml-2"><u>Senaste värde:</u></p>
               <div class="btn-group-vertical ml-2">
-                <button type="button" class="btn btn-sm expandBtn"><strong>23:30 27-11-2019</strong></button>
-                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>37.0 C</strong></button>
+                <button type="button" class="btn btn-sm expandBtn"><strong>{{latestTemperatureTime | date: 'short'}}</strong></button>
+                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestTemperature}} C</strong></button>
               </div>
           <div class="d-flex justify-content-end">
             <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricTemperature')">Mer historik</button>

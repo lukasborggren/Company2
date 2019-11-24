@@ -45,6 +45,24 @@ export class PatientOverviewComponent implements OnInit {
   scale1: boolean;
 
 
+
+    latestRespiration: string;
+    latestRespirationTime:any;
+    latestOxidation: string;
+    latestOxidationTime:string;
+    latestOxygen:string;
+    latestOxygenTime:any;
+    latestSystolic:string;
+    latestDiastolic:string;
+    latestBPTime:any;
+    latestPulse:string;
+    latestPulseTime:any;
+    latestAlertness:string;
+    latestAlertnessTime:any;
+    latestTemperature:string;
+    latestTemperatureTime:any;
+
+
   constructor(
       private patientService: PatientService,
       private route: ActivatedRoute,
@@ -104,6 +122,43 @@ export class PatientOverviewComponent implements OnInit {
         ]
       ]
     });
+
+
+
+    this.patientService.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestRespiration=data.resultSet[0].vitalsign;
+          this.latestRespirationTime=data.resultSet[0].time;
+        });
+        this.patientService.getHistoricOximetry(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestOxidation=data.resultSet[0].vitalsign;
+          this.latestOxidationTime=data.resultSet[0].time;
+        if (data.resultSet[0].syre) {
+          this.latestOxygen="Syre"
+        }else{
+          this.latestOxygen="Luft"
+        };
+
+        });
+        this.patientService.getHistoricBloodpressure(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestSystolic=data.resultSet[0].systolic;
+          this.latestDiastolic=data.resultSet[0].diastolic;
+          this.latestBPTime=data.resultSet[0].time;
+        });
+        this.patientService.getHistoricPulse(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestPulse=data.resultSet[0].vitalsign;
+          this.latestPulseTime=data.resultSet[0].time;
+        });
+        this.patientService.getHistoricACVPU(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestAlertness=data.resultSet[0].vitalsign;
+          this.latestAlertnessTime=data.resultSet[0].time;
+
+        });
+        this.patientService.getHistoricTemperature(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestTemperature=data.resultSet[0].vitalsign;
+          this.latestTemperatureTime=data.resultSet[0].time;
+
+        });
+
 
     // kolla på touched / invalid
 
