@@ -6,6 +6,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('ConfirmSubmitComponent', () => {
   let component: ConfirmSubmitComponent;
@@ -14,7 +15,7 @@ describe('ConfirmSubmitComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ConfirmSubmitComponent ],
-      imports: [BrowserAnimationsModule, MatButtonModule,  MatDialogModule, ReactiveFormsModule, RouterTestingModule ],
+      imports: [BrowserAnimationsModule, MatButtonModule,  MatDialogModule, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule],
       providers: [{provide : MatDialogRef, useValue : {} },
         { provide: MAT_DIALOG_DATA, useValue: [] },
       ]
