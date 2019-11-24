@@ -5,6 +5,7 @@
 
 .vertical {
     float: left;
+    padding-right: 10px;
 }
 .vertical  > *{
     display :block;
@@ -53,6 +54,11 @@
   color:black;
 }
 
+.expandBtn {
+  background-color: #d8d8d8;
+  border: solid black 1px;
+}
+
 .toggleRow {
   background-color: white;
   height: 100px; /*hårdkodad storlek, inte bra*/
@@ -78,4 +84,28 @@
 
 .newsscore3 {
   background-color: #F59681;
+}
+
+input[type=radio] {
+  -ms-transform: scale(2);
+  -moz-transform: scale(2);
+  -webkit-transform: scale(2);
+  -o-transform: scale(2);
+  transform: scale(2);
+  padding: 10px;
+}
+
+.vertical2 {
+    float: left;
+     padding-right:10px;
+
+}
+.vertical2  > *{
+    display :block;
+    margin: .2rem;
+
+}
+
+.form-check-label2 {
+   padding-right: 10px;
 }
