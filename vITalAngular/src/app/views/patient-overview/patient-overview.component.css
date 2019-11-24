@@ -8,6 +8,7 @@
 }
 .vertical  > *{
     display :block;
+    margin: .2rem;
 }
 
 .form-check-label{
@@ -16,7 +17,7 @@
 
 .parameterRow {
     background-color: #D8D8D8;
-    padding: .5rem 1rem;
+    padding: .5rem .1rem .5rem 1rem;;
     border: 1px solid black;
     /* height: 70px; */
 }
