@@ -12,10 +12,16 @@
     text-align: center;
     margin-top: 20px;
     margin-bottom: 15px;
+    max-width: 400px;
 }
 
 #interactive.viewport>canvas,
 #interactive.viewport>video {
     max-width: 100%;
     width: 100%;
+}
+
+#manualButton {
+  margin-top: 10px;
+  margin-bottom: 40px;
 }

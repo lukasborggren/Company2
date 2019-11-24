@@ -4,13 +4,12 @@
 <!-----------------Andningsfrekvens----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews"> {{this.respiratoryScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews" [ngClass]="{'bg-white': respiratoryScore == 0, 'newsscore1': respiratoryScore == 1, 'newsscore2': respiratoryScore == 2, 'newsscore3': respiratoryScore == 3}"> {{this.respiratoryScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Andningsfrekvens
           </div>
           <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
           <div *ngIf="form.controls.respiratoryRate.invalid && !form.controls.respiratoryRate.pristine" class="alert-danger">
-            <div *ngIf="form.controls.respiratoryRate.errors.required"> Andningsfrekvens krävs</div>
             <div *ngIf="form.controls.respiratoryRate.errors.pattern">Mata in ett värde mellan 0 och 100</div>
           </div>
           <div class="collapseButton p-2">
@@ -22,9 +21,16 @@
         </div>
         <div *ngIf="isAccordionOpen(0)">
           <div class="accordion">
-            <div class="card" style="height: 10rem" >
-              <div class="card-body ml-auto">
-                <button type="button" class="btn historikKnapp" (click)="goToHistory('getHistoricRespiration')">Historik</button>
+            <div class="card" style="height: 9rem" >
+              <div class="card-head text-left">
+                  <p class="card-text ml-2"><u>Senaste värde:</u></p>
+                    <div class="btn-group-vertical ml-2">
+                      <button type="button" class="btn btn-sm expandBtn"><strong>23:30 27-11-2019</strong></button>
+                      <button type="button" class="btn btn-sm expandBtn btn-block"><strong>17/MIN</strong></button>
+                    </div>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn historikKnapp btn-sm mr-2 mt-10" (click)="goToHistory('getHistoricRespiration')">Mer historik</button>
+                </div>
               </div>
             </div>
           </div>
@@ -36,13 +42,12 @@
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.saturationScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': saturationScore == 0, 'newsscore1': saturationScore == 1, 'newsscore2': saturationScore == 2, 'newsscore3': saturationScore == 3}"> {{this.saturationScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Syremättnad
           </div>
           <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
           <div *ngIf="form.controls.oxygenSaturation.invalid && !form.controls.oxygenSaturation.pristine" class="alert-danger">
-            <div *ngIf="form.controls.oxygenSaturation.errors.required"> Syremättnad krävs</div>
             <div *ngIf="form.controls.oxygenSaturation.errors.pattern">Mata in ett värde mellan 0 och 100</div>
           </div>
           <div class="collapseButton p-2">
@@ -93,7 +98,7 @@
 <!-----------------Tillförd syrgas----------------->
         <div class="parameterRow">
           <div class="d-flex align-items-center">
-            <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{getSupplementOxygenScore()}}</div>
+            <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getSupplementOxygenScore() == 0, 'newsscore1': getSupplementOxygenScore() == 1, 'newsscore2': getSupplementOxygenScore() == 2, 'newsscore3': getSupplementOxygenScore() == 3}"> {{getSupplementOxygenScore()}}</div>
             <div class="parameterTitle mr-auto col-4">
               Tillförd syrgas
             </div>
@@ -136,7 +141,7 @@
 <!-----------------Blodtryck----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.systolicScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': systolicScore == 0, 'newsscore1': systolicScore == 1, 'newsscore2': systolicScore == 2, 'newsscore3': systolicScore == 3}"> {{this.systolicScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Blodtryck
     </div>
@@ -171,13 +176,12 @@
 <!-----------------Pulsfrekvens----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.pulseScore}}</div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': pulseScore == 0, 'newsscore1': pulseScore == 1, 'newsscore2': pulseScore == 2, 'newsscore3': pulseScore == 3}"> {{this.pulseScore}}</div>
     <div class="parameterTitle mr-auto col-4">
       Pulsfrekvens
     </div>
     <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.pulseRate.invalid && !form.controls.pulseRate.pristine" class="alert-danger">
-      <div *ngIf="form.controls.pulseRate.errors.required"> Pulsfrekvens krävs</div>
       <div *ngIf="form.controls.pulseRate.errors.pattern">Mata in ett värde mellan 0 och 999</div>
     </div>
     <div class="collapseButton p-2">
@@ -201,9 +205,9 @@
 <!-----------------Medvetandegrad----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{getConsciousnessScore()}} </div>
-    <div class="parameterTitle mr-auto col-4">
-      Medvetandegrad </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessScore() == 0, 'newsscore1': getConsciousnessScore() == 1, 'newsscore2': getConsciousnessScore() == 2, 'newsscore3': getConsciousnessScore() == 3}"> {{getConsciousnessScore()}} </div>
+    <div class="parameterTitle mr-auto col-3">
+      Medvetande-<br>grad </div>
         <!-- Default inline 1-->
     <!-- This input shall have five check boxes for the alertness scale, see Prototype -->
       <!-- this is the radio check-boxes code-->
@@ -282,13 +286,12 @@
 <!-----------------Temperatur----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.temperatureScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': temperatureScore == 0, 'newsscore1': temperatureScore == 1, 'newsscore2': temperatureScore == 2, 'newsscore3': temperatureScore == 3}"> {{this.temperatureScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Temperatur
     </div>
     <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.temperature.invalid && !form.controls.temperature.pristine" class="alert-danger">
-      <div *ngIf="form.controls.temperature.errors.required"> Kroppstemperatur krävs</div>
       <div *ngIf="form.controls.temperature.errors.pattern">Mata in ett värde mellan 0 och 100</div>
     </div>
     <div class="collapseButton p-2">
