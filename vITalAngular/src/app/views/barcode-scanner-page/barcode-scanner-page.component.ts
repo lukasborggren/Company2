@@ -67,6 +67,7 @@ export class BarcodeScannerPageComponent implements OnInit {
                 response => {
                   const ehrId = response.parties[0].additionalInfo.ehrId;
                   localStorage.setItem('EHR_ID', ehrId);
+                  localStorage.setItem('PID', data.description);
                 },
                 error => console.log(error)
             );

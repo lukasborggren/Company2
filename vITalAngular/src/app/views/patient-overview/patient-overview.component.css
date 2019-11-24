@@ -49,20 +49,24 @@
 }
 
 .historikKnapp {
-  background-color: gray;
+  background-color: white;
+  border: solid black 1px;
   border-radius: 9px;
   color:black;
 }
 
 .expandBtn {
-  background-color: #d8d8d8;
+  background-color: white;
   border: solid black 1px;
+  border-radius: 9px;
 }
 
-.toggleRow {
-  background-color: white;
-  height: 100px; /*hårdkodad storlek, inte bra*/
+.collapseCard {
+  background-color: #d8d8d8;
+  border: 0px;
 }
+
+
 .SO2scales-class {
   padding-left:200px;
   margin-bottom:150px;

@@ -71,6 +71,7 @@ export class AuthService {
     localStorage.removeItem('ENCODED_STRING');
     localStorage.removeItem('ACCESS_TOKEN');
     localStorage.removeItem('EHR_ID');
+    localStorage.removeItem('PID');
     this.loggedIn.next(false);
   }
 }

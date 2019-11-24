@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class NewsScoreCalculatorService {
     clinicalRisk: number;
-    totalScore: number;
+    totalScore = 0;
     isEmpty: boolean;
     scale1: boolean;
   constructor() {

@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
 import { PatientService } from './patient.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('PatientService', () => {
   beforeEach(() => TestBed.configureTestingModule({
-    imports: [ HttpClientModule ],
+    imports: [ HttpClientTestingModule ],
     providers: [ PatientService ]
   }));
 
