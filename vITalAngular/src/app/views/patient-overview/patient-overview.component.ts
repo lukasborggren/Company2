@@ -264,20 +264,17 @@ export class PatientOverviewComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
   }
 
-  // Only fixed mock values at the moment, will be fixed later.
+  // Some fixed mock values at the moment, will be fixed later.
   packVitalsAsJson() {
     this.patientService.createJsonComp(
-        12, 12, 1, true, 30, 20,
-        70, true, 1, 2, 37.1, 3);
-    /*this.patientService.createJsonComp(
         this.form.get('respiratoryRate').value,
-        this.form.get('oxygenSaturation').value,
-        1, true,
+        this.form.get('oxygenSaturation').value, 1, true,
         this.form.get('systolicBloodPressure').value,
         this.form.get('diastolicBloodPressure').value,
-        this.form.get('pulseRate').value, true, 1, 2,
+        this.form.get('pulseRate').value, true,
+        1, 2,
         this.form.get('temperature').value,
-        this.newsScoreCalculator.getTotalScore());*/
+        this.newsScoreCalculator.getTotalScore());
   }
 
   goToHistory(vitalParameter: string) {
