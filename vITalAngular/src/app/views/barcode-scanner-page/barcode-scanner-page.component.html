@@ -12,17 +12,33 @@
 
   <label *ngIf="barcodevalue">Skannad streckkod = {{barcodevalue}}</label>
 
-  <div class="input-group">
-    <div id="inputBarcode" style="position: static">
-      <div id="interactive" class="viewport">
-        <video autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+  <!-- This is the code that have been working properly but not viewed properly in the window.
+      If needed this can be taken back and used:
+
+    <div class="input-group">
+      <div id="inputBarcode" style="position: static">
+        <div id="interactive" class="viewport">
+          <video autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+        </div>
       </div>
     </div>
+
+    -->
+
+  <!-- The new code that is replacing the one that is hidden by comments above, starts here:  -->
+
+  <div id="interactive" class="viewport">
+    <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+    <!-- The following line of code removes all the whitespace under the camera after the the button to stat scan have been clicked. -->
+    <canvas class="drawingBuffer" width="0" height="0"></canvas>
   </div>
+
+  <!-- This is the end of the new code. -->
 
   <div>
     <button class="standardButton" (click)="openDialog()">Manuell inmatning</button>
     <p>19791111-0017</p>
   </div>
+
   <button class="standardButton" (click)="goToLogout()">Logga ut</button>
 </div>
