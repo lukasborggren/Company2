@@ -50,3 +50,7 @@ p, .labelText {
   justify-content: center;
   align-items: center;
 }
+
+.standardButton:disabled {
+opacity: 0.2;
+}
