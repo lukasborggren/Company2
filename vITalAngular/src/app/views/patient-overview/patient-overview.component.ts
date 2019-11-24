@@ -241,6 +241,15 @@ export class PatientOverviewComponent implements OnInit {
     } else {
       this.newsScoreCalculator.isEmpty = false;
     }
+
+    if ((this.systolicScore == null) || (this.temperatureScore == null ) ||
+    (this.pulseScore == null) || (this.respiratoryScore == null) ||
+    (this.saturationScore == null) || (this.supplementalOxygenScore == null) ||
+    ( this.consciousnessScore == null)) {
+      this.newsScoreCalculator.isFull = false;
+    } else {
+    this.newsScoreCalculator.isFull = true;
+ }
   }
   updateSupplementOxygenScore(e, score: number) {
     if (e.target.checked) {
