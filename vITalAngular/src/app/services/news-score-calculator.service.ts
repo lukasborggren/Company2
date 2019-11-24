@@ -6,9 +6,12 @@ import { Injectable } from '@angular/core';
 export class NewsScoreCalculatorService {
     clinicalRisk: number;
     totalScore: number;
+    isEmpty : boolean;
   constructor() {
   }
-
+  ngOnInit() {
+    this.isEmpty = true;
+  }
   getRespiratoryScore(respiratoryRate: number) {
     if (respiratoryRate >= 25 || respiratoryRate <= 8) {
       return 3;
@@ -21,6 +24,7 @@ export class NewsScoreCalculatorService {
     }
   }
 
+  
   getSaturationScore(oxygenSaturation: number) {
     if (oxygenSaturation <= 91) {
       return 3;

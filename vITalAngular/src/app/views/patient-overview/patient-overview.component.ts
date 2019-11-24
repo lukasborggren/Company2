@@ -41,7 +41,6 @@ export class PatientOverviewComponent implements OnInit {
   supplementalOxygenScore: number;
   totalScore: number;
   tempTotal: number;
-
   accordionState: Array<boolean>; // Icon toggle for the accordion
 
 
@@ -68,7 +67,7 @@ export class PatientOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
     this.personnumber = pid;
     this.form = this.fb.group({
@@ -130,6 +129,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
@@ -140,6 +140,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('pulseRate').valueChanges.subscribe(val => {
       this.form.controls.pulseRate.patchValue(val, {emitEvent: false});
@@ -150,6 +151,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.form.controls.temperature.patchValue(val, {emitEvent: false});
@@ -160,6 +162,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('systolicBloodPressure').valueChanges.subscribe(val => {
       this.form.controls.systolicBloodPressure.patchValue(val, {emitEvent: false});
@@ -170,15 +173,28 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
+    
   }
-
+  updateIsEmpty(){
+    if((this.systolicScore == null) && (this.temperatureScore == null ) &&
+       (this.pulseScore == null) && (this.respiratoryScore == null) &&
+       (this.saturationScore == null) && (this.supplementalOxygenScore == null) &&
+       ( this.consciousnessScore == null)){
+         this.newsScoreCalculator.isEmpty = true;
+    }
+    else{
+      this.newsScoreCalculator.isEmpty = false;
+    }
+  }
   updateSupplementOxygenScore(e, score: number) {
     if (e.target.checked) {
       this.supplementalOxygenScore = score;
     }
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
+    this.updateIsEmpty();
   }
 
   updateConsciousnessScore(e, score: number) {
@@ -187,6 +203,7 @@ export class PatientOverviewComponent implements OnInit {
     }
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
+    this.updateIsEmpty();
   }
 
   getConsciousnessScore() {
@@ -198,6 +215,7 @@ export class PatientOverviewComponent implements OnInit {
   }
 
   updateTotalNews2Score() {
+    this.updateIsEmpty();
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
       this.totalScore = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
           this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
@@ -209,7 +227,7 @@ export class PatientOverviewComponent implements OnInit {
   }
 
   getTotalNews2Score() {
-  return this.totalScore;
+    return this.totalScore;
   }
 
   updateClinicalRisk() {

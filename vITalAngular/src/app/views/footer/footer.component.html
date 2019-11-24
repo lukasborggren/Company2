@@ -12,7 +12,8 @@
         <p class="labelText">{{this.newsScoreCalculator.getClinicalRisk()}}</p>
       </div>
     </div>
-    <button class=standardButton (click)="openPopup('error')">Spara</button>
+    <button class=standardButton *ngIf="!this.newsScoreCalculator.isEmpty"(click)="openPopup('error')">Spara</button>
+    <button class=standardButton disabled *ngIf="this.newsScoreCalculator.isEmpty"(click)="openPopup('error')">fylla för att spara</button>
 </div>
 </footer>
 
