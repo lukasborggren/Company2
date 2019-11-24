@@ -91,5 +91,9 @@ export class BarcodeScannerPageComponent implements OnInit {
       }
     });
   }
+  public goToLogout() {
+    this.router.navigate(['/logout']);
+  }
+
 
 }
