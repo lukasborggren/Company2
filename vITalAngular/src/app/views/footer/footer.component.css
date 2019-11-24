@@ -54,3 +54,15 @@ p, .labelText {
 .standardButton:disabled {
 opacity: 0.2;
 }
+
+.newsscore1 {
+  background-color: #FFF1AB;
+}
+
+.newsscore2 {
+  background-color: #FDC889;
+}
+
+.newsscore3 {
+  background-color: #F59681;
+}

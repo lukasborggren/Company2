@@ -29,8 +29,8 @@ export class PatientOverviewComponent implements OnInit {
   barcodevalue: string;
   stopScanButtonVisible: boolean;
   pid: string;
-  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
-  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
+  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
 
   respiratoryScore: number;
   saturationScore: number;
@@ -42,7 +42,7 @@ export class PatientOverviewComponent implements OnInit {
   totalScore: number;
   tempTotal: number;
   accordionState: Array<boolean>; // Icon toggle for the accordion
-
+  scale1: boolean;
 
 
   constructor(
@@ -175,16 +175,15 @@ export class PatientOverviewComponent implements OnInit {
       this.updateClinicalRisk();
       this.updateIsEmpty();
     });
-    
+
   }
-  updateIsEmpty(){
-    if((this.systolicScore == null) && (this.temperatureScore == null ) &&
+  updateIsEmpty() {
+    if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
        (this.pulseScore == null) && (this.respiratoryScore == null) &&
        (this.saturationScore == null) && (this.supplementalOxygenScore == null) &&
-       ( this.consciousnessScore == null)){
+       ( this.consciousnessScore == null)) {
          this.newsScoreCalculator.isEmpty = true;
-    }
-    else{
+    } else {
       this.newsScoreCalculator.isEmpty = false;
     }
   }
@@ -214,6 +213,7 @@ export class PatientOverviewComponent implements OnInit {
     return this.supplementalOxygenScore;
   }
 
+
   updateTotalNews2Score() {
     this.updateIsEmpty();
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
@@ -226,9 +226,6 @@ export class PatientOverviewComponent implements OnInit {
     }
   }
 
-  getTotalNews2Score() {
-    return this.totalScore;
-  }
 
   updateClinicalRisk() {
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
@@ -249,9 +246,6 @@ export class PatientOverviewComponent implements OnInit {
     }
   }
 
-  getClinicalRisk() {
-    return this.clinicalRisk;
-  }
 
   toggleAccordion(id: number) { // Icon toggle for the accordion
     this.accordionState[id] = !this.accordionState[id];
