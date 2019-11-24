@@ -3,3 +3,18 @@
     top: 0;
     left: 0;
 }
+
+#interactive.viewport {
+    position: relative;
+    width: 80%;
+    height: auto;
+    overflow: hidden;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#interactive.viewport>canvas,
+#interactive.viewport>video {
+    max-width: 100%;
+    width: 100%;
+}
