@@ -13,7 +13,7 @@
             <div *ngIf="form.controls.respiratoryRate.errors.pattern">Mata in ett värde mellan 0 och 100</div>
           </div>
           <div class="collapseButton p-2">
-            <button (click)="toggleAccordion(0)" class="btn">  <!-- togglefunktion med koppling till ikonändring vid klick-->
+            <button (click)="toggleAccordion(0)" class="btn">
               <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(0)" class="fa fa-angle-double-down fa-2x"></i>
             </button>
@@ -57,39 +57,50 @@
             </button>
           </div>
         </div>
-        <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-          <div class="accordion">
 
+      <!--  -->
+
+        <div *ngIf="isAccordionOpen(1)">
+          <div class="accordion">
+            <div class="d-flex flex-row">
+              <p class="ml-2"><u>Senaste värde:</u></p>
+            </div>
+            <div class="d-flex flex-row">
+              <div class="p-2">
+                <div class="btn-group-vertical">
+                  <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime | date:'short'}}</strong></button>
+                  <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxidation}}%</strong></button>
+                </div>
+               </div>
             <!-- Lägg till senaste värde med {{latestOxidation}} och {latestOxidationTime | date:'short'}} -->
 
-            <div class="card collapseCard" style="height: 9rem" >
-              <div class="card-body ml-auto">
-                <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
-              </div>
 
               <!-- KNAPPAR HÄR -->
-              <div class="SO2scales-class">
+              <div class="p-2">
+                <div class="form-check form-check-inline radio-check mr-2" style="display: inline-block;">
+                  <div class = "mb-2">
+                       <label class="form-check-label mr-3" for="inlineRadio1">Skala 1</label>
+                        <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option1">
+                  </div>
 
                   <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-                  <div class = "mb-2">
-                     <label class="form-check-label mr-3" for="inlineRadio1">Skala 1</label>
-                   <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
-                          value="option1">
-                          </div>
-                          <div>
-                   <label class="form-check-label mr-3" for="inlineRadio1">Skala 2</label>
-                   <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1"
-                          value="option2">
-                          </div>
+                     <label class="form-check-label mr-3" for="inlineRadio1">Skala 2</label>
+                     <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option2">
                   </div>
-                  </div>
+              </div>
+             </div>
+            </div>
+
+          <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
+          </div>
 
            <!-- Knappar här
 
            <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio3"
                   value="option3" (change)="updateConsciousnessScore($event, 3)"> -->
 
-            </div>
+
           </div>
         </div>
       </div>
