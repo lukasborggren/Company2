@@ -7,17 +7,18 @@ import {Observable} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardTwoService implements CanActivate {
 
   constructor(public authService: AuthService, private router: Router) { }
 
   canActivate(): Observable<boolean> {
     return this.authService.checkToken()
     .pipe(map((valid: boolean) => {
-      if (!valid) {
-        this.router.navigate(['/login']);
+      if (valid) {
+        this.router.navigate(['/scannerpage']);
+      } else {
+        return !valid;
       }
-      return valid;
     }));
   }
 }
