@@ -1,9 +1,31 @@
-<header *ngIf="isLoggedIn | async; else notLoggedIn">
-    <!-- When logged in elements go here -->
-    <h1>FOOTER logged in</h1>
-</header>
-<ng-template #notLoggedIn>
-    <!-- When logged out elements go here -->
-    <h1>FOOTER not logged in</h1>
-</ng-template>
+<footer class = "fix-bottom" *ngIf="patientOverview">
+    <!-- When at patientOverview elements go here -->
+  <div class = "d-flex align-items-center justify-content-between h-100 p-3">
+    <div class="text">Totalt<br>värde </div>
+    <div class="totalNews alert alert-secondary alert-sm" [ngClass]="{'bg-white': newsScoreCalculator.getClinicalRisk() == 'Låg', 'newsscore1': newsScoreCalculator.getClinicalRisk() == 'Låg/medium', 'newsscore2': newsScoreCalculator.getClinicalRisk() == 'Medium', 'newsscore3': newsScoreCalculator.getClinicalRisk() == 'Hög'}">
+      {{this.newsScoreCalculator.getTotalScore()}} </div>
+    <div class=" clinical d-flex flex-column justify-content-center">
+    <div class="text">
+        Klinisk risk:
+      </div>
+      <div class="clinicalLabel alert alert-secondary alert-sm">
+        <p class="labelText">{{this.newsScoreCalculator.getClinicalRisk()}}</p>
+      </div>
+    </div>
+    <button class=standardButton *ngIf="!this.newsScoreCalculator.isEmpty"(click)="openPopup('error')">Spara</button>
+    <button class=standardButton disabled *ngIf="this.newsScoreCalculator.isEmpty"(click)="openPopup('error')">Spara</button>
+</div>
+</footer>
 
+<footer class = "fix-bottom" *ngIf="history">
+    <!-- When at history elements go here -->
+    <!-- Footer at history view should not have any content -->
+    <!-- <h1>footer history</h1> -->
+</footer>
+
+<!-----------------old stuff right?-------------
+<header *ngIf="history">
+    When at history elements go here
+    <h1>History</h1>
+</header>
+--->

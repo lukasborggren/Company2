@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.login(this.loginForm.value).subscribe((valid) => {
       if (valid) {
-        this.router.navigate(['/home']);
+        this.router.navigate(['/scannerpage']);
       } else {
         this.isInvalid = true;
       }

@@ -1,22 +1,19 @@
-<h2>Personnummer = {{this.personnumber}}</h2>
-
 <div>
     <form [formGroup]="form">
 
 <!-----------------Andningsfrekvens----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews"> {{this.respiratoryScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews" [ngClass]="{'bg-white': respiratoryScore == 0, 'newsscore1': respiratoryScore == 1, 'newsscore2': respiratoryScore == 2, 'newsscore3': respiratoryScore == 3}"> {{this.respiratoryScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Andningsfrekvens
           </div>
           <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
           <div *ngIf="form.controls.respiratoryRate.invalid && !form.controls.respiratoryRate.pristine" class="alert-danger">
-            <div *ngIf="form.controls.respiratoryRate.errors.required"> Andningsfrekvens krävs</div>
             <div *ngIf="form.controls.respiratoryRate.errors.pattern">Mata in ett värde mellan 0 och 100</div>
           </div>
           <div class="collapseButton p-2">
-            <button (click)="toggleAccordion(0)" class="btn">  <!-- togglefunktion med koppling till ikonändring vid klick-->
+            <button (click)="toggleAccordion(0)" class="btn">
               <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(0)" class="fa fa-angle-double-down fa-2x"></i>
             </button>
@@ -24,9 +21,16 @@
         </div>
         <div *ngIf="isAccordionOpen(0)">
           <div class="accordion">
-            <div class="card" style="height: 10rem" >
-              <div class="card-body ml-auto">
-                <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+            <div class="card collapseCard" style="height: 9rem" >
+              <div class="card-head text-left">
+                  <p class="card-text ml-2"><u>Senaste värde:</u></p>
+                    <div class="btn-group-vertical ml-2">
+                      <button type="button" class="btn btn-sm expandBtn"><strong>{{latestRespirationTime| date:'short' }}</strong></button>
+                      <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestRespiration}}/MIN</strong></button>
+                    </div>
+                <div class="d-flex justify-content-end">
+                  <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricRespiration')">Mer historik</button>
+                </div>
               </div>
             </div>
           </div>
@@ -38,13 +42,12 @@
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.saturationScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': saturationScore == 0, 'newsscore1': saturationScore == 1, 'newsscore2': saturationScore == 2, 'newsscore3': saturationScore == 3}"> {{this.saturationScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Syremättnad
           </div>
           <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
           <div *ngIf="form.controls.oxygenSaturation.invalid && !form.controls.oxygenSaturation.pristine" class="alert-danger">
-            <div *ngIf="form.controls.oxygenSaturation.errors.required"> Syremättnad krävs</div>
             <div *ngIf="form.controls.oxygenSaturation.errors.pattern">Mata in ett värde mellan 0 och 100</div>
           </div>
           <div class="collapseButton p-2">
@@ -54,13 +57,50 @@
             </button>
           </div>
         </div>
-        <div *ngIf="isAccordionOpen(1)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+
+      <!--  -->
+
+        <div *ngIf="isAccordionOpen(1)">
           <div class="accordion">
-            <div class="card" style="height: 10rem" >
-              <div class="card-body ml-auto">
-                <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
-              </div>
+            <div class="d-flex flex-row">
+              <p class="ml-2"><u>Senaste värde:</u></p>
             </div>
+            <div class="d-flex flex-row">
+              <div class="p-2">
+                <div class="btn-group-vertical">
+                  <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime | date:'short'}}</strong></button>
+                  <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxidation}}%</strong></button>
+                </div>
+               </div>
+            <!-- Lägg till senaste värde med {{latestOxidation}} och {latestOxidationTime | date:'short'}} -->
+
+
+              <!-- KNAPPAR HÄR -->
+              <div class="p-2">
+                <div class="form-check form-check-inline radio-check mr-2" style="display: inline-block;">
+                  <div class = "mb-2">
+                       <label class="form-check-label mr-3" for="inlineRadio1">Skala 1</label>
+                        <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option1">
+                  </div>
+
+                  <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
+                     <label class="form-check-label mr-3" for="inlineRadio1">Skala 2</label>
+                     <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option2">
+                  </div>
+              </div>
+             </div>
+            </div>
+
+          <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
+          </div>
+
+           <!-- Knappar här
+
+           <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio3"
+                  value="option3" (change)="updateConsciousnessScore($event, 3)"> -->
+
+
           </div>
         </div>
       </div>
@@ -75,7 +115,7 @@
 <!-----------------Tillförd syrgas----------------->
         <div class="parameterRow">
           <div class="d-flex align-items-center">
-            <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{getSupplementOxygenScore()}}</div>
+            <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getSupplementOxygenScore() == 0, 'newsscore1': getSupplementOxygenScore() == 1, 'newsscore2': getSupplementOxygenScore() == 2, 'newsscore3': getSupplementOxygenScore() == 3}"> {{getSupplementOxygenScore()}}</div>
             <div class="parameterTitle mr-auto col-4">
               Tillförd syrgas
             </div>
@@ -84,12 +124,16 @@
             <div class="collapseButton p-2"-->
               <!-- here i added the two radio check buttons instead of input-box -->
                 <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
-                    <label class="form-check-label" for="inlineRadio1">Ja</label>
+                  <div class="vertical">
+                      <label class="form-check-label" for="inlineRadio1">Ja</label>
                     <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                            value="option1" (change)="updateSupplementOxygenScore($event, 2)">
+                           </div>
+                           <div class="vertical">
                     <label class="form-check-label" for="inlineRadio1">Nej</label>
                     <input class="form-check-input" type="radio" name="supplementalOxygen" id="inlineRadio1"
                            value="option2" (change)="updateSupplementOxygenScore($event, 0)">
+                           </div>
                 </div>
 
             <div class="accordion p-2">
@@ -100,21 +144,28 @@
             </div>
             </div>
 
-          <div *ngIf="isAccordionOpen(2)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-            <div class="accordion">
-              <div class="card" style="height: 10rem" >
-                <div class="card-body ml-auto">
-                  <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
-                </div>
+  <div *ngIf="isAccordionOpen(2)">
+    <div class="accordion">
+      <div class="card collapseCard" style="height: 9rem" >
+        <div class="card-head text-left">
+            <p class="card-text ml-2"><u>Senaste värde:</u></p>
+              <div class="btn-group-vertical ml-2">
+                <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime |date:'short'}}</strong></button>
+                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxygen}}</strong></button>
               </div>
-            </div>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricRespirationAdded')">Mer historik</button>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-----------------Blodtryck----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.systolicScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': systolicScore == 0, 'newsscore1': systolicScore == 1, 'newsscore2': systolicScore == 2, 'newsscore3': systolicScore == 3}"> {{this.systolicScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Blodtryck
     </div>
@@ -123,6 +174,7 @@
     <div *ngIf="form.controls.systolicBloodPressure.invalid && !form.controls.systolicBloodPressure.pristine" class="alert-danger">
       <div *ngIf="form.controls.systolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
     </div>
+      <div class="ml-auto" id="between">/</div>
     <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.diastolicBloodPressure.invalid && !form.controls.diastolicBloodPressure.pristine" class="alert-danger">
       <div *ngIf="form.controls.diastolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
@@ -134,27 +186,35 @@
       </button>
     </div>
   </div>
-  <div *ngIf="isAccordionOpen(3)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
-    <div class="accordion">
-      <div class="card" style="height: 10rem" >
-        <div class="card-body ml-auto">
-          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+
+
+    <div *ngIf="isAccordionOpen(3)">
+      <div class="accordion">
+        <div class="card collapseCard" style="height: 9rem" >
+          <div class="card-head text-left">
+              <p class="card-text ml-2"><u>Senaste värde:</u></p>
+                <div class="btn-group-vertical ml-2">
+                  <button type="button" class="btn btn-sm expandBtn"><strong>{{latestBPTime| date:'short'}}</strong></button>
+                  <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestSystolic}}/{{latestDiastolic}} mm Hg</strong></button>
+                </div>
+            <div class="d-flex justify-content-end">
+              <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricBloodpressure')">Mer historik</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
 <!-----------------Pulsfrekvens----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.pulseScore}}</div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': pulseScore == 0, 'newsscore1': pulseScore == 1, 'newsscore2': pulseScore == 2, 'newsscore3': pulseScore == 3}"> {{this.pulseScore}}</div>
     <div class="parameterTitle mr-auto col-4">
       Pulsfrekvens
     </div>
     <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.pulseRate.invalid && !form.controls.pulseRate.pristine" class="alert-danger">
-      <div *ngIf="form.controls.pulseRate.errors.required"> Pulsfrekvens krävs</div>
       <div *ngIf="form.controls.pulseRate.errors.pattern">Mata in ett värde mellan 0 och 999</div>
     </div>
     <div class="collapseButton p-2">
@@ -164,11 +224,20 @@
       </button>
     </div>
   </div>
-  <div *ngIf="isAccordionOpen(4)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+
+
+  <div *ngIf="isAccordionOpen(4)">
     <div class="accordion">
-      <div class="card" style="height: 10rem" >
-        <div class="card-body ml-auto">
-          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+      <div class="card collapseCard" style="height: 9rem" >
+        <div class="card-head text-left">
+            <p class="card-text ml-2"><u>Senaste värde:</u></p>
+              <div class="btn-group-vertical ml-2">
+                <button type="button" class="btn btn-sm expandBtn"><strong>{{latestPulseTime | date: 'short'}}</strong></button>
+                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestPulse}}/min</strong></button>
+              </div>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricPulse')">Mer historik</button>
+          </div>
         </div>
       </div>
     </div>
@@ -178,45 +247,58 @@
 <!-----------------Medvetandegrad----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{getConsciousnessScore()}} </div>
-    <div class="parameterTitle mr-auto col-4">
-        Medvetandegrad </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessScore() == 0, 'newsscore1': getConsciousnessScore() == 1, 'newsscore2': getConsciousnessScore() == 2, 'newsscore3': getConsciousnessScore() == 3}"> {{getConsciousnessScore()}} </div>
+    <div class="parameterTitle mr-auto col-3">
+      Medvetande-<br>grad </div>
         <!-- Default inline 1-->
     <!-- This input shall have five check boxes for the alertness scale, see Prototype -->
       <!-- this is the radio check-boxes code-->
       <!--div-->
       <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
+<div class="vertical">
           <label class="form-check-label" for="inlineRadio1">A</label>
           <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio1"
                  value="option1" (change)="updateConsciousnessScore($event, 0)">
+                 </div>
       <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
-              <label class="form-check-label" for="inlineRadio2">C</label>
+
+              <div class="vertical">
+                <label class="form-check-label" for="inlineRadio2">C</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio2"
                      value="option2" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check " style="display: inline-block;"-->
+<div class="vertical">
               <label class="form-check-label" for="inlineRadio3">V</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio3"
                      value="option3" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style= "display: inline-block;"-->
+<div class="vertical">
               <label class="form-check-label" for="inlineRadio4">P</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio4"
                      value="option4" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
+<div class="vertical">
               <label class="form-check-label" for="inlineRadio5">U</label>
               <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio5"
                      value="option5" (change)="updateConsciousnessScore($event, 3)">
+                     </div>
           <!--/div-->
     </div>
 
-      <input type="number" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+    <!--  This is the old input field for this parameter using a text input, may be removed if teh new input works as desired
+          <input type="number" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+          -->
     <div *ngIf="form.controls.consciousness.invalid && !form.controls.consciousness.pristine" class="alert-danger">
       <div *ngIf="form.controls.consciousness.errors.pattern">Mata in ett värde mellan 1 och 8</div>
     </div>
@@ -227,27 +309,46 @@
       </button>
     </div>
   </div>
-  <div *ngIf="isAccordionOpen(5)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+
+
+  <div *ngIf="isAccordionOpen(5)">
+
+
     <div class="accordion">
-      <div class="card" style="height: 10rem" >
-        <div class="card-body ml-auto">
-          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+      <div class="d-flex flex-row">
+        <p class="ml-2"><u>Senaste värde:</u></p>
+      </div>
+
+      <div class="d-flex flex-row ">
+          <div class="btn-group-vertical">
+              <!--Hämta senaaste mätvärde med {{latestAlertness}} och {{latestAlertnessTime |date:'short'}} -->
+            <button type="button" class="btn btn-sm expandBtn"><strong>{{latestAlertnessTime |date:'short'}}</strong></button>
+            <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestAlertness}}</strong></button>
+          </div>
+
+<!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
+        <div class="RLS-class"> RLS
+          <input type="number" formControlName="consciousnessScore" class="inputField col-3 ml-auto form-control-lg p-2 ">
         </div>
+      </div>
+
+      <div class="d-flex flex-row-reverse">
+        <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('getHistoricACVPU')">Mer historik</button>
       </div>
     </div>
   </div>
 </div>
 
+
 <!-----------------Temperatur----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews"> {{this.temperatureScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': temperatureScore == 0, 'newsscore1': temperatureScore == 1, 'newsscore2': temperatureScore == 2, 'newsscore3': temperatureScore == 3}"> {{this.temperatureScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Temperatur
     </div>
     <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
     <div *ngIf="form.controls.temperature.invalid && !form.controls.temperature.pristine" class="alert-danger">
-      <div *ngIf="form.controls.temperature.errors.required"> Kroppstemperatur krävs</div>
       <div *ngIf="form.controls.temperature.errors.pattern">Mata in ett värde mellan 0 och 100</div>
     </div>
     <div class="collapseButton p-2">
@@ -257,11 +358,20 @@
       </button>
     </div>
   </div>
-  <div *ngIf="isAccordionOpen(6)"> <!-- en Accordion med ren text, en annan enklare lösning. -->
+
+
+  <div *ngIf="isAccordionOpen(6)">
     <div class="accordion">
-      <div class="card" style="height: 10rem" >
-        <div class="card-body ml-auto">
-          <button type="button" class="btn historikKnapp" (click)="goToHistory()">Historik</button>
+      <div class="card collapseCard" style="height: 9rem" >
+        <div class="card-head text-left">
+            <p class="card-text ml-2"><u>Senaste värde:</u></p>
+              <div class="btn-group-vertical ml-2">
+                <button type="button" class="btn btn-sm expandBtn"><strong>{{latestTemperatureTime | date: 'short'}}</strong></button>
+                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestTemperature}} C</strong></button>
+              </div>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricTemperature')">Mer historik</button>
+          </div>
         </div>
       </div>
     </div>
@@ -271,16 +381,12 @@
     </form>
 </div>
 
-<!-----------------Total NEWS2 score----------------->
-<div>
-<label>NEWS2 Score = {{this.getTotalNews2Score()}}</label>
-    <div>
-        <label>Klinisk risk = {{this.getClinicalRisk()}}</label>
-</div>
-
 <!-----------------Save button----------------->
 <div>
+    <!-- This is the old button in the inaccurate style, can be removed when everything works as expected with the new button below.
     <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
-</div>
-<br/>
-<br/>
+    -->
+
+   <!-- Removing save-button as it is placed in footer instead
+    <button class=standardButton (click)="openPopup('error')">Spara</button>
+    -->

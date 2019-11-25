@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
+import {VerifyPatientDialogComponent} from '../shared-components/verify-patient-dialog/verify-patient-dialog.component';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {isNumeric} from 'rxjs/internal-compatibility';
 import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
@@ -28,8 +29,8 @@ export class PatientOverviewComponent implements OnInit {
   barcodevalue: string;
   stopScanButtonVisible: boolean;
   pid: string;
-  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
-  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
+  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
 
   respiratoryScore: number;
   saturationScore: number;
@@ -40,9 +41,26 @@ export class PatientOverviewComponent implements OnInit {
   supplementalOxygenScore: number;
   totalScore: number;
   tempTotal: number;
-
   accordionState: Array<boolean>; // Icon toggle for the accordion
+  scale1: boolean;
 
+
+
+    latestRespiration: string;
+    latestRespirationTime: any;
+    latestOxidation: string;
+    latestOxidationTime: string;
+    latestOxygen: string;
+    latestOxygenTime: any;
+    latestSystolic: string;
+    latestDiastolic: string;
+    latestBPTime: any;
+    latestPulse: string;
+    latestPulseTime: any;
+    latestAlertness: string;
+    latestAlertnessTime: any;
+    latestTemperature: string;
+    latestTemperatureTime: any;
 
 
   constructor(
@@ -67,7 +85,7 @@ export class PatientOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
     this.personnumber = pid;
     this.form = this.fb.group({
@@ -105,6 +123,44 @@ export class PatientOverviewComponent implements OnInit {
       ]
     });
 
+
+
+    this.patientService.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestRespiration = data.resultSet[0].vitalsign;
+          this.latestRespirationTime = data.resultSet[0].time;
+        });
+    this.patientService.getHistoricOximetry(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestOxidation = data.resultSet[0].vitalsign;
+          this.latestOxidationTime = data.resultSet[0].time;
+          if (data.resultSet[0].syre) {
+          this.latestOxygen = 'Syre';
+        } else {
+          this.latestOxygen = 'Luft';
+        }
+
+        });
+    this.patientService.getHistoricBloodpressure(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestSystolic = data.resultSet[0].systolic;
+          this.latestDiastolic = data.resultSet[0].diastolic;
+          this.latestBPTime = data.resultSet[0].time;
+        });
+    this.patientService.getHistoricPulse(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestPulse = data.resultSet[0].vitalsign;
+          this.latestPulseTime = data.resultSet[0].time;
+        });
+    this.patientService.getHistoricACVPU(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestAlertness = data.resultSet[0].acvpu;
+          console.log(this.latestAlertness);
+          this.latestAlertnessTime = data.resultSet[0].time;
+
+        });
+    this.patientService.getHistoricTemperature(localStorage.getItem('EHRID')).subscribe(data => {
+          this.latestTemperature = data.resultSet[0].vitalsign;
+          this.latestTemperatureTime = data.resultSet[0].time;
+
+        });
+
+
     // kolla på touched / invalid
 
     this.accordionState = [false, false, false, false, false, false, false]; // Icon toggle for the accordion - lite osäker på var jag skulle lägga den
@@ -115,7 +171,9 @@ export class PatientOverviewComponent implements OnInit {
         localStorage.setItem('EHRID', data.ehrId);
       });
     });
-
+    this.updateTotalNews2Score();
+    this.updateClinicalRisk();
+    this.updateIsEmpty();
     this.onChanges();
   }
 
@@ -129,6 +187,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
@@ -139,6 +198,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('pulseRate').valueChanges.subscribe(val => {
       this.form.controls.pulseRate.patchValue(val, {emitEvent: false});
@@ -149,6 +209,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.form.controls.temperature.patchValue(val, {emitEvent: false});
@@ -159,6 +220,7 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
     this.form.get('systolicBloodPressure').valueChanges.subscribe(val => {
       this.form.controls.systolicBloodPressure.patchValue(val, {emitEvent: false});
@@ -169,15 +231,36 @@ export class PatientOverviewComponent implements OnInit {
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
+      this.updateIsEmpty();
     });
-  }
 
+  }
+  updateIsEmpty() {
+    if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
+       (this.pulseScore == null) && (this.respiratoryScore == null) &&
+       (this.saturationScore == null) && (this.supplementalOxygenScore == null) &&
+       ( this.consciousnessScore == null)) {
+         this.newsScoreCalculator.isEmpty = true;
+    } else {
+      this.newsScoreCalculator.isEmpty = false;
+    }
+
+    if ((this.systolicScore == null) || (this.temperatureScore == null ) ||
+    (this.pulseScore == null) || (this.respiratoryScore == null) ||
+    (this.saturationScore == null) || (this.supplementalOxygenScore == null) ||
+    ( this.consciousnessScore == null)) {
+      this.newsScoreCalculator.isFull = false;
+    } else {
+    this.newsScoreCalculator.isFull = true;
+ }
+  }
   updateSupplementOxygenScore(e, score: number) {
     if (e.target.checked) {
       this.supplementalOxygenScore = score;
     }
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
+    this.updateIsEmpty();
   }
 
   updateConsciousnessScore(e, score: number) {
@@ -186,6 +269,7 @@ export class PatientOverviewComponent implements OnInit {
     }
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
+    this.updateIsEmpty();
   }
 
   getConsciousnessScore() {
@@ -196,7 +280,9 @@ export class PatientOverviewComponent implements OnInit {
     return this.supplementalOxygenScore;
   }
 
+
   updateTotalNews2Score() {
+    this.updateIsEmpty();
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
       this.totalScore = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
           this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
@@ -207,9 +293,6 @@ export class PatientOverviewComponent implements OnInit {
     }
   }
 
-  getTotalNews2Score() {
-  return this.totalScore;
-  }
 
   updateClinicalRisk() {
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
@@ -230,35 +313,42 @@ export class PatientOverviewComponent implements OnInit {
     }
   }
 
-  getClinicalRisk() {
-    return this.clinicalRisk;
-  }
 
-toggleAccordion(id: number) { // Icon toggle for the accordion
+  toggleAccordion(id: number) { // Icon toggle for the accordion
     this.accordionState[id] = !this.accordionState[id];
   }
+
   isAccordionOpen(id: number) {
     return this.accordionState[id];
   }
+
   openPopup(errorMessage: string) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
-      dialogMessage: errorMessage
+      dialogMessage: errorMessage,
     };
 
-    // Example call to the function sending data to database
-    this.patientService.postComposition(
-        12, 12, 1, true, 30, 20,
-        70, true, 'A', 2, 37.1, 3)
-        .subscribe(
-            data => console.log(data),
-            error => console.log(error)
-        );
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
-
   }
-  goToHistory() {
+
+  // Some fixed mock values at the moment, will be fixed later.
+  packVitalsAsJson() {
+    this.patientService.createJsonComp(
+        this.form.get('respiratoryRate').value,
+        this.form.get('oxygenSaturation').value, 1, true,
+        this.form.get('systolicBloodPressure').value,
+        this.form.get('diastolicBloodPressure').value,
+        this.form.get('pulseRate').value, true,
+        1, 2,
+        this.form.get('temperature').value,
+        this.newsScoreCalculator.getTotalScore());
+  }
+
+  goToHistory(vitalParameter: string) {
+    localStorage.setItem('outputVitalParameter', vitalParameter);
     this.router.navigate(['history']);
+
+    // this.router.navigate(['history'], {state: { outputVitalParameter: vitalParameter}});
   }
 
 }

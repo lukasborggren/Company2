@@ -18,6 +18,7 @@ export class DialogWindowComponent implements OnInit {
     this.dialogMessage = data.dialogMessage;
     this.firstOptionMessage = data.firstOptionMessage;
     this.secondOptionMessage = data.secondOptionMessage;
+  
   }
 
   ngOnInit() {

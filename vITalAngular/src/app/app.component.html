@@ -1,6 +1,8 @@
 <div class="m-0">
     <app-header></app-header>
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
+    <div class = "margin">
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
+    </div>
+    <app-footer (mdSubmitChange)="onSubmit($event)"></app-footer>
 </div>
 

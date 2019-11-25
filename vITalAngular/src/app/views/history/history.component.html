@@ -1,47 +1,46 @@
 <body>
-    <div class="container" id="historyTop">
-        <button class="btn" id="historybackBtn" (click)="goBack()"><i class="fa fa-angle-left fa-2x"></i></button>
-    </div>
+<!-- this button will not be needed since we have a return arrow in the header -->
+<!--button class="btn" (click)="goBack()">Backa<i class="fas fa-chevron-down"></i></button-->
 
-<table class="table table-bordered ml-2 " style = "max-width: 95%">
-    <thead>
+
+<table class="table history-table table-bordered" style = "max-width: 95%">
+    <thead style="background-color: #d8d8d8; text-align: start ">
     <tr>
         <th scope="col">Datum</th>
         <th scope="col">Tid</th>
-        <th scope="col">Andningsfrekvens/min</th>
+        <th scope="col">andningsfrekvens<br>andetag/min</th>
         <th scope="col">News2</th>
     </tr>
     </thead>
 
     <tbody>
     <tr>
-        <th >dd-mm-yy</th>
+        <th scope = "row" >27-11-19</th>
         <td>15:30</td>
-        <td>110</td>
-        <td>@2</td>
+        <td>14</td>
+        <td>0</td>
     </tr>
     <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
+        <th scope="row">27-11-19</th>
+        <td>15:00</td>
+        <td>13</td>
+        <td>0</td>
     </tr>
     <tr>
-        <th scope="row">3</th>
-        <td>Larry the Bird</td>
-        <td>Larry the Bird</td>
-        <td>Larry the Bird</td>
+        <th scope="row">27-11-19</th>
+        <td>14:30</td>
+        <td>11</td>
+        <td style = "background-color: #FFF1AB ">1</td>
 
     </tr>
     <tr>
-    <th scope="row">4</th>
-    <td>Larry the Bird</td>
-        <td>Larry the Bird</td>
-        <td>Larry the Bird</td>
+    <th scope="row">27-11-19</th>
+    <td>14:00</td>
+        <td>13</td>
+        <td>0</td>
     </tr>
     </tbody>
 </table>
-
 
 
 

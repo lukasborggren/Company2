@@ -1,20 +1,34 @@
 .parameterTitle {
     /* Problematic font size when desktop mode.. */
-    font-size: 3vw;
+    font-size: 4vw;
+}
+
+.vertical {
+    float: left;
+    padding-right: 10px;
+}
+.vertical  > *{
+    display :block;
+    margin: .2rem;
 }
 
 .form-check-label{
     position: relative;
-
 }
 
 .parameterRow {
     background-color: #D8D8D8;
-    padding: .5rem 1rem;
+    padding: .5rem .1rem .5rem 1rem;;
     border: 1px solid black;
     /* height: 70px; */
 }
-
+.RLS-class {
+  font-size: 100%;
+  margin-bottom: 40px;
+  margin-left:10px;
+  width: 500px;
+  /*margin-left: 250px;*/
+}
 .inputField {
     border: solid 2px;
     border-color: #000000;
@@ -36,12 +50,62 @@
 }
 
 .historikKnapp {
-  background-color: gray;
+  background-color: white;
+  border: solid black 1px;
   border-radius: 9px;
   color:black;
 }
 
-.toggleRow {
+.expandBtn {
   background-color: white;
-  height: 100px; /*hårdkodad storlek, inte bra*/
+  border: solid black 1px;
+  border-radius: 9px;
+}
+
+.collapseCard {
+  background-color: #d8d8d8;
+  border: 0px;
+}
+
+#between {
+    font-size: 40px;
+    position: relative;
+    padding: 1px;
+    font-weight: 100;
+}
+
+.newsscore1 {
+  background-color: #FFF1AB;
+}
+
+.newsscore2 {
+  background-color: #FDC889;
+}
+
+.newsscore3 {
+  background-color: #F59681;
+}
+
+input[type=radio] {
+  -ms-transform: scale(2);
+  -moz-transform: scale(2);
+  -webkit-transform: scale(2);
+  -o-transform: scale(2);
+  transform: scale(2);
+  padding: 10px;
+}
+
+.vertical2 {
+    float: left;
+     padding-right:10px;
+
+}
+.vertical2  > *{
+    display :block;
+    margin: .2rem;
+
+}
+
+.form-check-label2 {
+   padding-right: 10px;
 }

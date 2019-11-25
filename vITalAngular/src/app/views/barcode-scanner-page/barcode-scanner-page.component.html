@@ -1,27 +1,44 @@
-<h1>{{title}}</h1>
-<button type="button" class="btn btn-warning" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
+<div align="center">
+
+  <!-- The new code that is replacing the one that is hidden by comments below, starts here:  -->
+
+  <div id="interactive" class="viewport">
+    <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+    <!-- The following line of code removes all the whitespace under the camera after the the button to stat scan have been clicked. -->
+    <canvas class="drawingBuffer" width="0" height="0"></canvas>
+  </div>
+
+  <!-- This is the end of the new code. -->
+
+  <button type="button" class="standardButton" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
     Skanna streckkod
-</button>
+  </button>
 
-<button type="button" class="btn btn-warning" *ngIf="stopScanButtonVisible" (click)="stopScanner()">
-    sluta skanna
-</button>
-<br>
-<label *ngIf="barcodevalue">Skannad streckkod = {{barcodevalue}}</label>
+  <button type="button" class="standardButton" *ngIf="stopScanButtonVisible" (click)="stopScanner()">
+    Sluta skanna
+  </button>
 
-<div class="input-group">
-    <div id="inputBarcode" style="position: static">
+  <label *ngIf="barcodevalue">Skannad streckkod = {{barcodevalue}}</label>
+
+  <!-- This is the code that have been working properly but not viewed properly in the window.
+      If needed this can be taken back and used:
+
+    <div class="input-group">
+      <div id="inputBarcode" style="position: static">
         <div id="interactive" class="viewport">
-            <video autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+          <video autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
         </div>
+      </div>
     </div>
-</div>
 
-<div>
-    <button mat-raised-button color="accent" (click)="openDialog()">Manuell inmatning</button>
-    <p>Use 19791111-0017 in the manual input</p>
-</div>
+    -->
 
-<div>
-    <button mat-raised-button color="accent" (click)="goToHome()">Gå tillbaka</button>
+  <div id="manualButton">
+    <button class="standardButton" (click)="openDialog()">Manuell inmatning</button>
+  </div>
+
+  <button class="standardButton" (click)="goToLogout()">Logga ut</button>
+
+  <p>19791111-0017</p>
+
 </div>

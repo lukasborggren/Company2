@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import {Observable} from 'rxjs';
-import {AuthService} from '../../auth.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
+import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
+
 
 @Component({
   selector: 'app-footer',
@@ -8,12 +11,44 @@ import {AuthService} from '../../auth.service';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent implements OnInit {
-  isLoggedIn: Observable<boolean>;
 
-  constructor(private authService: AuthService) { }
+  @Output() mdSubmitChange = new EventEmitter<boolean>();
+  // isLoggedIn: boolean;
+  patientOverview: boolean;
+  history: boolean;
+
+
+  constructor(
+      private router: Router,
+      private newsScoreCalculator: NewsScoreCalculatorService,
+      private dialog: MatDialog
+  ) { }
+
 
   ngOnInit() {
-    this.isLoggedIn = this.authService.isLoggedIn;
+    this.routeEvent();
   }
+
+  routeEvent() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const currentLocation = event.url;
+        // this.isLoggedIn = currentLocation !== '/login';
+        this.patientOverview = currentLocation.substring(0, 5) === '/pid/';
+        this.history = currentLocation === '/history';
+      }
+    });
+  }
+
+  openPopup(errorMessage: string) {
+    const submit = true;
+    this.mdSubmitChange.emit(submit);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      dialogMessage: errorMessage,
+    };
+    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
+  }
+
 
 }

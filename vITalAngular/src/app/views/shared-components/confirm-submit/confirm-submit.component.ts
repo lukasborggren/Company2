@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {ManualInputDialogComponent} from '../manual-input-dialog/manual-input-dialog.component';
-import {PopupWindowComponent} from '../popup-window/popup-window.component';
+import {VerifyPatientDialogComponent} from '../verify-patient-dialog/verify-patient-dialog.component';
 import {Router} from '@angular/router';
+import {PatientService} from '../../../services/patient.service';
 
 @Component({
   selector: 'app-confirm-submit',
@@ -13,13 +13,13 @@ import {Router} from '@angular/router';
 export class ConfirmSubmitComponent implements OnInit {
 
   dialogMessage: string;
-  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
 
   constructor(
       private dialogRef: MatDialogRef<ConfirmSubmitComponent>,
       @Inject(MAT_DIALOG_DATA) data,
       private dialog: MatDialog,
-      private router: Router
+      private router: Router,
+      private patientService: PatientService
   ) {
     this.dialogMessage = data.dialogMessage;
   }
@@ -43,13 +43,28 @@ export class ConfirmSubmitComponent implements OnInit {
       dialogmessage: 'Personnummer'
     };
 
-    const dialogRef = this.dialog.open(ManualInputDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(VerifyPatientDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
         data => {
-          console.log('Dialog output:', data);
-          if (this.PERSONID_PATTERN.test(data.description)) {
-            this.router.navigate(['/pid/' + data.description]);
+          if (data.description === localStorage.getItem('PID')) {
+            this.patientService.postComposition()
+                .subscribe(
+                    resp => {
+                      // Confirmation alert here
+                      if (resp.action === 'CREATE') {
+                        console.log('Submission successful');
+                        this.router.navigate(['/pid/' + data.description]);
+                      }
+                    },
+                    error => {
+                      // Error alert here
+                      console.log(error);
+                      console.log('Submission failed');
+                    }
+                );
+          } else {
+            console.log('Wrong PID entered');
           }
         });
   }

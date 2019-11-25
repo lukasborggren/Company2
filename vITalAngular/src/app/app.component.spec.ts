@@ -3,12 +3,12 @@ import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideRoutes, Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { BarcodeScannerPageComponent } from './views/barcode-scanner-page/barcode-scanner-page.component';
 import { FooterComponent } from './views/footer/footer.component';
 import { HeaderComponent } from './views/header/header.component';
 import { HttpClientTestingModule} from '@angular/common/http/testing';
+import {MatDialogModule} from '@angular/material';
 
 
 
@@ -26,7 +26,8 @@ describe('AppComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatDialogModule
       ]
     }).compileComponents();
   }));
