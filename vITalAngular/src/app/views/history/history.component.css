@@ -3,3 +3,25 @@
     width: 100vw;
     box-sizing: border-box;
 }
+
+#historybackBtn {
+    margin: 0;
+    background-color: #909090;
+    border-radius: 9px;
+    color: #3F3F3e;
+    width: 2em;
+    height: 2em;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+#historybackBtn i{
+    line-height: 60%;
+}
+#historyTop{
+    background-color: #3a3938;
+    text-align: center;
+    padding: 5px 5px;
+    margin: 0px;
+
+}
