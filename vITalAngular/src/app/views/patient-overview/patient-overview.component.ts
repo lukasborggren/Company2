@@ -170,7 +170,9 @@ export class PatientOverviewComponent implements OnInit {
         localStorage.setItem('EHRID', data.ehrId);
       });
     });
-
+    this.updateTotalNews2Score();
+    this.updateClinicalRisk();
+    this.updateIsEmpty();
     this.onChanges();
   }
 
