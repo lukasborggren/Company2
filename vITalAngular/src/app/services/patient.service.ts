@@ -110,6 +110,7 @@ export class PatientService {
   }
 
   postComposition(): Observable<any> {
+    console.log(localStorage.getItem('ENCODED_STRING'));
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -130,18 +131,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/demographics/party/query', httpOptions);
   }
 
-  public getPatientEhrId(subjectId: string): Observable<any> {
-    const httpOptions = {
-      headers: this.headers,
-      params: new HttpParams()
-          .set('subjectId', subjectId)
-          .set('subjectNamespace', 'default')
-    };
-    return  this.http.get(this.baseUrl + '/ehr', httpOptions);
-  }
-
-  public getHistoricRespiration(ehrId: string): Observable<any> {
-    var aql= "select a_b/items[at0057]/value/value as syre, a/context/start_time/value as time, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/magnitude as vitalsign from EHR e[ehr_id/value='"+ ehrId +"'] contains COMPOSITION a contains (OBSERVATION a_a[openEHR-EHR-OBSERVATION.respiration.v1] and CLUSTER a_b[openEHR-EHR-CLUSTER.inspired_oxygen.v1]) order by a/context/start_time offset 0 limit 10" ;
+  public getHistoricRespiration(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_b/items[at0057]/value/value as syre, a/context/start_time/value as time, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/magnitude as vitalsign from EHR e[ehr_id/value='"+ ehrId +"'] contains COMPOSITION a contains (OBSERVATION a_a[openEHR-EHR-OBSERVATION.respiration.v1] and CLUSTER a_b[openEHR-EHR-CLUSTER.inspired_oxygen.v1]) order by a/context/start_time offset 0 limit 10" ;
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -150,8 +142,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
 
-  public getHistoricOximetry(ehrId: string): Observable<any> {
-    var aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0006, 'SpO₂']/value/numerator as vitalsign, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0058, 'Tolkning']/value/value as scale, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.pulse_oximetry.v1] order by a/context/start_time/value offset 0 limit 10" ;
+  public getHistoricOximetry(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0006, 'SpO₂']/value/numerator as vitalsign, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0058, 'Tolkning']/value/value as scale, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.pulse_oximetry.v1] order by a/context/start_time/value offset 0 limit 10" ;
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -160,8 +153,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
 
-  public getHistoricBloodpressure(ehrId: string): Observable<any> {
-    var aql = "select a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude as systolic, a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude as diastolic, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.blood_pressure.v2] order by a/context/start_time/value offset 0 limit 10";
+  public getHistoricBloodpressure(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude as systolic, a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude as diastolic, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.blood_pressure.v2] order by a/context/start_time/value offset 0 limit 10";
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -170,8 +164,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
 
-  public getHistoricACVPU(ehrId: string): Observable<any> {
-    var aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004.1]/value/defining_code as code, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004.1]/value/value as acvpu, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.avpu-c.v0] order by a/context/start_time/value offset 0 limit 10";
+  public getHistoricACVPU(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004.1]/value/defining_code as code, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004.1]/value/value as acvpu, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.avpu-c.v0] order by a/context/start_time/value offset 0 limit 10";
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -180,8 +175,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
 
-  public getHistoricRLS(ehrId: string): Observable<any> {
-    var aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/defining_code as code, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/value as rlcscore, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.rls85.v0] order by a/context/start_time/value offset 0 limit 10";
+  public getHistoricRLS(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/defining_code as code, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/value as rlcscore, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.rls85.v0] order by a/context/start_time/value offset 0 limit 10";
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -190,8 +186,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
 
-  public getHistoricTemperature(ehrId: string): Observable<any> {
-    var aql = "select a_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as vitalsign, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.body_temperature.v2] order by a/context/start_time/value offset 0 limit 10";
+  public getHistoricTemperature(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as vitalsign, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.body_temperature.v2] order by a/context/start_time/value offset 0 limit 10";
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -200,8 +197,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
 
-  public getHistoricPulse(ehrId: string): Observable<any> {
-    var aql = "select a_a/data[at0002]/events[at0003]/data[at0001]/items[at1059]/value/value as comment, a/context/start_time/value as time, a_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as vitalsign from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.pulse.v1] order by a/context/start_time/value offset 0 limit 10";
+  public getHistoricPulse(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_a/data[at0002]/events[at0003]/data[at0001]/items[at1059]/value/value as comment, a/context/start_time/value as time, a_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as vitalsign from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.pulse.v1] order by a/context/start_time/value offset 0 limit 10";
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -210,8 +208,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
 
-  public getHistoricTotalNewsScore(ehrId: string): Observable<any> {
-    var aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0028]/value/magnitude as news2, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.news2.v0] order by a/context/start_time/value offset 0 limit 10";
+  public getHistoricTotalNewsScore(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0028]/value/magnitude as news2, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.news2.v0] order by a/context/start_time/value offset 0 limit 10";
     const httpOptions = {
       headers: this.headers,
       params: new HttpParams()
@@ -220,8 +219,9 @@ export class PatientService {
     return this.http.get(this.baseUrl + '/query' , httpOptions);
   }
 
-  public getAllHistory(ehrId: string): Observable<any> {
-    var aql = "select " +
+  public getAllHistory(): Observable<any> {
+    const ehrId = localStorage.getItem('EHR_ID');
+    const aql = "select " +
         "a/context/start_time/value as time, " +
         "a_j/data[at0002]/events[at0003]/data[at0001]/items[at1059]/value/value as pulse, " +
         "a_h/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/value as rlcscore, " +

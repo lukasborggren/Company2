@@ -16,7 +16,6 @@ export class PatientOverviewComponent implements OnInit {
   patientinfo: string;
   personnumber: string;
   info: string;
-  patientInfoEhr: string;
   clinicalRisk: string;
 
   barcodevalue: string;
@@ -117,11 +116,11 @@ export class PatientOverviewComponent implements OnInit {
 
 
 
-    this.patientService.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricRespiration().subscribe(data => {
           this.latestRespiration = data.resultSet[0].vitalsign;
           this.latestRespirationTime = data.resultSet[0].time;
         });
-    this.patientService.getHistoricOximetry(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricOximetry().subscribe(data => {
           this.latestOxidation = data.resultSet[0].vitalsign;
           this.latestOxidationTime = data.resultSet[0].time;
           if (data.resultSet[0].syre) {
@@ -131,38 +130,29 @@ export class PatientOverviewComponent implements OnInit {
         }
 
         });
-    this.patientService.getHistoricBloodpressure(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricBloodpressure().subscribe(data => {
           this.latestSystolic = data.resultSet[0].systolic;
           this.latestDiastolic = data.resultSet[0].diastolic;
           this.latestBPTime = data.resultSet[0].time;
         });
-    this.patientService.getHistoricPulse(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricPulse().subscribe(data => {
           this.latestPulse = data.resultSet[0].vitalsign;
           this.latestPulseTime = data.resultSet[0].time;
         });
-    this.patientService.getHistoricACVPU(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricACVPU().subscribe(data => {
           this.latestAlertness = data.resultSet[0].acvpu;
           console.log(this.latestAlertness);
           this.latestAlertnessTime = data.resultSet[0].time;
 
         });
-    this.patientService.getHistoricTemperature(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricTemperature().subscribe(data => {
           this.latestTemperature = data.resultSet[0].vitalsign;
           this.latestTemperatureTime = data.resultSet[0].time;
 
         });
 
-
-    // kolla på touched / invalid
-
     this.accordionState = [false, false, false, false, false, false, false]; // Icon toggle for the accordion - lite osäker på var jag skulle lägga den
-    this.patientService.getPatientInformation(pid).subscribe(data => {
-      this.patientInfoEhr = data;
-      localStorage.setItem('SUBJECTID', data.parties[0].id);
-      this.patientService.getPatientEhrId(localStorage.getItem('SUBJECTID')).subscribe( data => {
-        localStorage.setItem('EHRID', data.ehrId);
-      });
-    });
+
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
     this.updateIsEmpty();

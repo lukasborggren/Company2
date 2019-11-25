@@ -41,7 +41,6 @@ export class ConfirmSubmitComponent implements OnInit {
 
     this.dialogAlert.afterClosed().subscribe(
     reroute => {
-        console.log(reroute);
         if (reroute) {
             this.router.navigate(['/scannerpage']);
         } else {
