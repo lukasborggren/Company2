@@ -5,6 +5,7 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import {PatientService} from '../../services/patient.service';
 import {Router} from '@angular/router';
+import { state } from '@angular/animations';
 
 
 @Component({
@@ -23,13 +24,13 @@ export class HistoryComponent implements OnInit {
     private vitalArray: any[] = [];
     private vitalArray2: any[] = [];
     private timeArray: any[] = [];
-    private chartLabel: any = 'funkar inte vaf*n';
+    private chartLabel: string;
     public yaxisMax: any;
     public yaxisMin: any;
 
     public chartData: ChartDataSets[] = [
         { data: this.vitalArray,
-            label: this.chartLabel,
+            label: 'Vitalparameter 1',
             lineTension: 0,
             pointStyle: 'triangle',
             pointRotation: 180,
@@ -44,7 +45,7 @@ export class HistoryComponent implements OnInit {
         },
         {
             data: this.vitalArray2,
-            label: this.chartLabel,
+            label: 'Vitalparameter 2',
             lineTension: 0,
             pointStyle: 'triangle',
             fill: false,
@@ -117,8 +118,12 @@ export class HistoryComponent implements OnInit {
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
     public fetchDataApi() {
-        this.vitalSign = history.state.outputVitalParameter;
-        if (this.vitalSign === 'getHistoricBloodpressure') {
+      if (localStorage.getItem('outputVitalParameter') === null) {
+        localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
+      }
+      this.vitalSign = localStorage.getItem('outputVitalParameter');
+
+      if (this.vitalSign === 'getHistoricBloodpressure') {
             this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].systolic;
