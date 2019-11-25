@@ -77,8 +77,8 @@ export class VerifyPatientDialogComponent implements OnInit {
     this.dialogAlert = this.dialog.open(DialogWindowComponent, dialogAlConfig);
 
     this.dialogAlert.afterClosed().subscribe(
-        data => {this.close();},
-        error => {});
+        data => {this.close(); },
+        error => {console.log(error); });
   }
 
   save() {
