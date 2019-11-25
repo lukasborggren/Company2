@@ -4,6 +4,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {VerifyPatientDialogComponent} from '../verify-patient-dialog/verify-patient-dialog.component';
 import {Router} from '@angular/router';
 import {PatientService} from '../../../services/patient.service';
+import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
 
 @Component({
   selector: 'app-confirm-submit',
@@ -19,7 +20,7 @@ export class ConfirmSubmitComponent implements OnInit {
       @Inject(MAT_DIALOG_DATA) data,
       private dialog: MatDialog,
       private router: Router,
-      private patientService: PatientService
+      private patientService: PatientService,
   ) {
     this.dialogMessage = data.dialogMessage;
   }
@@ -47,14 +48,14 @@ export class ConfirmSubmitComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
         data => {
-          if (data.description === localStorage.getItem('PID')) {
+            if (data.description === localStorage.getItem('PID')) {
             this.patientService.postComposition()
                 .subscribe(
                     resp => {
                       // Confirmation alert here
                       if (resp.action === 'CREATE') {
                         console.log('Submission successful');
-                        this.router.navigate(['/pid/' + data.description]);
+                        // this.router.navigate(['/pid/' + data.description]);
                       }
                     },
                     error => {

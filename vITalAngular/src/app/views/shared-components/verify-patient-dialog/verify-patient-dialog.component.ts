@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PatientService } from 'src/app/services/patient.service';
 import { FeedDataService } from 'src/app/services/feed-data.service';
 import { ManualInputDialogComponent } from '../manual-input-dialog/manual-input-dialog.component';
+import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
 
 @Component({
   selector: 'app-verify-patient-dialog',
@@ -27,6 +28,7 @@ export class VerifyPatientDialogComponent implements OnInit {
 
   constructor(
       private dialogRef: MatDialogRef<VerifyPatientDialogComponent>,
+      private dialogAlert: MatDialogRef<DialogWindowComponent>,
       private fb: FormBuilder,
 
       private barcodeScanner: BarcodeScannerService,
@@ -34,7 +36,6 @@ export class VerifyPatientDialogComponent implements OnInit {
       private router: Router,
       private patientService: PatientService,
       private feedData: FeedDataService,
-
 
       @Inject(MAT_DIALOG_DATA) data
   ) {
@@ -68,8 +69,39 @@ export class VerifyPatientDialogComponent implements OnInit {
     this.dialogRef.close('close');
   }
 
+  viewConfirmation(message: string) {
+    const dialogAlConfig = new MatDialogConfig();
+    dialogAlConfig.data = {dialogMessage: message};
+    dialogAlConfig.disableClose = true;
+    dialogAlConfig.autoFocus = true;
+    this.dialogAlert = this.dialog.open(DialogWindowComponent, dialogAlConfig);
+
+    this.dialogAlert.afterClosed().subscribe(
+        data => {this.close();},
+        error => {});
+  }
+
   save() {
-    this.dialogRef.close(this.form.value);
+    if (this.form.value.description === localStorage.getItem('PID')) {
+      this.patientService.postComposition()
+          .subscribe(
+              resp => {
+                // Confirmation alert here
+                if (resp.action === 'CREATE') {
+                  console.log('Submission successful');
+                  this.viewConfirmation('Vitaldata sparat!');
+                  // this.router.navigate(['/pid/' + data.description]);
+                }
+              },
+              error => {
+                // Error alert here
+                console.log(error);
+                console.log('Submission failed');
+                this.viewConfirmation('Spara misslyckades');
+              }
+          );
+    }
+    //this.dialogRef.close(this.form.value);
   }
   scan() {
     this.barcodevalue = 'scanning';

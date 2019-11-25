@@ -5,7 +5,6 @@ import {ManualInputDialogComponent} from '../shared-components/manual-input-dial
 import {VerifyPatientDialogComponent} from '../shared-components/verify-patient-dialog/verify-patient-dialog.component';
 import {MatDialog, MatDialogConfig} from '@angular/material';
 import {isNumeric} from 'rxjs/internal-compatibility';
-import {DialogWindowComponent} from '../shared-components/dialog-window/dialog-window.component';
 import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
