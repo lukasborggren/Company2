@@ -11,6 +11,7 @@ export class AppComponent {
 
   title = 'vITal';
   private activeComponent;
+  @ViewChild(PatientOverviewComponent, {static: false}) child: PatientOverviewComponent;
 
   constructor(private router: Router) { }
 
@@ -22,8 +23,6 @@ export class AppComponent {
       window.scrollTo(0, 0)
     });
   }
-
-  @ViewChild(PatientOverviewComponent, {static: false}) child: PatientOverviewComponent;
 
   public onSubmit(submit: boolean) {
     this.activeComponent.packVitalsAsJson();
