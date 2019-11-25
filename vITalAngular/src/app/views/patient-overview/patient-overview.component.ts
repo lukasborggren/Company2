@@ -43,24 +43,25 @@ export class PatientOverviewComponent implements OnInit {
   accordionState: Array<boolean>; // Icon toggle for the accordion
   scale1: boolean;
 
+  latestRespiration: string;
+  latestRespirationTime: any;
+  latestOxidation: string;
+  latestOxidationTime: string;
+  latestOxygen: string;
+  latestOxygenTime: any;
+  latestSystolic: string;
+  latestDiastolic: string;
+  latestBPTime: any;
+  latestPulse: string;
+  latestPulseTime: any;
+  latestAlertness: string;
+  latestAlertnessTime: any;
+  latestTemperature: string;
+  latestTemperatureTime: any;
 
-
-    latestRespiration: string;
-    latestRespirationTime: any;
-    latestOxidation: string;
-    latestOxidationTime: string;
-    latestOxygen: string;
-    latestOxygenTime: any;
-    latestSystolic: string;
-    latestDiastolic: string;
-    latestBPTime: any;
-    latestPulse: string;
-    latestPulseTime: any;
-    latestAlertness: string;
-    latestAlertnessTime: any;
-    latestTemperature: string;
-    latestTemperatureTime: any;
-
+  validationOxygenSaturation: boolean = false;
+  validationTemperature: boolean = false;
+  validationRespiratoryRate: boolean = false;
 
   constructor(
       private patientService: PatientService,
@@ -179,10 +180,12 @@ export class PatientOverviewComponent implements OnInit {
   onChanges() {
     this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
       this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
-      if (this.form.controls.oxygenSaturation.valid) {
+      if (this.form.controls.oxygenSaturation.valid && val<=100 && val>=0) {
+        this.validationOxygenSaturation = true;
         this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
       } else {
         this.saturationScore = null;
+        this.validationOxygenSaturation = false;
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
@@ -190,9 +193,11 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
-      if (this.form.controls.respiratoryRate.valid) {
+      if (this.form.controls.respiratoryRate.valid && val<=200 && val>=0) {
+        this.validationRespiratoryRate = true;
         this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
       } else {
+        this.validationRespiratoryRate = false;
         this.respiratoryScore = null;
       }
       this.updateTotalNews2Score();
@@ -212,10 +217,12 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.form.controls.temperature.patchValue(val, {emitEvent: false});
-      if (this.form.controls.temperature.valid) {
+      if (this.form.controls.temperature.valid && val<=100 && val>=0) {
+        this.validationTemperature = true;
         this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
       } else {
         this.temperatureScore = null;
+        this.validationTemperature = false;
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
