@@ -4,7 +4,6 @@ import { Router, RouterModule, Routes, CanActivate } from '@angular/router';
 import { BarcodeScannerPageComponent } from './views/barcode-scanner-page/barcode-scanner-page.component';
 import { ManualInputDialogComponent } from './views/shared-components/manual-input-dialog/manual-input-dialog.component';
 import { MatDialogModule } from '@angular/material';
-import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import { LogoutComponent } from './views/logout/logout.component';
 import { AuthGuardService as AuthGuard } from './auth-guard.service';
@@ -13,8 +12,6 @@ import { PatientOverviewComponent } from './views/patient-overview/patient-overv
 import { HistoryComponent } from './views/history/history.component';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-//  { path: 'login', component: LoginComponent },
   { path: 'login', component: LoginComponent, canActivate: [AuthGuardTwo] },
   { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
   { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },

@@ -8,7 +8,6 @@ import { BarcodeScannerPageComponent} from './views/barcode-scanner-page/barcode
 import { AppRoutingModule } from './app-routing.module';
 import { ManualInputDialogComponent } from './views/shared-components/manual-input-dialog/manual-input-dialog.component';
 import { HttpClientModule } from '@angular/common/http';
-import { HomeComponent } from './views/home/home.component';
 import { LoginComponent } from './views/login/login.component';
 import {RouterModule} from '@angular/router';
 import { LogoutComponent } from './views/logout/logout.component';
@@ -27,7 +26,6 @@ import { FooterComponent } from './views/footer/footer.component';
     AppComponent,
     BarcodeScannerPageComponent,
     ManualInputDialogComponent,
-    HomeComponent,
     LoginComponent,
     LogoutComponent,
     PatientOverviewComponent,
