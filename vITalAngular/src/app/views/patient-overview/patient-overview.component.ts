@@ -176,7 +176,7 @@ export class PatientOverviewComponent implements OnInit {
   onChanges() {
     this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
       this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
-      if (val<=200 && val>=0) {
+      if (val<=100 && val>=0) {
         this.validationOxygenSaturation = true;
       } else {
         this.validationOxygenSaturation = false;
@@ -250,7 +250,7 @@ export class PatientOverviewComponent implements OnInit {
     if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
        (this.pulseScore == null) && (this.respiratoryScore == null) &&
        (this.saturationScore == null) && (this.supplementalOxygenScore == null) &&
-       ( this.consciousnessScore == null)) {
+       (  this.consciousnessScore == null)) {
          this.newsScoreCalculator.isEmpty = true;
     } else {
       this.newsScoreCalculator.isEmpty = false;
