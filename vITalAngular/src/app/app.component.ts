@@ -10,6 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
 
   title = 'vITal';
+  private activeComponent;
 
   constructor(private router: Router) { }
 
@@ -23,7 +24,6 @@ export class AppComponent {
   }
 
   @ViewChild(PatientOverviewComponent, {static: false}) child: PatientOverviewComponent;
-  private activeComponent;
 
   public onSubmit(submit: boolean) {
     this.activeComponent.packVitalsAsJson();

@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 })
 export class PatientService {
 
-  private mockPatientsUrl = 'http://134.209.226.62/api';  // URL to web api
   private baseUrl = 'https://rest.ehrscape.com/rest/v1';
   private templateId = 'vital-news2-2019';
   private headers = new HttpHeaders({
@@ -20,28 +19,6 @@ export class PatientService {
   private rlsCodes = ['at0005', 'at0006', 'at0007', 'at0008', 'at0009', 'at0010', 'at0011', 'at0012'];
 
   constructor(private http: HttpClient) { }
-
-  setAcvpuCode(acvpu) {
-    let acvpuCode: string;
-    switch (acvpu) {
-      case 'A':
-        acvpuCode = 'at0005';
-        break;
-      case 'C':
-        acvpuCode = 'at0.15';
-        break;
-      case 'V':
-        acvpuCode = 'at0006';
-        break;
-      case 'P':
-        acvpu = 'at0007';
-        break;
-      case 'U':
-        acvpu = 'at0008';
-        break;
-    }
-    return acvpuCode;
-  }
 
   public createJsonComp(breathFreq, oxSat, oxSatScale, onAir, blPrSys, blPrDia,
                         pulse, freq, acvpu, rls, temp, newsScore) {
@@ -281,27 +258,5 @@ export class PatientService {
     };
     return this.http.get(this.baseUrl + '/query', httpOptions);
   }
-
-
-
-
-
-
-
-
-
-
-
-
-  // MOCK FUNCTIONS
-  getPatientDataPid(pid: string): Observable<any> {
-    return this.http.get(this.mockPatientsUrl + '/pid/' + pid);
-  }
-
-  getPatientDataEhr(ehrId: string): Observable<any> {
-    return this.http.get(this.mockPatientsUrl + '/ehr/' + ehrId);
-  }
-
-
 
 }

@@ -4,18 +4,22 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NewsScoreCalculatorService {
+
     clinicalRisk: number;
     totalScore = 0;
     isEmpty: boolean;
     isFull: boolean;
     scale1: boolean;
+
   constructor() {
     this.scale1 = true;
   }
+
   ngOnInit() {
     this.isEmpty = true;
     this.isFull = false;
   }
+
   getRespiratoryScore(respiratoryRate: number) {
     if (respiratoryRate >= 25 || respiratoryRate <= 8) {
       return 3;
@@ -98,9 +102,10 @@ export class NewsScoreCalculatorService {
 
   getTotalNEWS(respiratoryScore: number, saturationScore: number, supplementalOxygenScore: number,
                systolicScore: number, pulseScore: number, consciousnessScore: number, temperatureScore: number): number {
+
     this.totalScore = respiratoryScore + saturationScore + supplementalOxygenScore + systolicScore + pulseScore +
         consciousnessScore + temperatureScore;
-    if(this.isFull == false){
+    if (this.isFull === false) {
       return null;
     }
     if (this.totalScore >= 7) {
@@ -119,18 +124,18 @@ export class NewsScoreCalculatorService {
     }
   }
     getClinicalRisk() {
-      if(this.isFull == false){
+      if (this.isFull === false) {
         return null;
       }
-        if (this.clinicalRisk === 0) {
-            return 'Låg';
-        } else if (this.clinicalRisk === 1) {
-            return 'Låg/medium';
-        } else if (this.clinicalRisk === 2) {
-            return 'Medium';
-        } else if (this.clinicalRisk === 3) {
-            return 'Hög';
-        } else {
+      if (this.clinicalRisk === 0) {
+          return 'Låg';
+      } else if (this.clinicalRisk === 1) {
+          return 'Låg/medium';
+      } else if (this.clinicalRisk === 2) {
+          return 'Medium';
+      } else if (this.clinicalRisk === 3) {
+          return 'Hög';
+      } else {
     return null;
 }
 }
@@ -143,10 +148,10 @@ oxygenSaturationScale1(e, scale1: boolean) {
 }
 
 getTotalScore() {
-  if(this.isFull == false){
+  if (this.isFull === false ) {
     return null;
   }
-      return this.totalScore;
+  return this.totalScore;
 }
 }
 

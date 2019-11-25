@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
@@ -43,24 +43,23 @@ export class PatientOverviewComponent implements OnInit {
   accordionState: Array<boolean>; // Icon toggle for the accordion
   scale1: boolean;
 
+  private acvpuInt: number = null;
 
-
-    latestRespiration: string;
-    latestRespirationTime: any;
-    latestOxidation: string;
-    latestOxidationTime: string;
-    latestOxygen: string;
-    latestOxygenTime: any;
-    latestSystolic: string;
-    latestDiastolic: string;
-    latestBPTime: any;
-    latestPulse: string;
-    latestPulseTime: any;
-    latestAlertness: string;
-    latestAlertnessTime: any;
-    latestTemperature: string;
-    latestTemperatureTime: any;
-
+  latestRespiration: string;
+  latestRespirationTime: any;
+  latestOxidation: string;
+  latestOxidationTime: string;
+  latestOxygen: string;
+  latestOxygenTime: any;
+  latestSystolic: string;
+  latestDiastolic: string;
+  latestBPTime: any;
+  latestPulse: string;
+  latestPulseTime: any;
+  latestAlertness: string;
+  latestAlertnessTime: any;
+  latestTemperature: string;
+  latestTemperatureTime: any;
 
   constructor(
       private patientService: PatientService,
@@ -263,6 +262,7 @@ export class PatientOverviewComponent implements OnInit {
   }
 
   updateConsciousnessScore(e, score: number) {
+    this.acvpuInt = e.target.value;
     if (e.target.checked) {
       this.consciousnessScore = score;
     }
@@ -321,24 +321,20 @@ export class PatientOverviewComponent implements OnInit {
     return this.accordionState[id];
   }
 
-  openPopup(errorMessage: string) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      dialogMessage: errorMessage,
-    };
-
-    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
-  }
-
-  // Some fixed mock values at the moment, will be fixed later.
   packVitalsAsJson() {
+    let onAir: boolean;
+    this.supplementalOxygenScore === 0 ? onAir = true : onAir = false;
+
     this.patientService.createJsonComp(
         this.form.get('respiratoryRate').value,
-        this.form.get('oxygenSaturation').value, 1, true,
+        this.form.get('oxygenSaturation').value, 1,
+        onAir,
         this.form.get('systolicBloodPressure').value,
         this.form.get('diastolicBloodPressure').value,
-        this.form.get('pulseRate').value, true,
-        1, 2,
+        this.form.get('pulseRate').value,
+        true,
+        this.acvpuInt,
+        this.form.get('consciousness').value,
         this.form.get('temperature').value,
         this.newsScoreCalculator.getTotalScore());
   }
@@ -346,8 +342,6 @@ export class PatientOverviewComponent implements OnInit {
   goToHistory(vitalParameter: string) {
     localStorage.setItem('outputVitalParameter', vitalParameter);
     this.router.navigate(['history']);
-
-    // this.router.navigate(['history'], {state: { outputVitalParameter: vitalParameter}});
   }
 
 }

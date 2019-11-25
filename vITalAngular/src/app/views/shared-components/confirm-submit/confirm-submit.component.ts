@@ -37,6 +37,17 @@ export class ConfirmSubmitComponent implements OnInit {
     dialogAlConfig.disableClose = true;
     dialogAlConfig.autoFocus = true;
     this.dialogAlert = this.dialog.open(DialogWindowComponent, dialogAlConfig);
+
+    this.dialogAlert.afterClosed().subscribe(
+    reroute => {
+        if (reroute) {
+            this.router.navigate(['/scannerpage']);
+        } else {
+            this.router.navigate(['/pid/' + localStorage.getItem('PID')]);
+        }
+    },
+    error => console.log(error)
+    );
   }
 
   private submit() {
@@ -44,13 +55,12 @@ export class ConfirmSubmitComponent implements OnInit {
           .subscribe(
               resp => {
                   if (resp.action === 'CREATE') {
-                      this.viewConfirmation('Vitaldata sparad!');
-                      this.router.navigate(['/pid/' + localStorage.getItem('PID')]);
+                      this.viewConfirmation('Värden sparade');
                   }
               },
               error => {
                   console.log(error);
-                  this.viewConfirmation('Ett fel uppstod, försök igen!');
+                  this.viewConfirmation('Ett fel uppstod, värden ej sparade');
               }
           );
       this.close();
