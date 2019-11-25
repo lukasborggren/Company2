@@ -5,6 +5,7 @@ import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import {PatientService} from '../../services/patient.service';
 import {Router} from '@angular/router';
+import { state } from '@angular/animations';
 
 
 @Component({
@@ -117,8 +118,12 @@ export class HistoryComponent implements OnInit {
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
     public fetchDataApi() {
-        this.vitalSign = history.state.outputVitalParameter;
-        if (this.vitalSign === 'getHistoricBloodpressure') {
+      if (localStorage.getItem('outputVitalParameter') === null) {
+        localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
+      }
+      this.vitalSign = localStorage.getItem('outputVitalParameter');
+
+      if (this.vitalSign === 'getHistoricBloodpressure') {
             this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].systolic;
