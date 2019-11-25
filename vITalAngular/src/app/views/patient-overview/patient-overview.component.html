@@ -16,8 +16,8 @@
             </button>
           </div>
         </div>
-        <div *ngIf="(form.controls.respiratoryRate.invalid || !validationRespiratoryRate) && !form.controls.respiratoryRate.pristine" class="alert-danger">
-          <div *ngIf="!validationRespiratoryRate">Mata in ett värde mellan 0 och 200</div>
+        <div *ngIf="form.controls.respiratoryRate.invalid || !validationRespiratoryRate" class="alert-danger">
+          <div *ngIf="respiratoryScore == null">Mata in ett värde mellan 0 och 200</div>
         </div>
         <div *ngIf="isAccordionOpen(0)">
           <div class="accordion">
@@ -54,8 +54,8 @@
             </button>
           </div>
         </div>
-        <div *ngIf="(form.controls.oxygenSaturation.invalid || !validationOxygenSaturation) && !form.controls.oxygenSaturation.pristine" class="alert-danger">
-          <div *ngIf="!validationOxygenSaturation">Mata in ett värde mellan 0 och 100</div>
+        <div *ngIf="form.controls.oxygenSaturation.invalid || !validationOxygenSaturation" class="alert-danger">
+          <div *ngIf="saturationScore == null">Mata in ett värde mellan 0 och 100</div>
         </div>
 
       <!--  -->
@@ -355,8 +355,8 @@
       </button>
     </div>
   </div>
-  <div *ngIf="(form.controls.temperature.invalid || !validationTemperature) && !form.controls.temperature.pristine" class="alert-danger">
-    <div *ngIf="!validationTemperature">Mata in ett värde mellan 0 och 100</div>
+  <div *ngIf="form.controls.temperature.invalid || !validationTemperature" class="alert-danger">
+    <div *ngIf="temperatureScore == null">Mata in ett värde mellan 0 och 100</div>
   </div>
 
 
@@ -382,7 +382,6 @@
 </div>
 
 <!-----------------Save button----------------->
-<div>
     <!-- This is the old button in the inaccurate style, can be removed when everything works as expected with the new button below.
     <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
     -->

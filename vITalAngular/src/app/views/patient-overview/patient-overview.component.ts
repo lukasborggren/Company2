@@ -59,9 +59,9 @@ export class PatientOverviewComponent implements OnInit {
   latestTemperature: string;
   latestTemperatureTime: any;
 
-  validationOxygenSaturation: boolean = false;
-  validationTemperature: boolean = false;
-  validationRespiratoryRate: boolean = false;
+  validationOxygenSaturation: boolean = true;
+  validationTemperature: boolean = true;
+  validationRespiratoryRate: boolean = true;
 
   constructor(
       private patientService: PatientService,
@@ -90,22 +90,18 @@ export class PatientOverviewComponent implements OnInit {
     this.personnumber = pid;
     this.form = this.fb.group({
       respiratoryRate: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       oxygenSaturation: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       pulseRate: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       temperature: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
@@ -180,12 +176,15 @@ export class PatientOverviewComponent implements OnInit {
   onChanges() {
     this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
       this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
-      if (this.form.controls.oxygenSaturation.valid && val<=100 && val>=0) {
+      if (val<=200 && val>=0) {
         this.validationOxygenSaturation = true;
+      } else {
+        this.validationOxygenSaturation = false;
+      }
+      if (this.form.controls.oxygenSaturation.valid && this.validationOxygenSaturation && val != null) {
         this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
       } else {
         this.saturationScore = null;
-        this.validationOxygenSaturation = false;
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
@@ -193,11 +192,14 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
-      if (this.form.controls.respiratoryRate.valid && val<=200 && val>=0) {
+      if (val<=200 && val>=0) {
         this.validationRespiratoryRate = true;
-        this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
       } else {
         this.validationRespiratoryRate = false;
+      }
+      if (this.form.controls.respiratoryRate.valid && this.validationRespiratoryRate && val != null) {
+        this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+      } else {
         this.respiratoryScore = null;
       }
       this.updateTotalNews2Score();
@@ -206,7 +208,7 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('pulseRate').valueChanges.subscribe(val => {
       this.form.controls.pulseRate.patchValue(val, {emitEvent: false});
-      if (this.form.controls.pulseRate.valid) {
+      if (this.form.controls.pulseRate.valid && val != null) {
         this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
       } else {
         this.pulseScore = null;
@@ -217,12 +219,15 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.form.controls.temperature.patchValue(val, {emitEvent: false});
-      if (this.form.controls.temperature.valid && val<=100 && val>=0) {
+      if (val<=100 && val>=0) {
         this.validationTemperature = true;
+      } else {
+        this.validationTemperature = false;
+      }
+      if (this.form.controls.temperature.valid && this.validationTemperature && val != null) {
         this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
       } else {
         this.temperatureScore = null;
-        this.validationTemperature = false;
       }
       this.updateTotalNews2Score();
       this.updateClinicalRisk();
