@@ -35,9 +35,9 @@ export class PatientOverviewComponent implements OnInit {
   totalScore: number;
   tempTotal: number;
   accordionState: Array<boolean>; // Icon toggle for the accordion
-  scale1: boolean;
 
   private acvpuInt: number = null;
+  private oxSatScale = 1;
 
   latestRespiration: string;
   latestRespirationTime: any;
@@ -256,13 +256,19 @@ export class PatientOverviewComponent implements OnInit {
   }
 
   updateConsciousnessScore(e, score: number) {
-    this.acvpuInt = e.target.value;
     if (e.target.checked) {
+      this.acvpuInt = e.target.value;
       this.consciousnessScore = score;
     }
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
     this.updateIsEmpty();
+  }
+
+  updateOxygenSatScale(e, type: number) {
+    if (e.target.checked) {
+      this.oxSatScale = type;
+    }
   }
 
   getConsciousnessScore() {
@@ -321,7 +327,8 @@ export class PatientOverviewComponent implements OnInit {
 
     this.patientService.createJsonComp(
         this.form.get('respiratoryRate').value,
-        this.form.get('oxygenSaturation').value, 1,
+        this.form.get('oxygenSaturation').value,
+        this.oxSatScale,
         onAir,
         this.form.get('systolicBloodPressure').value,
         this.form.get('diastolicBloodPressure').value,

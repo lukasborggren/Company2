@@ -22,7 +22,6 @@ export class PatientService {
 
   public createJsonComp(breathFreq, oxSat, oxSatScale, onAir, blPrSys, blPrDia,
                         pulse, freq, acvpu, rls, temp, newsScore) {
-
     this.jsonComp = {
       'ctx/language': 'sv',
       'ctx/territory': 'US',
