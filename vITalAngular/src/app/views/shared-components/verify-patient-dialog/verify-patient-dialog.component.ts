@@ -69,39 +69,8 @@ export class VerifyPatientDialogComponent implements OnInit {
     this.dialogRef.close('close');
   }
 
-  viewConfirmation(message: string) {
-    const dialogAlConfig = new MatDialogConfig();
-    dialogAlConfig.data = {dialogMessage: message};
-    dialogAlConfig.disableClose = true;
-    dialogAlConfig.autoFocus = true;
-    this.dialogAlert = this.dialog.open(DialogWindowComponent, dialogAlConfig);
-
-    this.dialogAlert.afterClosed().subscribe(
-        data => {this.close(); },
-        error => {console.log(error); });
-  }
-
   save() {
-    if (this.form.value.description === localStorage.getItem('PID')) {
-      this.patientService.postComposition()
-          .subscribe(
-              resp => {
-                // Confirmation alert here
-                if (resp.action === 'CREATE') {
-                  console.log('Submission successful');
-                  this.viewConfirmation('Vitaldata sparat!');
-                  // this.router.navigate(['/pid/' + data.description]);
-                }
-              },
-              error => {
-                // Error alert here
-                console.log(error);
-                console.log('Submission failed');
-                this.viewConfirmation('Spara misslyckades');
-              }
-          );
-    }
-    //this.dialogRef.close(this.form.value);
+    this.dialogRef.close(this.form.value);
   }
   scan() {
     this.barcodevalue = 'scanning';
