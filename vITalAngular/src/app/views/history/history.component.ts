@@ -23,13 +23,13 @@ export class HistoryComponent implements OnInit {
     private vitalArray: any[] = [];
     private vitalArray2: any[] = [];
     private timeArray: any[] = [];
-    private chartLabel: any = 'funkar inte vaf*n';
+    private chartLabel: string;
     public yaxisMax: any;
     public yaxisMin: any;
 
     public chartData: ChartDataSets[] = [
         { data: this.vitalArray,
-            label: this.chartLabel,
+            label: 'Vitalparameter 1',
             lineTension: 0,
             pointStyle: 'triangle',
             pointRotation: 180,
@@ -44,7 +44,7 @@ export class HistoryComponent implements OnInit {
         },
         {
             data: this.vitalArray2,
-            label: this.chartLabel,
+            label: 'Vitalparameter 2',
             lineTension: 0,
             pointStyle: 'triangle',
             fill: false,
