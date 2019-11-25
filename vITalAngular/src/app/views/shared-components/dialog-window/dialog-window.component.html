@@ -2,6 +2,5 @@
     <p>{{dialogMessage}}</p>
 </div>
 <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]=firstOptionMessage>{{firstOptionMessage}}</button>
-    <button mat-button [mat-dialog-close]=secondOptionMessage>{{secondOptionMessage}}</button>
+    <button mat-button (click)="close()">Ok</button>
 </div>
