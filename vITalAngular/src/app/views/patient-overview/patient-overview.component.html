@@ -9,15 +9,15 @@
             Andningsfrekvens
           </div>
           <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
-          <div *ngIf="form.controls.respiratoryRate.invalid && !form.controls.respiratoryRate.pristine" class="alert-danger">
-            <div *ngIf="form.controls.respiratoryRate.errors.pattern">Mata in ett värde mellan 0 och 100</div>
-          </div>
           <div class="collapseButton p-2">
             <button (click)="toggleAccordion(0)" class="btn">
               <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(0)" class="fa fa-angle-double-down fa-2x"></i>
             </button>
           </div>
+        </div>
+        <div *ngIf="form.controls.respiratoryRate.invalid && !form.controls.respiratoryRate.pristine" class="alert-danger">
+          <div *ngIf="form.controls.respiratoryRate.errors.pattern">Mata in ett värde mellan 0 och 100</div>
         </div>
         <div *ngIf="isAccordionOpen(0)">
           <div class="accordion">
@@ -47,15 +47,15 @@
             Syremättnad
           </div>
           <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
-          <div *ngIf="form.controls.oxygenSaturation.invalid && !form.controls.oxygenSaturation.pristine" class="alert-danger">
-            <div *ngIf="form.controls.oxygenSaturation.errors.pattern">Mata in ett värde mellan 0 och 100</div>
-          </div>
           <div class="collapseButton p-2">
             <button (click)="toggleAccordion(1)" class="btn">
               <i *ngIf="isAccordionOpen(1)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(1)" class="fa fa-angle-double-down fa-2x"></i>
             </button>
           </div>
+        </div>
+        <div *ngIf="form.controls.oxygenSaturation.invalid && !form.controls.oxygenSaturation.pristine" class="alert-danger">
+          <div *ngIf="form.controls.oxygenSaturation.errors.pattern">Mata in ett värde mellan 0 och 100</div>
         </div>
 
       <!--  -->
@@ -171,20 +171,20 @@
     </div>
     <!-- This input shall have two input fields options, one for systolic and one for diastolic -->
     <input type="number" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div *ngIf="form.controls.systolicBloodPressure.invalid && !form.controls.systolicBloodPressure.pristine" class="alert-danger">
-      <div *ngIf="form.controls.systolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
-    </div>
       <div class="ml-auto" id="between">/</div>
     <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div *ngIf="form.controls.diastolicBloodPressure.invalid && !form.controls.diastolicBloodPressure.pristine" class="alert-danger">
-      <div *ngIf="form.controls.diastolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
-    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(3)" class="btn">
         <i *ngIf="isAccordionOpen(3)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(3)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
     </div>
+  </div>
+  <div *ngIf="form.controls.systolicBloodPressure.invalid && !form.controls.systolicBloodPressure.pristine" class="alert-danger">
+    <div *ngIf="form.controls.systolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
+  </div>
+  <div *ngIf="form.controls.diastolicBloodPressure.invalid && !form.controls.diastolicBloodPressure.pristine" class="alert-danger">
+    <div *ngIf="form.controls.diastolicBloodPressure.errors.pattern">Mata in ett värde mellan 0 och 999</div>
   </div>
 
 
@@ -214,15 +214,15 @@
       Pulsfrekvens
     </div>
     <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div *ngIf="form.controls.pulseRate.invalid && !form.controls.pulseRate.pristine" class="alert-danger">
-      <div *ngIf="form.controls.pulseRate.errors.pattern">Mata in ett värde mellan 0 och 999</div>
-    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(4)" class="btn">
         <i *ngIf="isAccordionOpen(4)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(4)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
     </div>
+  </div>
+  <div *ngIf="form.controls.pulseRate.invalid && !form.controls.pulseRate.pristine" class="alert-danger">
+    <div *ngIf="form.controls.pulseRate.errors.pattern">Mata in ett värde mellan 0 och 999</div>
   </div>
 
 
@@ -299,15 +299,15 @@
     <!--  This is the old input field for this parameter using a text input, may be removed if teh new input works as desired
           <input type="number" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
           -->
-    <div *ngIf="form.controls.consciousness.invalid && !form.controls.consciousness.pristine" class="alert-danger">
-      <div *ngIf="form.controls.consciousness.errors.pattern">Mata in ett värde mellan 1 och 8</div>
-    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(5)" class="btn">
         <i *ngIf="isAccordionOpen(5)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(5)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
     </div>
+  </div>
+  <div *ngIf="form.controls.consciousness.invalid && !form.controls.consciousness.pristine" class="alert-danger">
+    <div *ngIf="form.controls.consciousness.errors.pattern">Mata in ett värde mellan 1 och 8</div>
   </div>
 
 
@@ -348,15 +348,15 @@
       Temperatur
     </div>
     <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
-    <div *ngIf="form.controls.temperature.invalid && !form.controls.temperature.pristine" class="alert-danger">
-      <div *ngIf="form.controls.temperature.errors.pattern">Mata in ett värde mellan 0 och 100</div>
-    </div>
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(6)" class="btn">
         <i *ngIf="isAccordionOpen(6)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(6)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
     </div>
+  </div>
+  <div *ngIf="form.controls.temperature.invalid && !form.controls.temperature.pristine" class="alert-danger">
+    <div *ngIf="form.controls.temperature.errors.pattern">Mata in ett värde mellan 0 och 100</div>
   </div>
 
 
