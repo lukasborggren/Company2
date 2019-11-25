@@ -149,7 +149,8 @@ export class PatientOverviewComponent implements OnInit {
           this.latestPulseTime=data.resultSet[0].time;
         });
         this.patientService.getHistoricACVPU(localStorage.getItem('EHRID')).subscribe(data => {
-          this.latestAlertness=data.resultSet[0].vitalsign;
+          this.latestAlertness=data.resultSet[0].acvpu;
+          console.log(this.latestAlertness)
           this.latestAlertnessTime=data.resultSet[0].time;
 
         });

@@ -323,9 +323,10 @@
           <div class="btn-group-vertical">
               <!--Hämta senaaste mätvärde med {{latestAlertness}} och {{latestAlertnessTime |date:'short'}} -->
             <button type="button" class="btn btn-sm expandBtn"><strong>{{latestAlertnessTime |date:'short'}}</strong></button>
-            <button type="button" class="btn btn-sm expandBtn btn-block"><strong>Placeholder</strong></button>
+            <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestAlertness}}</strong></button>
           </div>
 
+<!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
         <div class="RLS-class"> RLS
           <input type="number" formControlName="consciousnessScore" class="inputField col-3 ml-auto form-control-lg p-2 ">
         </div>
