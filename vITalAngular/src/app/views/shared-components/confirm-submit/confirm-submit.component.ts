@@ -4,6 +4,7 @@ import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {Router} from '@angular/router';
 import {PatientService} from '../../../services/patient.service';
 import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-confirm-submit',
@@ -40,10 +41,17 @@ export class ConfirmSubmitComponent implements OnInit {
 
     this.dialogAlert.afterClosed().subscribe(
     reroute => {
+        console.log(reroute);
         if (reroute) {
             this.router.navigate(['/scannerpage']);
         } else {
-            this.router.navigate(['/pid/' + localStorage.getItem('PID')]);
+            const source = timer(0, 100);
+            const subscribe = source.subscribe(counter => {
+                if (counter >= 150) {
+                    this.router.navigate(['/scannerpage']);
+                    subscribe.unsubscribe();
+                }
+            });
         }
     },
     error => console.log(error)
