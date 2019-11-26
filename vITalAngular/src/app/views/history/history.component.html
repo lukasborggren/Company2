@@ -2,8 +2,26 @@
 <!-- this button will not be needed since we have a return arrow in the header -->
 <!--button class="btn" (click)="goBack()">Backa<i class="fas fa-chevron-down"></i></button-->
 
+<div class="row">
+    <div class="column">
+        <ul *ngFor="let time of timeArray">
+            {{ time | date:'shortDate'}}
+        </ul>
+    </div>
+    <div class="column">
+        <ul *ngFor="let time of timeArray">
+            {{ time | date:'shortTime'}}
+        </ul>
+    </div>
+    <div class="column">
+        <ul *ngFor="let vitalsign of vitalArray">
+            {{ vitalsign }}
+        </ul>
+    </div>
+</div>
 
-<table class="table history-table table-bordered" style = "max-width: 95%">
+
+<!--<table class="table history-table table-bordered" style = "max-width: 95%">
     <thead style="background-color: #d8d8d8; text-align: start ">
     <tr>
         <th scope="col">Datum</th>
@@ -40,24 +58,24 @@
         <td>0</td>
     </tr>
     </tbody>
-</table>
+</table>-->
 
 
 
 
 
 
-    <div>
+<div>
 
-        <div style="display: block; min-height: 700px; max-width: 95vw; margin-left: 10px" *ngIf="chartOptions">
-            <canvas baseChart id="graphId"
-                    [datasets]="chartData"
-                    [labels]="chartLabels"
-                    [options]="chartOptions"
-                    [chartType]="chartType">
-            </canvas>
-        </div>
+    <div style="display: block; min-height: 700px; max-width: 95vw; margin-left: 10px" *ngIf="chartOptions">
+        <canvas baseChart id="graphId"
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [options]="chartOptions"
+                [chartType]="chartType">
+        </canvas>
     </div>
+</div>
 
 </body>
 
