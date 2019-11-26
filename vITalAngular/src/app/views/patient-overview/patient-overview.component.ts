@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, OnDestroy} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
@@ -11,7 +11,7 @@ import {BarcodeScannerService} from '../../barcode-scanner.service';
   templateUrl: './patient-overview.component.html',
   styleUrls: ['./patient-overview.component.css']
 })
-export class PatientOverviewComponent implements OnInit {
+export class PatientOverviewComponent implements OnInit, OnDestroy {
   form: FormGroup;
   patientinfo: string;
   personnumber: string;
@@ -53,9 +53,9 @@ export class PatientOverviewComponent implements OnInit {
   latestTemperature: string;
   latestTemperatureTime: any;
 
-  validationOxygenSaturation: boolean = true;
-  validationTemperature: boolean = true;
-  validationRespiratoryRate: boolean = true;
+  validationOxygenSaturation = true;
+  validationTemperature = true;
+  validationRespiratoryRate = true;
 
   constructor(
     private patientService: PatientService,
@@ -78,7 +78,20 @@ export class PatientOverviewComponent implements OnInit {
     this.barcodeScanner.StopScanner();
   }
 
+  ngOnDestroy() {
+    const serialized = this.form.getRawValue();
+    localStorage.setItem('form', JSON.stringify(serialized));
+  }
+
   ngOnInit() {
+
+    if (localStorage.getItem('form') === null) {
+      console.log('form = null');
+    } else {
+      const loadedForm = JSON.parse(localStorage.getItem('form'));
+      console.log(loadedForm);
+      this.form.setValue(loadedForm);
+    }
     this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
     this.personnumber = pid;
@@ -174,11 +187,101 @@ onChanges() {
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
     this.updateIsEmpty();
+<<<<<<< HEAD
   });
   this.form.get('respiratoryRate').valueChanges.subscribe(val => {
     this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
     if (val<=200 && val>=0) {
       this.validationRespiratoryRate = true;
+=======
+    this.onChanges();
+  }
+
+  onChanges() {
+    this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
+      this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
+      if (val <= 100 && val >= 0) {
+        this.validationOxygenSaturation = true;
+      } else {
+        this.validationOxygenSaturation = false;
+      }
+      if (this.form.controls.oxygenSaturation.valid && this.validationOxygenSaturation && val != null) {
+        this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
+      } else {
+        this.saturationScore = null;
+      }
+      this.updateTotalNews2Score();
+      this.updateClinicalRisk();
+      this.updateIsEmpty();
+    });
+    this.form.get('respiratoryRate').valueChanges.subscribe(val => {
+      this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
+      if (val <= 200 && val >= 0) {
+        this.validationRespiratoryRate = true;
+      } else {
+        this.validationRespiratoryRate = false;
+      }
+      if (this.form.controls.respiratoryRate.valid && this.validationRespiratoryRate && val != null) {
+        this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
+      } else {
+        this.respiratoryScore = null;
+      }
+      this.updateTotalNews2Score();
+      this.updateClinicalRisk();
+      this.updateIsEmpty();
+    });
+    this.form.get('pulseRate').valueChanges.subscribe(val => {
+      this.form.controls.pulseRate.patchValue(val, {emitEvent: false});
+      if (this.form.controls.pulseRate.valid && val != null) {
+        this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
+      } else {
+        this.pulseScore = null;
+      }
+      this.updateTotalNews2Score();
+      this.updateClinicalRisk();
+      this.updateIsEmpty();
+    });
+    this.form.get('temperature').valueChanges.subscribe(val => {
+      this.form.controls.temperature.patchValue(val, {emitEvent: false});
+      if (val <= 100 && val >= 0) {
+        this.validationTemperature = true;
+      } else {
+        this.validationTemperature = false;
+      }
+      if (this.form.controls.temperature.valid && this.validationTemperature && val != null) {
+        this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
+      } else {
+        this.temperatureScore = null;
+      }
+      this.updateTotalNews2Score();
+      this.updateClinicalRisk();
+      this.updateIsEmpty();
+    });
+    this.form.get('systolicBloodPressure').valueChanges.subscribe(val => {
+      this.form.controls.systolicBloodPressure.patchValue(val, {emitEvent: false});
+      if (this.form.controls.systolicBloodPressure.valid && this.form.controls.systolicBloodPressure.value) {
+        this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
+      } else {
+        this.systolicScore = null;
+      }
+      this.updateTotalNews2Score();
+      this.updateClinicalRisk();
+      this.updateIsEmpty();
+    });
+
+  }
+
+  @HostListener('click') onClick() {
+    localStorage.setItem('TIMER_ACTIVE', 'F');
+  }
+
+  updateIsEmpty() {
+    if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
+       (this.pulseScore == null) && (this.respiratoryScore == null) &&
+       (this.saturationScore == null) && (this.supplementalOxygenScore == null) &&
+       (  this.consciousnessScore == null)) {
+         this.newsScoreCalculator.isEmpty = true;
+>>>>>>> 6420668cbf977a8ab4b61f863d52b3bc3bb32321
     } else {
       this.validationRespiratoryRate = false;
     }
