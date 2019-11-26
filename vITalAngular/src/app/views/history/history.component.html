@@ -5,12 +5,12 @@
 <div class="row">
     <div class="column">
         <ul *ngFor="let time of timeArray">
-            {{ time | date:'shortDate'}}
+            {{ time | date:'dd/MM/yy'}}
         </ul>
     </div>
     <div class="column">
         <ul *ngFor="let time of timeArray">
-            {{ time | date:'shortTime'}}
+            {{ time | date:'HH:mm'}}
         </ul>
     </div>
     <div class="column">
