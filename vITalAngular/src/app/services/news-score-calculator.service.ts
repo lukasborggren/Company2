@@ -140,11 +140,8 @@ export class NewsScoreCalculatorService {
 }
 }
 
-oxygenSaturationScale1(e, scale1: boolean) {
-
-  if (e.target.checked) {
-      this.scale1 = scale1;
-  }
+oxygenSaturationScale1(scale1: boolean) {
+    this.scale1 = scale1;
 }
 
 getTotalScore() {

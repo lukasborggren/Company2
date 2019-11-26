@@ -271,9 +271,10 @@ export class PatientOverviewComponent implements OnInit {
     this.updateIsEmpty();
   }
 
-  updateOxygenSatScale(e, type: number) {
+  updateOxygenSatScale(e, scale1: boolean) {
     if (e.target.checked) {
-      this.oxSatScale = type;
+      scale1 ? this.oxSatScale = 1 : this.oxSatScale = 2;
+      this.newsScoreCalculator.oxygenSaturationScale1(scale1);
     }
   }
 
