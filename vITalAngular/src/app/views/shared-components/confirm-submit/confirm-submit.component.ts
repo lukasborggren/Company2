@@ -44,9 +44,12 @@ export class ConfirmSubmitComponent implements OnInit {
         if (reroute) {
             this.router.navigate(['/scannerpage']);
         } else {
+            localStorage.setItem('TIMER_ACTIVE', 'T');
             const source = timer(0, 100);
             const subscribe = source.subscribe(counter => {
-                if (counter >= 150) {
+                if (localStorage.getItem('TIMER_ACTIVE') !== 'T') {
+                    subscribe.unsubscribe();
+                } else if (counter >= 150 ) {
                     this.router.navigate(['/scannerpage']);
                     subscribe.unsubscribe();
                 }

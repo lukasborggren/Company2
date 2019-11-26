@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
@@ -231,6 +231,11 @@ export class PatientOverviewComponent implements OnInit {
     });
 
   }
+
+  @HostListener('click') onClick() {
+    localStorage.setItem('TIMER_ACTIVE', 'F');
+  }
+
   updateIsEmpty() {
     if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
        (this.pulseScore == null) && (this.respiratoryScore == null) &&
