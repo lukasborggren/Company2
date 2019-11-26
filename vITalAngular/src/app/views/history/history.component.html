@@ -48,14 +48,16 @@
 
     <div>
 
-        <div style="display: block; min-height: 700px; max-width: 95vw; margin-left: 10px">
+        <div style="display: block; min-height: 700px; max-width: 95vw; margin-left: 10px" *ngIf="chartOptions">
             <canvas baseChart id="graphId"
                     [datasets]="chartData"
                     [labels]="chartLabels"
                     [options]="chartOptions"
-                    [chartType]="chartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"></canvas>
+                    [chartType]="chartType">
+
+                    <!-- (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"> --> 
+                </canvas>
         </div>
     </div>
 

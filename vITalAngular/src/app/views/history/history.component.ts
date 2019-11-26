@@ -3,8 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
-import {PatientService} from '../../services/patient.service';
-import {Router} from '@angular/router';
+import { PatientService } from '../../services/patient.service';
+import { Router } from '@angular/router';
 import { state } from '@angular/animations';
 
 
@@ -17,8 +17,8 @@ import { state } from '@angular/animations';
 export class HistoryComponent implements OnInit {
 
     constructor(private location: Location,
-                private router: Router,
-                private patientservice: PatientService) {
+        private router: Router,
+        private patientservice: PatientService) {
     }
     private vitalSign: string;
     private vitalArray: any[] = [];
@@ -29,9 +29,10 @@ export class HistoryComponent implements OnInit {
     public yaxisMin: any;
 
     public chartData: ChartDataSets[] = [
-        { data: this.vitalArray,
+        {
+            data: this.vitalArray,
             label: 'Vitalparameter 1',
-            lineTension: 0,
+            lineTension: 0.2,
             pointStyle: 'triangle',
             pointRotation: 180,
             fill: false,
@@ -46,7 +47,7 @@ export class HistoryComponent implements OnInit {
         {
             data: this.vitalArray2,
             label: 'Vitalparameter 2',
-            lineTension: 0,
+            lineTension: 0.2,
             pointStyle: 'triangle',
             fill: false,
             borderColor: 'rgba(223, 128, 255, 1)', // Change the color of the line
@@ -57,59 +58,196 @@ export class HistoryComponent implements OnInit {
         },
     ];
     public chartLabels: Label[] = this.timeArray;
-    public chartOptions: (ChartOptions & { annotation: any }) = {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                display: true,
-                ticks: {
-                    min: 0,
-                    max: 240,
-                    stepSize: 20
+    public chartOptions: (ChartOptions & { annotation: any });
+    public setChartOptions() {
+        if (this.vitalSign === 'getHistoricBloodpressure') { //print the graph to be used with historic bloodpressure
+           console.log("getHistoricBloodpressure");
+            this.chartOptions = {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            min: 0,
+                            max: 240,
+                            stepSize: 20
+                        }
+                    }],
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {}
+                    }]
+                },
+                annotation: {
+                    annotations: [{
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 220,
+                        yMax: 240,
+                        backgroundColor: 'rgba(255, 31, 25, 0.2)',
+                        borderColor: 'rgba(255, 31, 25, 0.2)',
+                    },
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 100,
+                        yMax: 110,
+                        backgroundColor: 'rgba(255, 251, 25, 0.2)',
+                        borderColor: 'rgba(255, 251, 25, 0.2)',
+                    },
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 90,
+                        yMax: 100,
+                        backgroundColor: 'rgba(255, 128, 0, 0.2)',
+                        borderColor: 'rgba(255, 128, 0, 0.2)',
+                    },
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 50,
+                        yMax: 90,
+                        backgroundColor: 'rgba(255, 31, 25, 0.2)',
+                        borderColor: 'rgba(255, 31, 25, 0.2)',
+                    },
+                    ],
+                },
+            };
+        } else if (this.vitalSign === 'getHistoricRespiration') {
+            console.log("getHistoricRespiration");
+            this.chartOptions = {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            min: 8,
+                            max: 25,
+                            stepSize: 3
+                        }
+                    }],
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {}
+                    }]
+                },
+                annotation: {
+                    annotations: [{
+                    }],
                 }
-            }],
-            xAxes: [{
-                display: true,
-                scaleLabel: {}
-            }]
-        },
-        annotation: {
-            annotations: [{
-                type: 'box',
-                yScaleID: 'y-axis-0',
-                yMin: 220,
-                yMax: 240,
-                backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                borderColor: 'rgba(255, 31, 25, 0.2)',
-            },
-                {
-                    type: 'box',
-                    yScaleID: 'y-axis-0',
-                    yMin: 100,
-                    yMax: 110,
-                    backgroundColor: 'rgba(255, 251, 25, 0.2)',
-                    borderColor: 'rgba(255, 251, 25, 0.2)',
+            };
+        } else if (this.vitalSign === 'getHistoricACVPU') {
+            console.log("getHistoricACVPU");
+            this.chartOptions = {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            display:true,
+                        },
+                        ticks: {
+                            min: 1,
+                            max: 5,
+                            stepSize: 1,
+                            callback: function(label, index, labels) {
+                                switch (label) {
+                                    case 1:
+                                        return 'U';
+                                    case 2:
+                                        return 'P';
+                                    case 3:
+                                        return 'V';
+                                    case 4:
+                                        return 'C';
+                                    case 5:
+                                        return 'A';
+                                }
+                            }
+                        }
+                    }],
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {}
+                    }]
                 },
-                {
-                    type: 'box',
-                    yScaleID: 'y-axis-0',
-                    yMin: 90,
-                    yMax: 100,
-                    backgroundColor: 'rgba(255, 128, 0, 0.2)',
-                    borderColor: 'rgba(255, 128, 0, 0.2)',
+                annotation: {
+                    annotations: [{
+                    }],
+                }
+            };  
+        } else if (this.vitalSign === 'getHistoricOximetry'){
+            console.log("getHistoricOximetry");
+            this.chartOptions = {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            min: 90,
+                            max: 100,
+                            stepSize: 1
+                        }
+                    }],
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {}
+                    }]
                 },
-                {
-                    type: 'box',
-                    yScaleID: 'y-axis-0',
-                    yMin: 50,
-                    yMax: 90,
-                    backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                    borderColor: 'rgba(255, 31, 25, 0.2)',
+                annotation: {
+                    annotations: [{
+                    }],
+                }
+            };
+        } else if (this.vitalSign === 'getHistoricPulse'){
+            console.log("getHistoricPulse");
+            this.chartOptions = {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            min: 20,
+                            max: 140,
+                            stepSize: 10
+                        }
+                    }],
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {}
+                    }]
                 },
-            ],
-        },
-    };
-
+                annotation: {
+                    annotations: [{
+                    }],
+                }
+            };
+        } else if (this.vitalSign === 'getHistoricTemperature'){
+            console.log("getHistoricTemperature");
+            this.chartOptions = {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            min: 34,
+                            max: 40,
+                            stepSize: 1
+                        }
+                    }],
+                    xAxes: [{
+                        display: true,
+                        scaleLabel: {}
+                    }]
+                },
+                annotation: {
+                    annotations: [{
+                    }],
+                }
+            };
+        }
+    }
     public chartType = 'line';
     public lineChartLegend = true;
     public lineChartType = 'line';
@@ -118,28 +256,31 @@ export class HistoryComponent implements OnInit {
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
     public fetchDataApi() {
-      if (localStorage.getItem('outputVitalParameter') === null) {
-        localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
-      }
-      this.vitalSign = localStorage.getItem('outputVitalParameter');
+        if (localStorage.getItem('outputVitalParameter') === null) {
+            localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
+        }
+        this.vitalSign = localStorage.getItem('outputVitalParameter');
+        console.log(this.vitalSign);
 
-      if (this.vitalSign === 'getHistoricBloodpressure') {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+        if (this.vitalSign === 'getHistoricBloodpressure') {
+            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe(data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].systolic;
                     this.vitalArray2[i] = data.resultSet[i].diastolic;
                     this.timeArray[i] = data.resultSet[i].time;
                 }
+                console.log(this.vitalArray);
             });
-        } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-            return this.patientservice.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe( data => {
+        } else if (this.vitalSign === 'getHistoricRespiration') {
+            return this.patientservice.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe(data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].syre;
                     this.timeArray[i] = data.resultSet[i].time;
                 }
+                console.log(this.vitalArray);
             });
         } else if (this.vitalSign === 'getHistoricACVPU') {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe(data => {
                 for (let i = 0; i < 10; i++) {
                     this.timeArray[i] = data.resultSet[i].time;
                     if (data.resultSet[i].acvpu === 'Alert') {
@@ -154,13 +295,16 @@ export class HistoryComponent implements OnInit {
                         this.vitalArray[i] = 1;
                     }
                 }
-                });
+                console.log(this.vitalArray);
+            });
         } else {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe( data => {
+            console.log(this.vitalArray);
+            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe(data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].vitalsign;
                     this.timeArray[i] = data.resultSet[i].time;
                 }
+                console.log(this.vitalArray);
             });
             /*   if (this.vitalSign === 'getHistoricRespiration') {
                    this.chartLabel = 'Andningsfrekvens';
@@ -174,6 +318,7 @@ export class HistoryComponent implements OnInit {
     }
     ngOnInit() {
         this.fetchDataApi();
+        this.setChartOptions();
     }
     goBack() {
         // om du ska använda denna måste du skapa den i konstruktorn som jag gjorde ovanför.
