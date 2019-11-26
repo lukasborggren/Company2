@@ -29,8 +29,8 @@ export class AuthService {
             const valid = res.status === 'success';
             if (valid) {
                 const encodedString = btoa(userInfo.username + ':' + userInfo.password);
-                localStorage.setItem('ENCODED_STRING', encodedString);
-                localStorage.setItem('ACCESS_TOKEN', res.auth_token);
+                sessionStorage.setItem('ENCODED_STRING', encodedString);
+                sessionStorage.setItem('ACCESS_TOKEN', res.auth_token);
                 this.loggedIn.next(true);
             }
             return valid;
@@ -45,7 +45,7 @@ export class AuthService {
     let headers = new HttpHeaders();
     headers = headers.append(
         'Authorization',
-        localStorage.getItem('ACCESS_TOKEN')
+        sessionStorage.getItem('ACCESS_TOKEN')
     );
     return this.http.get<boolean>(url, {headers: headers})
         .pipe(map((res: any) => {
@@ -61,17 +61,17 @@ export class AuthService {
     let headers = new HttpHeaders();
     headers = headers.append(
         'Authorization',
-        localStorage.getItem('ACCESS_TOKEN')
+        sessionStorage.getItem('ACCESS_TOKEN')
     );
     this.http.post(url, null, {headers: headers})
         .subscribe((res) => {},
         err => {
           console.error(err);
         });
-    localStorage.removeItem('ENCODED_STRING');
-    localStorage.removeItem('ACCESS_TOKEN');
-    localStorage.removeItem('EHR_ID');
-    localStorage.removeItem('PID');
+    sessionStorage.removeItem('ENCODED_STRING');
+    sessionStorage.removeItem('ACCESS_TOKEN');
+    sessionStorage.removeItem('EHR_ID');
+    sessionStorage.removeItem('PID');
     this.loggedIn.next(false);
   }
 }
