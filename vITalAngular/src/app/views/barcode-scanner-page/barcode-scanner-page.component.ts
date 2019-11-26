@@ -66,10 +66,10 @@ export class BarcodeScannerPageComponent implements OnInit {
                   const ehrId = response.parties[0].additionalInfo.ehrId;
                   localStorage.setItem('EHR_ID', ehrId);
                   localStorage.setItem('PID', data.description);
+                  this.router.navigate(['/pid/' + data.description]);
                 },
                 error => console.log(error)
             );
-            this.router.navigate(['/pid/' + data.description]);
           }
         });
   }
