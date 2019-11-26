@@ -80,18 +80,14 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     const serialized = this.form.getRawValue();
+    console.log('form: ', serialized);
     localStorage.setItem('form', JSON.stringify(serialized));
+    console.log('form: ',     localStorage.getItem('form'));
   }
 
   ngOnInit() {
 
-    if (localStorage.getItem('form') === null) {
-      console.log('form = null');
-    } else {
-      const loadedForm = JSON.parse(localStorage.getItem('form'));
-      console.log(loadedForm);
-      this.form.setValue(loadedForm);
-    }
+
     this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
     this.personnumber = pid;
@@ -125,7 +121,16 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       ]
       ]
     });
-
+    if (localStorage.getItem('form') === null) {
+      console.log('form = null');
+    } else {
+      const loadedForm = JSON.parse(localStorage.getItem('form'));
+      console.log(loadedForm);
+      this.form.setValue(loadedForm);
+      this.updateTotalNews2Score();
+      this.updateClinicalRisk();
+      this.updateIsEmpty();
+    }
 
 
     this.patientService.getHistoricRespiration().subscribe(data => {
@@ -174,7 +179,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   onChanges() {
     this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
       this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
-      if (val<=100 && val>=0) {
+      if (val <= 100 && val >= 0) {
         this.validationOxygenSaturation = true;
       } else {
         this.validationOxygenSaturation = false;
@@ -190,7 +195,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
-      if (val<=200 && val>=0) {
+      if (val <= 200 && val >= 0) {
         this.validationRespiratoryRate = true;
       } else {
         this.validationRespiratoryRate = false;
@@ -217,7 +222,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.form.controls.temperature.patchValue(val, {emitEvent: false});
-      if (val<=100 && val>=0) {
+      if (val <= 100 && val >= 0) {
         this.validationTemperature = true;
       } else {
         this.validationTemperature = false;
@@ -309,7 +314,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
         this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
         this.temperatureScore);
-        this.updateClinicalRisk();
+      this.updateClinicalRisk();
       } else {
         this.newsScoreCalculator.totalScore = null;
       }
