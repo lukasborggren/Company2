@@ -48,7 +48,7 @@ export class NewsScoreCalculatorService {
     } else {
       if (oxygenSaturation <= 83 || oxygenSaturation >= 97 ) {
         return 3;
-      } else if (oxygenSaturation >= 83 && oxygenSaturation <= 84) {
+      } else if (oxygenSaturation >= 84 && oxygenSaturation <= 85) {
         return 2;
       } else if (oxygenSaturation >= 95 && oxygenSaturation <= 96) {
         return 2;
