@@ -215,10 +215,10 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateOxSatScale(val: number) {
-    if (val === 1) {
+    if (val == 1) {
       this.oxSatScale = 1;
       this.newsScoreCalculator.oxygenSaturationScale1(this.scale1 = true);
-    } else {
+    } else if (val == 2) {
       this.oxSatScale = 2;
       this.newsScoreCalculator.oxygenSaturationScale1(this.scale1 = false);
     }
@@ -232,7 +232,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     if (val === 1) {
       this.supplementalOxygenScore = 2;
       this.onAir = true;
-    } else {
+    } else if (val) {
       this.supplementalOxygenScore = 0;
       this.onAir = false;
     }
@@ -247,7 +247,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updatePulseScore(val: number) {
-    console.log('in updatePulseSCore');
     if (this.form.controls.pulseRate.valid && this.form.controls.pulseRate.value) {
       this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
     } else {
@@ -258,7 +257,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   updateConsciousnessACVPUScore(val: number) {
     if (val == 1) {
       this.consciousnessACVPUScore = 0;
-    } else {
+    } else if (val) {
       this.consciousnessACVPUScore = 3;
     }
   }
