@@ -8,7 +8,7 @@
     <div class="text">
         Klinisk risk:
       </div>
-      <div class="clinicalLabel alert alert-secondary alert-sm">
+      <div class="clinicalLabel alert alert-secondary alert-sm" [ngClass]="{'bg-white': newsScoreCalculator.getClinicalRisk() == 'Låg', 'newsscore1': newsScoreCalculator.getClinicalRisk() == 'Låg/medium', 'newsscore2': newsScoreCalculator.getClinicalRisk() == 'Medium', 'newsscore3': newsScoreCalculator.getClinicalRisk() == 'Hög'}">
         <p class="labelText">{{this.newsScoreCalculator.getClinicalRisk()}}</p>
       </div>
     </div>
