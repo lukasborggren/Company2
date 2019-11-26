@@ -1,15 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
-import {VerifyPatientDialogComponent} from '../shared-components/verify-patient-dialog/verify-patient-dialog.component';
-import {MatDialog, MatDialogConfig} from '@angular/material';
-import {isNumeric} from 'rxjs/internal-compatibility';
-import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confirm-submit.component';
+import {MatDialog} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
-import {throwMatDialogContentAlreadyAttachedError} from '@angular/material/dialog';
-import {PopupWindowComponent} from '../shared-components/popup-window/popup-window.component';
 import {BarcodeScannerService} from '../../barcode-scanner.service';
 
 @Component({
@@ -22,7 +16,6 @@ export class PatientOverviewComponent implements OnInit {
   patientinfo: string;
   personnumber: string;
   info: string;
-  patientInfoEhr: string;
   clinicalRisk: string;
 
   barcodevalue: string;
@@ -41,6 +34,9 @@ export class PatientOverviewComponent implements OnInit {
   totalScore: number;
   tempTotal: number;
   accordionState: Array<boolean>; // Icon toggle for the accordion
+
+  private acvpuInt: number = null;
+  private oxSatScale = 1;
   scale1: boolean;
 
   latestRespiration: string;
@@ -121,11 +117,11 @@ export class PatientOverviewComponent implements OnInit {
 
 
 
-    this.patientService.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricRespiration().subscribe(data => {
           this.latestRespiration = data.resultSet[0].vitalsign;
           this.latestRespirationTime = data.resultSet[0].time;
         });
-    this.patientService.getHistoricOximetry(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricOximetry().subscribe(data => {
           this.latestOxidation = data.resultSet[0].vitalsign;
           this.latestOxidationTime = data.resultSet[0].time;
           if (data.resultSet[0].syre) {
@@ -135,38 +131,29 @@ export class PatientOverviewComponent implements OnInit {
         }
 
         });
-    this.patientService.getHistoricBloodpressure(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricBloodpressure().subscribe(data => {
           this.latestSystolic = data.resultSet[0].systolic;
           this.latestDiastolic = data.resultSet[0].diastolic;
           this.latestBPTime = data.resultSet[0].time;
         });
-    this.patientService.getHistoricPulse(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricPulse().subscribe(data => {
           this.latestPulse = data.resultSet[0].vitalsign;
           this.latestPulseTime = data.resultSet[0].time;
         });
-    this.patientService.getHistoricACVPU(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricACVPU().subscribe(data => {
           this.latestAlertness = data.resultSet[0].acvpu;
           console.log(this.latestAlertness);
           this.latestAlertnessTime = data.resultSet[0].time;
 
         });
-    this.patientService.getHistoricTemperature(localStorage.getItem('EHRID')).subscribe(data => {
+    this.patientService.getHistoricTemperature().subscribe(data => {
           this.latestTemperature = data.resultSet[0].vitalsign;
           this.latestTemperatureTime = data.resultSet[0].time;
 
         });
 
-
-    // kolla på touched / invalid
-
     this.accordionState = [false, false, false, false, false, false, false]; // Icon toggle for the accordion - lite osäker på var jag skulle lägga den
-    this.patientService.getPatientInformation(pid).subscribe(data => {
-      this.patientInfoEhr = data;
-      localStorage.setItem('SUBJECTID', data.parties[0].id);
-      this.patientService.getPatientEhrId(localStorage.getItem('SUBJECTID')).subscribe( data => {
-        localStorage.setItem('EHRID', data.ehrId);
-      });
-    });
+
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
     this.updateIsEmpty();
@@ -276,11 +263,18 @@ export class PatientOverviewComponent implements OnInit {
 
   updateConsciousnessScore(e, score: number) {
     if (e.target.checked) {
+      this.acvpuInt = e.target.value;
       this.consciousnessScore = score;
     }
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
     this.updateIsEmpty();
+  }
+
+  updateOxygenSatScale(e, type: number) {
+    if (e.target.checked) {
+      this.oxSatScale = type;
+    }
   }
 
   getConsciousnessScore() {
@@ -333,24 +327,21 @@ export class PatientOverviewComponent implements OnInit {
     return this.accordionState[id];
   }
 
-  openPopup(errorMessage: string) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      dialogMessage: errorMessage,
-    };
-
-    const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
-  }
-
-  // Some fixed mock values at the moment, will be fixed later.
   packVitalsAsJson() {
+    let onAir: boolean;
+    this.supplementalOxygenScore === 0 ? onAir = true : onAir = false;
+
     this.patientService.createJsonComp(
         this.form.get('respiratoryRate').value,
-        this.form.get('oxygenSaturation').value, 1, true,
+        this.form.get('oxygenSaturation').value,
+        this.oxSatScale,
+        onAir,
         this.form.get('systolicBloodPressure').value,
         this.form.get('diastolicBloodPressure').value,
-        this.form.get('pulseRate').value, true,
-        1, 2,
+        this.form.get('pulseRate').value,
+        true,
+        this.acvpuInt,
+        this.form.get('consciousness').value,
         this.form.get('temperature').value,
         this.newsScoreCalculator.getTotalScore());
   }
@@ -358,8 +349,6 @@ export class PatientOverviewComponent implements OnInit {
   goToHistory(vitalParameter: string) {
     localStorage.setItem('outputVitalParameter', vitalParameter);
     this.router.navigate(['history']);
-
-    // this.router.navigate(['history'], {state: { outputVitalParameter: vitalParameter}});
   }
 
 }
