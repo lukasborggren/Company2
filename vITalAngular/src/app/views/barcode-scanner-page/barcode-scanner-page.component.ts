@@ -17,8 +17,8 @@ export class BarcodeScannerPageComponent implements OnInit {
   barcodevalue: string;
   stopScanButtonVisible: boolean;
   pid: string;
-  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/
-  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/
+  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -75,6 +75,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.removeItem('form');
     this.stopScanButtonVisible = false;
     this.barcodeScanner.barcodeObs.subscribe(barcode => {
       this.barcodevalue = barcode;

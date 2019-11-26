@@ -1,4 +1,4 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, OnDestroy} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
@@ -11,7 +11,7 @@ import {BarcodeScannerService} from '../../barcode-scanner.service';
   templateUrl: './patient-overview.component.html',
   styleUrls: ['./patient-overview.component.css']
 })
-export class PatientOverviewComponent implements OnInit {
+export class PatientOverviewComponent implements OnInit, OnDestroy {
   form: FormGroup;
   patientinfo: string;
   personnumber: string;
@@ -53,9 +53,9 @@ export class PatientOverviewComponent implements OnInit {
   latestTemperature: string;
   latestTemperatureTime: any;
 
-  validationOxygenSaturation: boolean = true;
-  validationTemperature: boolean = true;
-  validationRespiratoryRate: boolean = true;
+  validationOxygenSaturation = true;
+  validationTemperature = true;
+  validationRespiratoryRate = true;
 
   constructor(
       private patientService: PatientService,
@@ -78,7 +78,20 @@ export class PatientOverviewComponent implements OnInit {
     this.barcodeScanner.StopScanner();
   }
 
+  ngOnDestroy() {
+    const serialized = this.form.getRawValue();
+    localStorage.setItem('form', JSON.stringify(serialized));
+  }
+
   ngOnInit() {
+
+    if (localStorage.getItem('form') === null) {
+      console.log('form = null');
+    } else {
+      const loadedForm = JSON.parse(localStorage.getItem('form'));
+      console.log(loadedForm);
+      this.form.setValue(loadedForm);
+    }
     this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
     this.personnumber = pid;
@@ -161,7 +174,7 @@ export class PatientOverviewComponent implements OnInit {
   onChanges() {
     this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
       this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
-      if (val<=100 && val>=0) {
+      if (val <= 100 && val >= 0) {
         this.validationOxygenSaturation = true;
       } else {
         this.validationOxygenSaturation = false;
@@ -177,7 +190,7 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
-      if (val<=200 && val>=0) {
+      if (val <= 200 && val >= 0) {
         this.validationRespiratoryRate = true;
       } else {
         this.validationRespiratoryRate = false;
@@ -204,7 +217,7 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.form.controls.temperature.patchValue(val, {emitEvent: false});
-      if (val<=100 && val>=0) {
+      if (val <= 100 && val >= 0) {
         this.validationTemperature = true;
       } else {
         this.validationTemperature = false;
