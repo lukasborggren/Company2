@@ -20,7 +20,7 @@ export class DialogWindowComponent implements OnInit {
   ngOnInit() {
   }
 
-  private close(reroute: boolean) {
+  close(reroute: boolean) {
     this.dialogRef.close(reroute);
   }
 

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NewsScoreCalculatorService {
 
-    clinicalRisk: number;
-    totalScore = 0;
+    clinicalRisk;
+    clinicalRiskText;
+    totalScore;
     isEmpty: boolean;
     isFull: boolean;
     scale1: boolean;
@@ -106,6 +108,7 @@ export class NewsScoreCalculatorService {
     this.totalScore = respiratoryScore + saturationScore + supplementalOxygenScore + systolicScore + pulseScore +
         consciousnessScore + temperatureScore;
     if (this.isFull === false) {
+      this.totalScore = null;
       return null;
     }
     if (this.totalScore >= 7) {
@@ -123,28 +126,31 @@ export class NewsScoreCalculatorService {
         return 1;
     }
   }
-    getClinicalRisk() {
-      if(this.isFull === false){
-        return null;
-      }
-      if (this.clinicalRisk === 0) {
-          return 'Låg';
-      } else if (this.clinicalRisk === 1) {
-          return 'Låg/medium';
-      } else if (this.clinicalRisk === 2) {
-          return 'Medium';
-      } else if (this.clinicalRisk === 3) {
-          return 'Hög';
-      } else {
-    return null;
-}
-}
-
-oxygenSaturationScale1(e, scale1: boolean) {
-
-  if (e.target.checked) {
-      this.scale1 = scale1;
+  getClinicalRisk() {
+    if(this.isFull === false){
+      this.clinicalRisk = null;
+      this.clinicalRiskText = null;
+      return null;
+    }
+    if (this.clinicalRisk === 0) {
+      this.clinicalRiskText = 'Låg';
+      return 'Låg';
+    } else if (this.clinicalRisk === 1) {
+      this.clinicalRiskText = 'Låg/medium';
+      return 'Låg/medium';
+    } else if (this.clinicalRisk === 2) {
+      this.clinicalRiskText = 'Medium';
+      return 'Medium';
+    } else if (this.clinicalRisk === 3) {
+      this.clinicalRiskText = 'Hög';
+      return 'Hög';
+    } else {
+      return null;
+    }
   }
+
+oxygenSaturationScale1(scale1: boolean) {
+    this.scale1 = scale1;
 }
 
 getTotalScore() {

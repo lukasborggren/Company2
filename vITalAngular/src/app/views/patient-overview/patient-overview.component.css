@@ -5,7 +5,7 @@
 
 .vertical {
     float: left;
-    padding-right: 10px;
+
 }
 .vertical  > *{
     display :block;
@@ -85,7 +85,7 @@
 .newsscore3 {
   background-color: #F59681;
 }
-
+/*
 input[type=radio] {
   -ms-transform: scale(2);
   -moz-transform: scale(2);
@@ -94,10 +94,10 @@ input[type=radio] {
   transform: scale(2);
   padding: 10px;
 }
-
+*/
 .vertical2 {
     float: left;
-     padding-right:10px;
+     /*padding-right:10px;*/
 
 }
 .vertical2  > *{

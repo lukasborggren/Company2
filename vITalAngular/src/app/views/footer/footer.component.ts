@@ -20,13 +20,25 @@ export class FooterComponent implements OnInit {
 
   constructor(
       private router: Router,
-      private newsScoreCalculator: NewsScoreCalculatorService,
+      public newsScoreCalculator: NewsScoreCalculatorService,
       private dialog: MatDialog
-  ) { }
+  ) {}
 
 
   ngOnInit() {
     this.routeEvent();
+  }
+
+  getClinicalRisk() {
+    return this.newsScoreCalculator.clinicalRisk;
+  }
+
+  getClinicalRiskText() {
+    return this.newsScoreCalculator.clinicalRiskText;
+  }
+
+  getTotalScore() {
+    return this.newsScoreCalculator.totalScore;
   }
 
   routeEvent() {
