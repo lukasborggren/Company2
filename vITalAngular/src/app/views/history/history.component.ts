@@ -28,7 +28,6 @@ export class HistoryComponent implements OnInit {
     private vitalArray: any[] = [];
     private vitalArray2: any[] = [];
     private timeArray: any[] = [];
-    private chartLabel: string;
     private boxMin: any[] = [];
     private boxMax: any[] = [];
     private yaxisMax: any;
@@ -153,9 +152,9 @@ export class HistoryComponent implements OnInit {
         if (this.vitalSign === 'getHistoricBloodpressure') {
             this.patientservice[this.vitalSign]().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
-                    this.vitalArray[i] = data.resultSet[i].systolic;
-                    this.vitalArray2[i] = data.resultSet[i].diastolic;
-                    this.timeArray[i] = data.resultSet[i].time;
+                    this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].systolic;
+                    this.vitalArray2[i] = data.resultSet[(data.resultSet.length - 1) - i].diastolic;
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                 }
             });
             this.chartData[1].borderColor = 'rgba(223, 128, 255, 1)';
@@ -169,8 +168,8 @@ export class HistoryComponent implements OnInit {
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
             this.patientservice.getHistoricRespiration().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
-                    this.vitalArray[i] = data.resultSet[i].syre;
-                    this.timeArray[i] = data.resultSet[i].time;
+                    this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                 }
             });
             this.chartData[0].label = 'Tillfört Syre';
@@ -182,17 +181,17 @@ export class HistoryComponent implements OnInit {
         } else if (this.vitalSign === 'getHistoricACVPU') {
             this.patientservice[this.vitalSign]().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
-                    this.timeArray[i] = data.resultSet[i].time;
-                    if (data.resultSet[i].acvpu === 'Alert') {
-                        this.vitalArray[i] = 5;
-                    } else if (data.resultSet[i].acvpu === 'Confusion') {
-                        this.vitalArray[i] = 4;
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
+                    if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Alert') {
+                        this.vitalArray[(data.resultSet.length - 1) - i] = 5;
+                    } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Confusion') {
+                        this.vitalArray[(data.resultSet.length - 1) - i] = 4;
                     } else if (data.resultSet[i].acvpu === 'Verbal') {
-                        this.vitalArray[i] = 3;
+                        this.vitalArray[(data.resultSet.length - 1) - i] = 3;
                     } else if (data.resultSet[i].acvpu === 'Pain') {
-                        this.vitalArray[i] = 2;
+                        this.vitalArray[(data.resultSet.length - 1) - i] = 2;
                     } else if (data.resultSet[i].acvpu === 'Unresponsive') {
-                        this.vitalArray[i] = 1;
+                        this.vitalArray[(data.resultSet.length - 1) - i] = 1;
                     }
                 }
             });
@@ -205,8 +204,8 @@ export class HistoryComponent implements OnInit {
         } else {
             this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
-                    this.vitalArray[i] = data.resultSet[i].vitalsign;
-                    this.timeArray[i] = data.resultSet[i].time;
+                    this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].vitalsign;
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                 }
             });
             if (this.vitalSign === 'getHistoricRespiration') {
@@ -233,7 +232,7 @@ export class HistoryComponent implements OnInit {
             } else if (this.vitalSign === 'getHistoricOximetry') {
                 this.chartData[0].label = 'Syremättnad';
                 this.yaxisMin = 88;
-                this.yaxisMax = 98;
+                this.yaxisMax = 100;
                 this.stepSize = 1;
                 this.boxMax = [0, 0, 0, 96, 94, 92];
                 this.boxMin = [0, 0, 0, 94, 92, 88];
