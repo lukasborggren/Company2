@@ -1,9 +1,10 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
-import {VerifyPatientDialogComponent} from '../verify-patient-dialog/verify-patient-dialog.component';
 import {Router} from '@angular/router';
 import {PatientService} from '../../../services/patient.service';
+import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
+import {timer} from 'rxjs';
 
 @Component({
   selector: 'app-confirm-submit',
@@ -15,11 +16,11 @@ export class ConfirmSubmitComponent implements OnInit {
   dialogMessage: string;
 
   constructor(
-      private dialogRef: MatDialogRef<ConfirmSubmitComponent>,
+      private dialogAlert: MatDialogRef<DialogWindowComponent>,
       @Inject(MAT_DIALOG_DATA) data,
       private dialog: MatDialog,
       private router: Router,
-      private patientService: PatientService
+      private patientService: PatientService,
   ) {
     this.dialogMessage = data.dialogMessage;
   }
@@ -28,44 +29,47 @@ export class ConfirmSubmitComponent implements OnInit {
   }
 
   close() {
-    this.dialogRef.close();
+    this.dialogAlert.close();
   }
 
-  openPersonalIdentification() {
-    const dialogConfig = new MatDialogConfig();
+  private viewConfirmation(message: string) {
+    const dialogAlConfig = new MatDialogConfig();
+    dialogAlConfig.data = {dialogMessage: message};
+    dialogAlConfig.disableClose = true;
+    dialogAlConfig.autoFocus = true;
+    this.dialogAlert = this.dialog.open(DialogWindowComponent, dialogAlConfig);
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    this.dialogAlert.afterClosed().subscribe(
+    reroute => {
+        if (reroute) {
+            this.router.navigate(['/scannerpage']);
+        } else {
+            const source = timer(0, 100);
+            const subscribe = source.subscribe(counter => {
+                if (counter >= 150) {
+                    this.router.navigate(['/scannerpage']);
+                    subscribe.unsubscribe();
+                }
+            });
+        }
+    },
+    error => console.log(error)
+    );
+  }
 
-    dialogConfig.data = {
-      id: 1,
-      title: 'Angular For Beginners',
-      dialogmessage: 'Personnummer'
-    };
-
-    const dialogRef = this.dialog.open(VerifyPatientDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-        data => {
-          if (data.description === localStorage.getItem('PID')) {
-            this.patientService.postComposition()
-                .subscribe(
-                    resp => {
-                      // Confirmation alert here
-                      if (resp.action === 'CREATE') {
-                        console.log('Submission successful');
-                        this.router.navigate(['/pid/' + data.description]);
-                      }
-                    },
-                    error => {
-                      // Error alert here
-                      console.log(error);
-                      console.log('Submission failed');
-                    }
-                );
-          } else {
-            console.log('Wrong PID entered');
-          }
-        });
+  private submit() {
+      this.patientService.postComposition()
+          .subscribe(
+              resp => {
+                  if (resp.action === 'CREATE') {
+                      this.viewConfirmation('Värden sparade');
+                  }
+              },
+              error => {
+                  console.log(error);
+                  this.viewConfirmation('Ett fel uppstod, värden ej sparade');
+              }
+          );
+      this.close();
   }
 }

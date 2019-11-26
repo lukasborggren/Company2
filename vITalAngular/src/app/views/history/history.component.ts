@@ -262,8 +262,8 @@ export class HistoryComponent implements OnInit {
         this.vitalSign = localStorage.getItem('outputVitalParameter');
         console.log(this.vitalSign);
 
-        if (this.vitalSign === 'getHistoricBloodpressure') {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe(data => {
+      if (this.vitalSign === 'getHistoricBloodpressure') {
+            this.patientservice[this.vitalSign]().subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].systolic;
                     this.vitalArray2[i] = data.resultSet[i].diastolic;
@@ -271,8 +271,8 @@ export class HistoryComponent implements OnInit {
                 }
                 console.log(this.vitalArray);
             });
-        } else if (this.vitalSign === 'getHistoricRespiration') {
-            return this.patientservice.getHistoricRespiration(localStorage.getItem('EHRID')).subscribe(data => {
+        } else if (this.vitalSign === 'getHistoricRespirationAdded') {
+            return this.patientservice.getHistoricRespiration().subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].syre;
                     this.timeArray[i] = data.resultSet[i].time;
@@ -280,7 +280,7 @@ export class HistoryComponent implements OnInit {
                 console.log(this.vitalArray);
             });
         } else if (this.vitalSign === 'getHistoricACVPU') {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe(data => {
+            this.patientservice[this.vitalSign]().subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.timeArray[i] = data.resultSet[i].time;
                     if (data.resultSet[i].acvpu === 'Alert') {
@@ -298,8 +298,7 @@ export class HistoryComponent implements OnInit {
                 console.log(this.vitalArray);
             });
         } else {
-            console.log(this.vitalArray);
-            this.patientservice[this.vitalSign](localStorage.getItem('EHRID')).subscribe(data => {
+            this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe( data => {
                 for (let i = 0; i < 10; i++) {
                     this.vitalArray[i] = data.resultSet[i].vitalsign;
                     this.timeArray[i] = data.resultSet[i].time;

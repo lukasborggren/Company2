@@ -59,15 +59,14 @@ export class BarcodeScannerPageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(
         data => {
-          console.log('Dialog output:', data);
           if (this.PERSONID_PATTERN.test(data.description)) {
             this.feedData.nextPid(data.description);
-            this.router.navigate(['/pid/' + data.description]);
             this.patientService.getPatientInformation(data.description).subscribe(
                 response => {
                   const ehrId = response.parties[0].additionalInfo.ehrId;
                   localStorage.setItem('EHR_ID', ehrId);
                   localStorage.setItem('PID', data.description);
+                  this.router.navigate(['/pid/' + data.description]);
                 },
                 error => console.log(error)
             );
