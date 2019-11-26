@@ -1,68 +1,57 @@
-<body>
-<!-- this button will not be needed since we have a return arrow in the header -->
-<!--button class="btn" (click)="goBack()">Backa<i class="fas fa-chevron-down"></i></button-->
+<div class="containerHistoryGraph">
+    <h2 class="historyTitle">Historik:</h2>
+    <div class="historyTableDiv">
+        <table class="table history-table table-bordered" style="max-width: 95%">
+            <thead style="background-color: #d8d8d8; text-align: start ">
+                <tr>
+                    <th scope="col">Datum</th>
+                    <th scope="col">Tid</th>
+                    <th scope="col">andningsfrekvens<br>andetag/min</th>
+                    <th scope="col">News2</th>
+                </tr>
+            </thead>
 
+            <tbody>
+                <tr>
+                    <th scope="row">27-11-19</th>
+                    <td>15:30</td>
+                    <td>14</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th scope="row">27-11-19</th>
+                    <td>15:00</td>
+                    <td>13</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <th scope="row">27-11-19</th>
+                    <td>14:30</td>
+                    <td>11</td>
+                    <td style="background-color: #FFF1AB ">1</td>
 
-<table class="table history-table table-bordered" style = "max-width: 95%">
-    <thead style="background-color: #d8d8d8; text-align: start ">
-    <tr>
-        <th scope="col">Datum</th>
-        <th scope="col">Tid</th>
-        <th scope="col">andningsfrekvens<br>andetag/min</th>
-        <th scope="col">News2</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    <tr>
-        <th scope = "row" >27-11-19</th>
-        <td>15:30</td>
-        <td>14</td>
-        <td>0</td>
-    </tr>
-    <tr>
-        <th scope="row">27-11-19</th>
-        <td>15:00</td>
-        <td>13</td>
-        <td>0</td>
-    </tr>
-    <tr>
-        <th scope="row">27-11-19</th>
-        <td>14:30</td>
-        <td>11</td>
-        <td style = "background-color: #FFF1AB ">1</td>
-
-    </tr>
-    <tr>
-    <th scope="row">27-11-19</th>
-    <td>14:00</td>
-        <td>13</td>
-        <td>0</td>
-    </tr>
-    </tbody>
-</table>
-
-
-
-
-
-    <div>
-
-        <div style="display: block; min-height: 700px; max-width: 95vw; margin-left: 10px" *ngIf="chartOptions">
-            <canvas baseChart id="graphId"
-                    [datasets]="chartData"
-                    [labels]="chartLabels"
-                    [options]="chartOptions"
-<<<<<<< HEAD
-                    [chartType]="chartType">
-
-                    <!-- (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)"> --> 
-                </canvas>
-=======
-                    [chartType]="chartType"></canvas>
->>>>>>> 2a437bf57c3043e24725b31d2918f8c52568bace
-        </div>
+                </tr>
+                <tr>
+                    <th scope="row">27-11-19</th>
+                    <td>14:00</td>
+                    <td>13</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
-</body>
+    <div class="GraphContainer">
+        <div class="row">
+            <div>
+                <span>Diagram</span>
+            </div>
+
+        </div>
+
+        <div style="display: block; max-width: 95vw; margin-left: 10px;" *ngIf="chartOptions">
+            <canvas baseChart id="graphId" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
+                [chartType]="chartType">
+            </canvas>
+        </div>
+    </div>

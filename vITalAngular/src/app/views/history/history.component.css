@@ -1,33 +1,31 @@
-.body {
-    height: 100vh;
-    width: 100vw;
+.containerHistoryGraph {
+    height: 100%;
+    width: 100%;
     box-sizing: border-box;
+    background-color: rgb(216, 216, 216);
 }
 
-#historybackBtn {
-    margin: 0;
-    background-color: #909090;
-    border-radius: 9px;
-    color: #3F3F3e;
-    width: 2em;
-    height: 2em;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-#historybackBtn i{
-    line-height: 60%;
-}
-#historyTop{
-    background-color: #3a3938;
-    text-align: center;
-    padding: 5px 5px;
-    margin: 0px;
-
-}
 
 .history-table  {
     text-align: center;
    font-size: small;
+}
 
+.historyTitle{
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+.row{
+    color: white;
+    margin: 0 !important;
+    background-image: linear-gradient(rgb(92, 92, 92), rgb(17, 17, 17));
+    padding: 5px;
+    padding-left: 1rem;
+    width: 100%;
+}
+
+.GraphContainer{
+    margin-top: 1rem;
+    padding-bottom: 20px;
+    background-color: #D8D8D8;
 }
