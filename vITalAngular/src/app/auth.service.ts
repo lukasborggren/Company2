@@ -19,7 +19,7 @@ export class AuthService {
   ) {}
 
   public login(userInfo: User): Observable<boolean> {
-    const url = 'http://134.209.226.62/api/login';
+    const url = 'https://134.209.226.62/api/login';
     const userInfoJSON = {
       username: userInfo.username,
       password: userInfo.password
@@ -41,7 +41,7 @@ export class AuthService {
   }
 
   public checkToken(): Observable<boolean> {
-    const url = 'http://134.209.226.62/api/authenticate';
+    const url = 'https://134.209.226.62/api/authenticate';
     let headers = new HttpHeaders();
     headers = headers.append(
         'Authorization',
@@ -57,7 +57,7 @@ export class AuthService {
   }
 
   public logout() {
-    const url = 'http://134.209.226.62/api/logout';
+    const url = 'https://134.209.226.62/api/logout';
     let headers = new HttpHeaders();
     headers = headers.append(
         'Authorization',
