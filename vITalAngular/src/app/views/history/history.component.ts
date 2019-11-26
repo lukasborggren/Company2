@@ -29,8 +29,10 @@ export class HistoryComponent implements OnInit {
     private vitalArray2: any[] = [];
     private timeArray: any[] = [];
     private chartLabel: string;
-    public yaxisMax: any;
-    public yaxisMin: any;
+    private boxMin: any[] = [];
+    private boxMax: any[] = [];
+    private yaxisMax: any;
+    private yaxisMin: any;
     private stepSize: any;
 
     public chartData: ChartDataSets[] = [
@@ -61,7 +63,7 @@ export class HistoryComponent implements OnInit {
             pointBorderColor: 'rgba(223, 128, 255, 1)',
         },
     ];
-    public chartLabels: Label[] = ['1', '2', '3', '4'];
+    public chartLabels: Label[] = this.timeArray;
     public chartOptions: (ChartOptions & { annotation: any });
     public setChartOptions() {
         this.chartOptions = {
@@ -82,36 +84,58 @@ export class HistoryComponent implements OnInit {
             },
             annotation: {
                 annotations: [{
+                    //Röd box
                     type: 'box',
                     yScaleID: 'y-axis-0',
-                    yMin: 0,
-                    yMax: 0,
+                    yMin: this.boxMin[0],
+                    yMax: this.boxMax[0],
                     backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                    borderColor: 'rgba(255, 31, 25, 0.2)',
+                    borderColor: 'rgba(255, 31, 25, 0)',
                 },
                     {
+                        //Orange box
                         type: 'box',
                         yScaleID: 'y-axis-0',
-                        yMin: 0,
-                        yMax: 0,
-                        backgroundColor: 'rgba(255, 251, 25, 0.2)',
-                        borderColor: 'rgba(255, 251, 25, 0.2)',
-                    },
-                    {
-                        type: 'box',
-                        yScaleID: 'y-axis-0',
-                        yMin: 90,
-                        yMax: 100,
+                        yMin: this.boxMin[1],
+                        yMax: this.boxMax[1],
                         backgroundColor: 'rgba(255, 128, 0, 0.2)',
-                        borderColor: 'rgba(255, 128, 0, 0.2)',
+                        borderColor: 'rgba(255, 128, 0, 0)',
                     },
                     {
+                        //Gul box
                         type: 'box',
                         yScaleID: 'y-axis-0',
-                        yMin: 50,
-                        yMax: 90,
+                        yMin: this.boxMin[2],
+                        yMax: this.boxMax[2],
+                        backgroundColor: 'rgba(255, 251, 25, 0.2)',
+                        borderColor: 'rgba(255, 251, 25, 0)',
+                    },
+                    {
+                        //Gul box
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: this.boxMin[3],
+                        yMax: this.boxMax[3],
+                        backgroundColor: 'rgba(255, 251, 25, 0.2)',
+                        borderColor: 'rgba(255, 251, 25, 0)',
+                    },
+                    {
+                        //Orange box
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: this.boxMin[4],
+                        yMax: this.boxMax[4],
+                        backgroundColor: 'rgba(255, 128, 0, 0.2)',
+                        borderColor: 'rgba(255, 128, 0, 0)',
+                    },
+                    {
+                        //Röd box
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: this.boxMin[5],
+                        yMax: this.boxMax[5],
                         backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                        borderColor: 'rgba(255, 31, 25, 0.2)',
+                        borderColor: 'rgba(255, 31, 25, 0)',
                     },
                 ],
             },
@@ -140,8 +164,10 @@ export class HistoryComponent implements OnInit {
             this.yaxisMin = 50;
             this.yaxisMax = 220;
             this.stepSize = 10;
+            this.boxMax = [200, 0, 0, 100, 90, 50];
+            this.boxMin = [220, 0, 0, 110, 100, 90];
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-            return this.patientservice.getHistoricRespiration().subscribe( data => {
+            this.patientservice.getHistoricRespiration().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[i].syre;
                     this.timeArray[i] = data.resultSet[i].time;
@@ -149,8 +175,10 @@ export class HistoryComponent implements OnInit {
             });
             this.chartData[0].label = 'Tillfört Syre';
             this.yaxisMin = 0;
-            this.yaxisMax = 10;
+            this.yaxisMax = 2;
             this.stepSize = 1;
+            this.boxMax = [0, 0, 0, 0, 2, 0];
+            this.boxMin = [0, 0, 0, 0, 1, 0];
         } else if (this.vitalSign === 'getHistoricACVPU') {
             this.patientservice[this.vitalSign]().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
@@ -172,6 +200,8 @@ export class HistoryComponent implements OnInit {
             this.yaxisMin = 1;
             this.yaxisMax = 6;
             this.stepSize = 1;
+            this.boxMax = [0, 0, 0, 0, 0, 4];
+            this.boxMin = [0, 0, 0, 0, 0, 1];
         } else {
             this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
@@ -184,16 +214,30 @@ export class HistoryComponent implements OnInit {
                 this.yaxisMin = 7;
                 this.yaxisMax = 26;
                 this.stepSize = 3;
+                this.boxMax = [26, 24, 0, 11, 0, 9];
+                this.boxMin = [24, 21, 0, 9, 0, 7];
             } else if (this.vitalSign === 'getHistoricTemperature') {
                 this.chartData[0].label = 'Temperatur';
                 this.yaxisMin = 33;
                 this.yaxisMax = 42;
                 this.stepSize = 1;
+                this.boxMax = [0, 42, 39, 36, 0, 36];
+                this.boxMin = [0, 39, 38, 35, 0, 33];
             } else if (this.vitalSign === 'getHistoricPulse') {
-                this.chartData[0].label = 'Puls';
+                this.chartData[0].label = 'Pulsfrekvens';
                 this.yaxisMin = 20;
                 this.yaxisMax = 160;
-                this.stepSize = 10; }
+                this.stepSize = 10;
+                this.boxMax = [160, 130, 110, 50, 0, 40];
+                this.boxMin = [130, 110, 90, 40, 0, 20];
+            } else if (this.vitalSign === 'getHistoricOximetry') {
+                this.chartData[0].label = 'Syremättnad';
+                this.yaxisMin = 88;
+                this.yaxisMax = 98;
+                this.stepSize = 1;
+                this.boxMax = [0, 0, 0, 96, 94, 92];
+                this.boxMin = [0, 0, 0, 94, 92, 88];
+            }
         }
         this.setChartOptions();
     }
