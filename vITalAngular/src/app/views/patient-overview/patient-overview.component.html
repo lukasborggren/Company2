@@ -95,22 +95,12 @@
             <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
           </div>
 
-           <!-- Knappar här
-
-           <input class="form-check-input" type="radio" name="consciousness" id="inlineRadio3"
-                  value="option3" (change)="updateConsciousnessScore($event, 3)"> -->
+          
 
 
           </div>
         </div>
       </div>
-      <!--  <div class="individualNews" id="saturationNews"> 0 </div>
-        <label>
-
-            Syremättnad
-            <input type="text" formControlName="oxygenSaturation">
-        </label>
-        <br/> -->
 
 <!-----------------Tillförd syrgas----------------->
         <div class="parameterRow">
@@ -247,7 +237,7 @@
 <!-----------------Medvetandegrad----------------->
 <div class="parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessScore() == 0, 'newsscore1': getConsciousnessScore() == 1, 'newsscore2': getConsciousnessScore() == 2, 'newsscore3': getConsciousnessScore() == 3}"> {{getConsciousnessScore()}} </div>
+    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessACVPUScore() == 0, 'newsscore1': getConsciousnessACVPUScore() == 1, 'newsscore2': getConsciousnessACVPUScore() == 2, 'newsscore3': getConsciousnessACVPUScore() == 3}"> {{getConsciousnessACVPUScore()}} </div>
     <div class="parameterTitle mr-auto col-3">
       Medvetande-<br>grad </div>
         <!-- Default inline 1-->
@@ -256,8 +246,8 @@
       <!--div-->
       <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
 <div class="vertical">
-          <label class="form-check-label" for="consciousness">A</label>
-          <input class="form-check-input" type="radio" formControlName="consciousness" id="inlineRadio1"
+          <label class="form-check-label" for="consciousnessACVPU">A</label>
+          <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio1"
                  value='1'>
                  </div>
       <!--/div-->
@@ -265,39 +255,39 @@
           <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
 
               <div class="vertical">
-                <label class="form-check-label" for="consciousness">C</label>
-              <input class="form-check-input" type="radio" formControlName="consciousness" id="inlineRadio2"
+                <label class="form-check-label" for="consciousnessACVPU">C</label>
+              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio2"
                      value='2'>
                      </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check " style="display: inline-block;"-->
 <div class="vertical">
-              <label class="form-check-label" for="consciousness">V</label>
-              <input class="form-check-input" type="radio" formControlName="consciousness" id="inlineRadio3"
+              <label class="form-check-label" for="consciousnessACVPU">V</label>
+              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio3"
                      value='3'>
                      </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style= "display: inline-block;"-->
 <div class="vertical">
-              <label class="form-check-label" for="consciousness">P</label>
-              <input class="form-check-input" type="radio" formControlName="consciousness" id="inlineRadio4"
+              <label class="form-check-label" for="consciousnessACVPU">P</label>
+              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio4"
                      value='4'>
                      </div>
           <!--/div-->
 
           <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
 <div class="vertical">
-              <label class="form-check-label" for="consciousness">U</label>
-              <input class="form-check-input" type="radio" formControlName="consciousness" id="inlineRadio5"
+              <label class="form-check-label" for="consciousnessACVPU">U</label>
+              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio5"
                      value='5'>
                      </div>
           <!--/div-->
     </div>
 
     <!--  This is the old input field for this parameter using a text input, may be removed if teh new input works as desired
-          <input type="number" formControlName="consciousness" class="inputField col-2 ml-auto form-control-lg p-2">
+          <input type="number" formControlName="consciousnessACVPU" class="inputField col-2 ml-auto form-control-lg p-2">
           -->
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(5)" class="btn">
@@ -306,8 +296,8 @@
       </button>
     </div>
   </div>
-  <div *ngIf="form.controls.consciousness.invalid && !form.controls.consciousness.pristine" class="alert-danger">
-    <div *ngIf="form.controls.consciousness.errors.pattern">Mata in ett värde mellan 1 och 8</div>
+  <div *ngIf="form.controls.rls.invalid && !form.controls.rls.pristine" class="alert-danger">
+    <div *ngIf="form.controls.rls.errors.pattern">Mata in ett värde mellan 1 och 8</div>
   </div>
 
 
@@ -328,7 +318,7 @@
 
 <!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
         <div class="RLS-class"> RLS
-          <input type="number" formControlName="consciousness" class="inputField col-3 ml-auto form-control-lg p-2 ">
+          <input type="number" formControlName="rls" class="inputField col-3 ml-auto form-control-lg p-2 ">
         </div>
       </div>
 

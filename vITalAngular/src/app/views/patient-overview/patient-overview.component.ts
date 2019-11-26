@@ -28,13 +28,12 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   pulseScore: number;
   temperatureScore: number;
   systolicScore: number;
-  consciousnessScore: number;
+  consciousnessACVPUScore: number;
   supplementalOxygenScore: number;
   tempTotal: number;
   accordionState: Array<boolean>; // Icon toggle for the accordion
   onAir: boolean;
 
-  private acvpuInt: number = null;
   private oxSatScale = 1;
   scale1: boolean;
 
@@ -68,27 +67,16 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     private barcodeScanner: BarcodeScannerService,
   ) {
   }
-  startScanner() {
-    this.barcodevalue = 'scanning';
-    this.stopScanButtonVisible = true;
-    this.barcodeScanner.startScanner();
-  }
-
-  stopScanner() {
-    this.stopScanButtonVisible = false;
-    this.barcodeScanner.StopScanner();
-  }
 
   ngOnDestroy() {
     this.newsScoreCalculator.clinicalRisk = null;
     this.newsScoreCalculator.clinicalRiskText = null;
     const serialized = this.form.getRawValue();
-    console.log('form: ', serialized);
     localStorage.setItem('form', JSON.stringify(serialized));
-    console.log('form: ',     localStorage.getItem('form'));
   }
 
   ngOnInit() {
+    this.accordionState = [false, false, false, false, false, false, false];
     this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
     this.personnumber = pid;
@@ -119,7 +107,10 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
-      consciousness: ['', [
+      consciousnessACVPU: ['', [
+        ]
+      ],
+      rls: ['', [
         Validators.pattern(/^[1-8]$/)
         ]
       ],
@@ -163,7 +154,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
     this.patientService.getHistoricACVPU().subscribe(data => {
       this.latestAlertness = data.resultSet[0].acvpu;
-      console.log(this.latestAlertness);
       this.latestAlertnessTime = data.resultSet[0].time;
 
     });
@@ -172,8 +162,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.latestTemperatureTime = data.resultSet[0].time;
 
     });
-
-    this.accordionState = [false, false, false, false, false, false, false]; // Icon toggle for the accordion - lite osäker på var jag skulle lägga den
     this.updateCalculations();
     this.onChanges();
   }
@@ -184,7 +172,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     if (loadedForm != null) {
       this.updateScores(loadedForm);
     }
-    console.log("hej")
     this.updateTotalNews2Score();
     this.updateClinicalRisk();
     this.updateIsEmpty();
@@ -197,7 +184,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     this.updateSupplementalOxygenScore(loadedForm.supplementalOxygen);
     this.updateSystolicBloodPressureScore(loadedForm.systolicBloodPressure);
     this.updatePulseScore(loadedForm.pulseRate);
-    this.updateConsciousnessScore(loadedForm.consciousness);
+    this.updateConsciousnessACVPUScore(loadedForm.consciousnessACVPU);
     this.updateTemperatureScore(loadedForm.temperature);
   }
 
@@ -207,7 +194,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.validationRespiratoryRate = false;
     }
-    if (this.form.controls.respiratoryRate.valid && this.validationRespiratoryRate && val != null) {
+    if (this.form.controls.respiratoryRate.valid && this.validationRespiratoryRate && this.form.controls.respiratoryRate.value) {
       this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
     } else {
       this.respiratoryScore = null;
@@ -220,7 +207,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.validationOxygenSaturation = false;
     }
-    if (this.form.controls.oxygenSaturation.valid && this.validationOxygenSaturation && val != null) {
+    if (this.form.controls.oxygenSaturation.valid && this.validationOxygenSaturation && this.form.controls.oxygenSaturation.value) {
       this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
     } else {
       this.saturationScore = null;
@@ -228,18 +215,21 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateOxSatScale(val: number) {
-    if(val == 1) {
-      console.log("hej")
+    if (val === 1) {
       this.oxSatScale = 1;
-      this.newsScoreCalculator.oxygenSaturationScale1(true);
+      this.newsScoreCalculator.oxygenSaturationScale1(this.scale1 = true);
     } else {
       this.oxSatScale = 2;
-      this.newsScoreCalculator.oxygenSaturationScale1(false);
+      this.newsScoreCalculator.oxygenSaturationScale1(this.scale1 = false);
+    }
+    const oxygenSaturation = this.form.controls.oxygenSaturation.value;
+    if (oxygenSaturation != null && oxygenSaturation !== '') {
+      this.updateOxygenSaturationScore(oxygenSaturation);
     }
   }
 
   updateSupplementalOxygenScore(val: number) {
-    if(val == 1) {
+    if (val === 1) {
       this.supplementalOxygenScore = 2;
       this.onAir = true;
     } else {
@@ -256,20 +246,20 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  updatePulseScore(val:number) {
-    if (this.form.controls.pulseRate.valid && val != null) {
+  updatePulseScore(val: number) {
+    console.log('in updatePulseSCore');
+    if (this.form.controls.pulseRate.valid && this.form.controls.pulseRate.value) {
       this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
     } else {
       this.pulseScore = null;
     }
   }
 
-  updateConsciousnessScore(val: number) {
-    this.acvpuInt = val;
-    if(val == 1) {
-      this.consciousnessScore = 0;
+  updateConsciousnessACVPUScore(val: number) {
+    if (val == 1) {
+      this.consciousnessACVPUScore = 0;
     } else {
-      this.consciousnessScore = 3;
+      this.consciousnessACVPUScore = 3;
     }
   }
 
@@ -279,7 +269,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.validationTemperature = false;
     }
-    if (this.form.controls.temperature.valid && this.validationTemperature && val != null) {
+    if (this.form.controls.temperature.valid && this.validationTemperature && this.form.controls.temperature.value) {
       this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
     } else {
       this.temperatureScore = null;
@@ -288,21 +278,21 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
 
   onChanges() {
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
-      this.updateRespiratoryScore(val)
+      this.updateRespiratoryScore(val);
       this.updateCalculations();
-    })
+    });
     this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
-      this.updateOxygenSaturationScore(val)
+      this.updateOxygenSaturationScore(val);
       this.updateCalculations();
     });
     this.form.get('oxSatScale').valueChanges.subscribe(val => {
       this.updateOxSatScale(val);
       this.updateCalculations();
-    })
+    });
     this.form.get('supplementalOxygen').valueChanges.subscribe(val => {
       this.updateSupplementalOxygenScore(val);
       this.updateCalculations();
-    })
+    });
     this.form.get('systolicBloodPressure').valueChanges.subscribe(val => {
       this.updateSystolicBloodPressureScore(val);
       this.updateCalculations();
@@ -311,10 +301,15 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.updatePulseScore(val);
       this.updateCalculations();
     });
-    this.form.get('consciousness').valueChanges.subscribe(val => {
-      this.updateConsciousnessScore(val);
+    this.form.get('consciousnessACVPU').valueChanges.subscribe(val => {
+      this.updateConsciousnessACVPUScore(val);
       this.updateCalculations();
-    })
+    });
+    this.form.get('rls').valueChanges.subscribe(val => {
+      // DO
+      // this.updateConsciousnessScore(val);
+      // this.updateCalculations();
+    });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.updateTemperatureScore(val);
       this.updateCalculations();
@@ -331,7 +326,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
     (this.pulseScore == null) && (this.respiratoryScore == null) &&
     (this.saturationScore == null) && (this.supplementalOxygenScore == null) &&
-    (  this.consciousnessScore == null)) {
+    (  this.consciousnessACVPUScore == null)) {
       this.newsScoreCalculator.isEmpty = true;
     } else {
       this.newsScoreCalculator.isEmpty = false;
@@ -340,7 +335,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     if ((this.systolicScore == null) || (this.temperatureScore == null ) ||
     (this.pulseScore == null) || (this.respiratoryScore == null) ||
     (this.saturationScore == null) || (this.supplementalOxygenScore == null) ||
-    ( this.consciousnessScore == null)) {
+    ( this.consciousnessACVPUScore == null)) {
       this.newsScoreCalculator.isFull = false;
     } else {
       this.newsScoreCalculator.isFull = true;
@@ -355,8 +350,8 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     this.updateIsEmpty();
   }
 
-  getConsciousnessScore() {
-    return this.consciousnessScore;
+  getConsciousnessACVPUScore() {
+    return this.consciousnessACVPUScore;
   }
 
   getSupplementOxygenScore() {
@@ -366,9 +361,9 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
 
   updateTotalNews2Score() {
     this.updateIsEmpty();
-    if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
+    if (this.getSupplementOxygenScore() != null && this.getConsciousnessACVPUScore() != null && this.form.valid) {
       this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
-        this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
+        this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessACVPUScore,
         this.temperatureScore);
       this.updateClinicalRisk();
       } else {
@@ -377,7 +372,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     }
 
     updateClinicalRisk() {
-      if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
+      if (this.getSupplementOxygenScore() != null && this.getConsciousnessACVPUScore() != null && this.form.valid) {
         this.newsScoreCalculator.getClinicalRisk();
       }
     }
@@ -401,8 +396,8 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
         this.form.get('diastolicBloodPressure').value,
         this.form.get('pulseRate').value,
         true,
-        this.acvpuInt,
-        this.form.get('consciousness').value,
+        this.form.get('rls').value,
+        this.form.get('consciousnessACVPU').value,
         this.form.get('temperature').value,
         this.newsScoreCalculator.getTotalScore());
       }

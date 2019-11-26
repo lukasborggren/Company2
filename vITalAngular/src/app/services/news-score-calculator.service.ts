@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +15,8 @@ export class NewsScoreCalculatorService {
   constructor() {
     this.scale1 = true;
   }
-
   ngOnInit() {
+    console.log('NgOnINit körs');
     this.isEmpty = true;
     this.isFull = false;
   }
@@ -127,7 +126,7 @@ export class NewsScoreCalculatorService {
     }
   }
   getClinicalRisk() {
-    if(this.isFull === false){
+    if (this.isFull === false) {
       this.clinicalRisk = null;
       this.clinicalRiskText = null;
       return null;
@@ -158,36 +157,6 @@ getTotalScore() {
     return null;
   }
   return this.totalScore;
-}
-}
-
-/*   getSaturationScore(oxygenSaturation: number) {
-    if (this.scale1) {
-    if (oxygenSaturation <= 91) {
-      return 3;
-    } else if (oxygenSaturation >= 92 && oxygenSaturation <= 93) {
-      return 2;
-    } else if (oxygenSaturation >= 94 && oxygenSaturation <= 95) {
-      return 1;
-    } else {
-      return 0;
-    }
-  } else {
-      if (oxygenSaturation <= 83 || oxygenSaturation >= 97 ) {
-        return 3;
-      } else if (oxygenSaturation >= 83 && oxygenSaturation <= 84) {
-        return 2;
-      } else if (oxygenSaturation >= 95 && oxygenSaturation <= 96) {
-        return 2;
-      } else if (oxygenSaturation >= 93 && oxygenSaturation <= 94) {
-        return 1;
-      } else if (oxygenSaturation >= 86 && oxygenSaturation <= 87) {
-        return 1;
-      } else {
-        return 0;
-      }
-    }
   }
+}
 
-
- */
