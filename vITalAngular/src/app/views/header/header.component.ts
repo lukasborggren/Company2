@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
       private feedData: FeedDataService
       ) { }
 
-  private goBack() {
+  goBack() {
     this.location.back();
   }
 

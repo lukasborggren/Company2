@@ -57,7 +57,7 @@ export class ConfirmSubmitComponent implements OnInit {
     );
   }
 
-  private submit() {
+  submit() {
       this.patientService.postComposition()
           .subscribe(
               resp => {

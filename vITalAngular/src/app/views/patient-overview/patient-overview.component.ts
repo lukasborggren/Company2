@@ -16,7 +16,6 @@ export class PatientOverviewComponent implements OnInit {
   patientinfo: string;
   personnumber: string;
   info: string;
-  clinicalRisk: string;
 
   barcodevalue: string;
   stopScanButtonVisible: boolean;
@@ -31,7 +30,6 @@ export class PatientOverviewComponent implements OnInit {
   systolicScore: number;
   consciousnessScore: number;
   supplementalOxygenScore: number;
-  totalScore: number;
   tempTotal: number;
   accordionState: Array<boolean>; // Icon toggle for the accordion
 
@@ -290,32 +288,19 @@ export class PatientOverviewComponent implements OnInit {
   updateTotalNews2Score() {
     this.updateIsEmpty();
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
-      this.totalScore = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
+      this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
           this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
           this.temperatureScore);
       this.updateClinicalRisk();
     } else {
-      this.totalScore = null;
+      this.newsScoreCalculator.totalScore = null;
     }
   }
 
 
   updateClinicalRisk() {
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
-      const temp = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
-          this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
-          this.temperatureScore);
-      if (temp === 0) {
-        this.clinicalRisk = 'Låg';
-      } else if (temp === 1) {
-        this.clinicalRisk = 'Låg/medium';
-      } else if (temp === 2) {
-        this.clinicalRisk = 'Medium';
-      } else if (temp === 3) {
-        this.clinicalRisk = 'Hög';
-      }
-    } else {
-      this.clinicalRisk = null;
+      this.newsScoreCalculator.getClinicalRisk();
     }
   }
 
