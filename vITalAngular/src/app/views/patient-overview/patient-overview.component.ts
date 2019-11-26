@@ -37,6 +37,7 @@ export class PatientOverviewComponent implements OnInit {
 
   private acvpuInt: number = null;
   private oxSatScale = 1;
+  scale1: boolean;
 
   latestRespiration: string;
   latestRespirationTime: any;
@@ -53,6 +54,10 @@ export class PatientOverviewComponent implements OnInit {
   latestAlertnessTime: any;
   latestTemperature: string;
   latestTemperatureTime: any;
+
+  validationOxygenSaturation: boolean = true;
+  validationTemperature: boolean = true;
+  validationRespiratoryRate: boolean = true;
 
   constructor(
       private patientService: PatientService,
@@ -81,22 +86,18 @@ export class PatientOverviewComponent implements OnInit {
     this.personnumber = pid;
     this.form = this.fb.group({
       respiratoryRate: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       oxygenSaturation: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       pulseRate: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
       temperature: ['', [
-        Validators.required,
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
@@ -160,7 +161,12 @@ export class PatientOverviewComponent implements OnInit {
   onChanges() {
     this.form.get('oxygenSaturation').valueChanges.subscribe(val => {
       this.form.controls.oxygenSaturation.patchValue(val, {emitEvent: false});
-      if (this.form.controls.oxygenSaturation.valid) {
+      if (val<=100 && val>=0) {
+        this.validationOxygenSaturation = true;
+      } else {
+        this.validationOxygenSaturation = false;
+      }
+      if (this.form.controls.oxygenSaturation.valid && this.validationOxygenSaturation && val != null) {
         this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
       } else {
         this.saturationScore = null;
@@ -171,7 +177,12 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.form.controls.respiratoryRate.patchValue(val, {emitEvent: false});
-      if (this.form.controls.respiratoryRate.valid) {
+      if (val<=200 && val>=0) {
+        this.validationRespiratoryRate = true;
+      } else {
+        this.validationRespiratoryRate = false;
+      }
+      if (this.form.controls.respiratoryRate.valid && this.validationRespiratoryRate && val != null) {
         this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
       } else {
         this.respiratoryScore = null;
@@ -182,7 +193,7 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('pulseRate').valueChanges.subscribe(val => {
       this.form.controls.pulseRate.patchValue(val, {emitEvent: false});
-      if (this.form.controls.pulseRate.valid) {
+      if (this.form.controls.pulseRate.valid && val != null) {
         this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
       } else {
         this.pulseScore = null;
@@ -193,7 +204,12 @@ export class PatientOverviewComponent implements OnInit {
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.form.controls.temperature.patchValue(val, {emitEvent: false});
-      if (this.form.controls.temperature.valid) {
+      if (val<=100 && val>=0) {
+        this.validationTemperature = true;
+      } else {
+        this.validationTemperature = false;
+      }
+      if (this.form.controls.temperature.valid && this.validationTemperature && val != null) {
         this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
       } else {
         this.temperatureScore = null;
@@ -219,7 +235,7 @@ export class PatientOverviewComponent implements OnInit {
     if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
        (this.pulseScore == null) && (this.respiratoryScore == null) &&
        (this.saturationScore == null) && (this.supplementalOxygenScore == null) &&
-       ( this.consciousnessScore == null)) {
+       (  this.consciousnessScore == null)) {
          this.newsScoreCalculator.isEmpty = true;
     } else {
       this.newsScoreCalculator.isEmpty = false;

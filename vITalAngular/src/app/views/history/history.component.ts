@@ -20,6 +20,10 @@ export class HistoryComponent implements OnInit {
                 private router: Router,
                 private patientservice: PatientService) {
     }
+    public chartType = 'line';
+    public lineChartLegend = true;
+    public lineChartType = 'line';
+    public lineChartPlugins = [pluginAnnotations];
     private vitalSign: string;
     private vitalArray: any[] = [];
     private vitalArray2: any[] = [];
@@ -27,10 +31,11 @@ export class HistoryComponent implements OnInit {
     private chartLabel: string;
     public yaxisMax: any;
     public yaxisMin: any;
+    private stepSize: any;
 
     public chartData: ChartDataSets[] = [
         { data: this.vitalArray,
-            label: 'Vitalparameter 1',
+            label: '',
             lineTension: 0,
             pointStyle: 'triangle',
             pointRotation: 180,
@@ -45,102 +50,110 @@ export class HistoryComponent implements OnInit {
         },
         {
             data: this.vitalArray2,
-            label: 'Vitalparameter 2',
+            label: '',
             lineTension: 0,
             pointStyle: 'triangle',
             fill: false,
-            borderColor: 'rgba(223, 128, 255, 1)', // Change the color of the line
+            borderColor: 'rgba(255, 255, 255, 1)', // Change the color of the line
             borderWidth: 2,
             pointRadius: 4,
             pointBackgroundColor: 'rgba(223, 128, 255, 1)', // Change the color of the point
             pointBorderColor: 'rgba(223, 128, 255, 1)',
         },
     ];
-    public chartLabels: Label[] = this.timeArray;
-    public chartOptions: (ChartOptions & { annotation: any }) = {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                display: true,
-                ticks: {
-                    min: 0,
-                    max: 240,
-                    stepSize: 20
-                }
-            }],
-            xAxes: [{
-                display: true,
-                scaleLabel: {}
-            }]
-        },
-        annotation: {
-            annotations: [{
-                type: 'box',
-                yScaleID: 'y-axis-0',
-                yMin: 220,
-                yMax: 240,
-                backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                borderColor: 'rgba(255, 31, 25, 0.2)',
+    public chartLabels: Label[] = ['1', '2', '3', '4'];
+    public chartOptions: (ChartOptions & { annotation: any });
+    public setChartOptions() {
+        this.chartOptions = {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        min: this.yaxisMin,
+                        max: this.yaxisMax,
+                        stepSize: this.stepSize,
+                    }
+                }],
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {}
+                }]
             },
-                {
+            annotation: {
+                annotations: [{
                     type: 'box',
                     yScaleID: 'y-axis-0',
-                    yMin: 100,
-                    yMax: 110,
-                    backgroundColor: 'rgba(255, 251, 25, 0.2)',
-                    borderColor: 'rgba(255, 251, 25, 0.2)',
-                },
-                {
-                    type: 'box',
-                    yScaleID: 'y-axis-0',
-                    yMin: 90,
-                    yMax: 100,
-                    backgroundColor: 'rgba(255, 128, 0, 0.2)',
-                    borderColor: 'rgba(255, 128, 0, 0.2)',
-                },
-                {
-                    type: 'box',
-                    yScaleID: 'y-axis-0',
-                    yMin: 50,
-                    yMax: 90,
+                    yMin: 0,
+                    yMax: 0,
                     backgroundColor: 'rgba(255, 31, 25, 0.2)',
                     borderColor: 'rgba(255, 31, 25, 0.2)',
                 },
-            ],
-        },
-    };
-
-    public chartType = 'line';
-    public lineChartLegend = true;
-    public lineChartType = 'line';
-    public lineChartPlugins = [pluginAnnotations];
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 0,
+                        yMax: 0,
+                        backgroundColor: 'rgba(255, 251, 25, 0.2)',
+                        borderColor: 'rgba(255, 251, 25, 0.2)',
+                    },
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 90,
+                        yMax: 100,
+                        backgroundColor: 'rgba(255, 128, 0, 0.2)',
+                        borderColor: 'rgba(255, 128, 0, 0.2)',
+                    },
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 50,
+                        yMax: 90,
+                        backgroundColor: 'rgba(255, 31, 25, 0.2)',
+                        borderColor: 'rgba(255, 31, 25, 0.2)',
+                    },
+                ],
+            },
+        };
+    }
 
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
     public fetchDataApi() {
-      if (localStorage.getItem('outputVitalParameter') === null) {
-        localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
-      }
-      this.vitalSign = localStorage.getItem('outputVitalParameter');
+        if (localStorage.getItem('outputVitalParameter') === null) {
+            localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
+        }
+        this.vitalSign = localStorage.getItem('outputVitalParameter');
 
-      if (this.vitalSign === 'getHistoricBloodpressure') {
+        if (this.vitalSign === 'getHistoricBloodpressure') {
             this.patientservice[this.vitalSign]().subscribe( data => {
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[i].systolic;
                     this.vitalArray2[i] = data.resultSet[i].diastolic;
                     this.timeArray[i] = data.resultSet[i].time;
                 }
             });
+            this.chartData[1].borderColor = 'rgba(223, 128, 255, 1)';
+            this.chartData[0].label = 'Systoliskt';
+            this.chartData[1].label = 'Diastoliskt';
+            this.yaxisMin = 50;
+            this.yaxisMax = 220;
+            this.stepSize = 10;
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
             return this.patientservice.getHistoricRespiration().subscribe( data => {
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[i].syre;
                     this.timeArray[i] = data.resultSet[i].time;
                 }
             });
+            this.chartData[0].label = 'Tillfört Syre';
+            this.yaxisMin = 0;
+            this.yaxisMax = 10;
+            this.stepSize = 1;
         } else if (this.vitalSign === 'getHistoricACVPU') {
             this.patientservice[this.vitalSign]().subscribe( data => {
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 4; i++) {
                     this.timeArray[i] = data.resultSet[i].time;
                     if (data.resultSet[i].acvpu === 'Alert') {
                         this.vitalArray[i] = 5;
@@ -154,23 +167,35 @@ export class HistoryComponent implements OnInit {
                         this.vitalArray[i] = 1;
                     }
                 }
-                });
+            });
+            this.chartData[0].label = 'Medvetandegrad';
+            this.yaxisMin = 1;
+            this.yaxisMax = 6;
+            this.stepSize = 1;
         } else {
             this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe( data => {
-                for (let i = 0; i < 10; i++) {
+                for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[i].vitalsign;
                     this.timeArray[i] = data.resultSet[i].time;
                 }
             });
-            /*   if (this.vitalSign === 'getHistoricRespiration') {
-                   this.chartLabel = 'Andningsfrekvens';
-               } else if (this.vitalSign === 'getHistoricTemperature') {
-                   this.chartLabel = 'Temperatur';
-               } else if (this.
-               vitalSign === 'getHistoricPulse') {
-                   this.chartLabel = 'Puls'; }
-               console.log(this.chartLabel);*/
+            if (this.vitalSign === 'getHistoricRespiration') {
+                this.chartData[0].label = 'Andningsfrekvens';
+                this.yaxisMin = 7;
+                this.yaxisMax = 26;
+                this.stepSize = 3;
+            } else if (this.vitalSign === 'getHistoricTemperature') {
+                this.chartData[0].label = 'Temperatur';
+                this.yaxisMin = 33;
+                this.yaxisMax = 42;
+                this.stepSize = 1;
+            } else if (this.vitalSign === 'getHistoricPulse') {
+                this.chartData[0].label = 'Puls';
+                this.yaxisMin = 20;
+                this.yaxisMax = 160;
+                this.stepSize = 10; }
         }
+        this.setChartOptions();
     }
     ngOnInit() {
         this.fetchDataApi();
