@@ -27,6 +27,7 @@ export class HistoryComponent implements OnInit {
     private chartLabel: string;
     public yaxisMax: any;
     public yaxisMin: any;
+    private stepSize: any;
 
     public chartData: ChartDataSets[] = [
         { data: this.vitalArray,
@@ -56,59 +57,62 @@ export class HistoryComponent implements OnInit {
             pointBorderColor: 'rgba(223, 128, 255, 1)',
         },
     ];
-    public chartLabels: Label[] = this.timeArray;
-    public chartOptions: (ChartOptions & { annotation: any }) = {
-        responsive: true,
-        scales: {
-            yAxes: [{
-                display: true,
-                ticks: {
-                    min: 0,
-                    max: 240,
-                    stepSize: 20
-                }
-            }],
-            xAxes: [{
-                display: true,
-                scaleLabel: {}
-            }]
-        },
-        annotation: {
-            annotations: [{
-                type: 'box',
-                yScaleID: 'y-axis-0',
-                yMin: 220,
-                yMax: 240,
-                backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                borderColor: 'rgba(255, 31, 25, 0.2)',
+    public chartLabels: Label[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+    public chartOptions: (ChartOptions & { annotation: any });
+    public setChartOptions() {
+        this.chartOptions = {
+            responsive: true,
+            scales: {
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        min: this.yaxisMin,
+                        max: this.yaxisMax,
+                        stepSize: this.stepSize,
+                    }
+                }],
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {}
+                }]
             },
-                {
+            annotation: {
+                annotations: [{
                     type: 'box',
                     yScaleID: 'y-axis-0',
-                    yMin: 100,
-                    yMax: 110,
-                    backgroundColor: 'rgba(255, 251, 25, 0.2)',
-                    borderColor: 'rgba(255, 251, 25, 0.2)',
-                },
-                {
-                    type: 'box',
-                    yScaleID: 'y-axis-0',
-                    yMin: 90,
-                    yMax: 100,
-                    backgroundColor: 'rgba(255, 128, 0, 0.2)',
-                    borderColor: 'rgba(255, 128, 0, 0.2)',
-                },
-                {
-                    type: 'box',
-                    yScaleID: 'y-axis-0',
-                    yMin: 50,
-                    yMax: 90,
+                    yMin: 220,
+                    yMax: 240,
                     backgroundColor: 'rgba(255, 31, 25, 0.2)',
                     borderColor: 'rgba(255, 31, 25, 0.2)',
                 },
-            ],
-        },
-    };
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 100,
+                        yMax: 110,
+                        backgroundColor: 'rgba(255, 251, 25, 0.2)',
+                        borderColor: 'rgba(255, 251, 25, 0.2)',
+                    },
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 90,
+                        yMax: 100,
+                        backgroundColor: 'rgba(255, 128, 0, 0.2)',
+                        borderColor: 'rgba(255, 128, 0, 0.2)',
+                    },
+                    {
+                        type: 'box',
+                        yScaleID: 'y-axis-0',
+                        yMin: 50,
+                        yMax: 90,
+                        backgroundColor: 'rgba(255, 31, 25, 0.2)',
+                        borderColor: 'rgba(255, 31, 25, 0.2)',
+                    },
+                ],
+            },
+        };
+    }
 
     public chartType = 'line';
     public lineChartLegend = true;
@@ -161,15 +165,17 @@ export class HistoryComponent implements OnInit {
                     this.vitalArray[i] = data.resultSet[i].vitalsign;
                     this.timeArray[i] = data.resultSet[i].time;
                 }
+                if (this.vitalSign === 'getHistoricRespiration') {
+                    this.chartData[0].label = 'Andningsfrekvens';
+                    this.yaxisMin = 7;
+                    this.yaxisMax = 26;
+                    this.stepSize = 3;
+                } else if (this.vitalSign === 'getHistoricTemperature') {
+                    this.chartData[0].label = 'Temperatur';
+                } else if (this.vitalSign === 'getHistoricPulse') {
+                    this.chartData[0].label = 'Puls'; }
+                this.setChartOptions();
             });
-            /*   if (this.vitalSign === 'getHistoricRespiration') {
-                   this.chartLabel = 'Andningsfrekvens';
-               } else if (this.vitalSign === 'getHistoricTemperature') {
-                   this.chartLabel = 'Temperatur';
-               } else if (this.
-               vitalSign === 'getHistoricPulse') {
-                   this.chartLabel = 'Puls'; }
-               console.log(this.chartLabel);*/
         }
     }
     ngOnInit() {
