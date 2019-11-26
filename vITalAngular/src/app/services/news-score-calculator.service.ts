@@ -124,7 +124,7 @@ export class NewsScoreCalculatorService {
     }
   }
     getClinicalRisk() {
-      if (this.isFull === false) {
+      if(this.isFull === false){
         return null;
       }
       if (this.clinicalRisk === 0) {
