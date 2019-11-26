@@ -19,7 +19,7 @@ export class AuthService {
   ) {}
 
   public login(userInfo: User): Observable<boolean> {
-    const url = 'http://134.209.226.62/api/login';
+    const url = 'https://brewinabox.se/api/login';
     const userInfoJSON = {
       username: userInfo.username,
       password: userInfo.password
@@ -41,13 +41,13 @@ export class AuthService {
   }
 
   public checkToken(): Observable<boolean> {
-    const url = 'http://134.209.226.62/api/authenticate';
+    const url = 'https://brewinabox.se/api/authenticate';
     let headers = new HttpHeaders();
     headers = headers.append(
         'Authorization',
         localStorage.getItem('ACCESS_TOKEN')
     );
-    return this.http.get<boolean>(url, {headers: headers})
+    return this.http.get<boolean>(url, {headers})
         .pipe(map((res: any) => {
               return res.status === 'success';
             }),
@@ -57,13 +57,13 @@ export class AuthService {
   }
 
   public logout() {
-    const url = 'http://134.209.226.62/api/logout';
+    const url = 'https://brewinabox.se/api/logout';
     let headers = new HttpHeaders();
     headers = headers.append(
         'Authorization',
         localStorage.getItem('ACCESS_TOKEN')
     );
-    this.http.post(url, null, {headers: headers})
+    this.http.post(url, null, {headers})
         .subscribe((res) => {},
         err => {
           console.error(err);
