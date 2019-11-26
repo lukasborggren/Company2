@@ -62,8 +62,8 @@ export class HistoryComponent implements OnInit {
             pointBorderColor: 'rgba(223, 128, 255, 1)',
         },
     ];
-    public chartLabels: Label[] = this.timeArray;
-    public chartOptions: (ChartOptions & { annotation: any });
+    public chartLabels: Label[] = ['1', '2', '3', '4'];
+    public chartOptions: (ChartOptions /*& { annotation: any }*/);
     public setChartOptions() {
         this.chartOptions = {
             responsive: true,
@@ -81,15 +81,16 @@ export class HistoryComponent implements OnInit {
                     scaleLabel: {}
                 }]
             },
-            annotation: {
+           /* annotation: {
                 annotations: [{
+                    drawTime: 'beforeDatasetsDraw',
                     //Röd box
                     type: 'box',
                     yScaleID: 'y-axis-0',
                     yMin: this.boxMin[0],
                     yMax: this.boxMax[0],
-                    backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                    borderColor: 'rgba(255, 31, 25, 0)',
+                    backgroundColor: 'rgba(245, 150, 129, 0.2)',
+                    borderColor: 'rgba(245, 150, 129, 0.2)',
                 },
                     {
                         //Orange box
@@ -98,7 +99,7 @@ export class HistoryComponent implements OnInit {
                         yMin: this.boxMin[1],
                         yMax: this.boxMax[1],
                         backgroundColor: 'rgba(255, 128, 0, 0.2)',
-                        borderColor: 'rgba(255, 128, 0, 0)',
+                        borderColor: 'rgba(255, 128, 0, 0.2)',
                     },
                     {
                         //Gul box
@@ -107,7 +108,7 @@ export class HistoryComponent implements OnInit {
                         yMin: this.boxMin[2],
                         yMax: this.boxMax[2],
                         backgroundColor: 'rgba(255, 251, 25, 0.2)',
-                        borderColor: 'rgba(255, 251, 25, 0)',
+                        borderColor: 'rgba(255, 251, 25, 0.2)',
                     },
                     {
                         //Gul box
@@ -116,7 +117,7 @@ export class HistoryComponent implements OnInit {
                         yMin: this.boxMin[3],
                         yMax: this.boxMax[3],
                         backgroundColor: 'rgba(255, 251, 25, 0.2)',
-                        borderColor: 'rgba(255, 251, 25, 0)',
+                        borderColor: 'rgba(255, 251, 25, 0.2)',
                     },
                     {
                         //Orange box
@@ -125,7 +126,7 @@ export class HistoryComponent implements OnInit {
                         yMin: this.boxMin[4],
                         yMax: this.boxMax[4],
                         backgroundColor: 'rgba(255, 128, 0, 0.2)',
-                        borderColor: 'rgba(255, 128, 0, 0)',
+                        borderColor: 'rgba(255, 128, 0, 0.2)',
                     },
                     {
                         //Röd box
@@ -133,11 +134,11 @@ export class HistoryComponent implements OnInit {
                         yScaleID: 'y-axis-0',
                         yMin: this.boxMin[5],
                         yMax: this.boxMax[5],
-                        backgroundColor: 'rgba(255, 31, 25, 0.2)',
-                        borderColor: 'rgba(255, 31, 25, 0)',
+                        backgroundColor: 'rgba(245, 150, 129, 0.2)',
+                        borderColor: 'rgba(255, 31, 25, 0.2)',
                     },
                 ],
-            },
+            },*/
         };
     }
 
