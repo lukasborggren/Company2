@@ -100,7 +100,7 @@ export class NewsScoreCalculatorService {
                systolicScore: number, pulseScore: number, consciousnessScore: number, temperatureScore: number): number {
     this.totalScore = respiratoryScore + saturationScore + supplementalOxygenScore + systolicScore + pulseScore +
         consciousnessScore + temperatureScore;
-    if(this.isFull == false){
+    if(this.isFull === false){
       return null;
     }
     if (this.totalScore >= 7) {
@@ -119,7 +119,7 @@ export class NewsScoreCalculatorService {
     }
   }
     getClinicalRisk() {
-      if(this.isFull == false){
+      if(this.isFull === false){
         return null;
       }
         if (this.clinicalRisk === 0) {
@@ -143,10 +143,10 @@ oxygenSaturationScale1(e, scale1: boolean) {
 }
 
 getTotalScore() {
-  if(this.isFull == false){
+  if(this.isFull === false){
     return null;
   }
-      return this.totalScore;
+  return this.totalScore;
 }
 }
 
