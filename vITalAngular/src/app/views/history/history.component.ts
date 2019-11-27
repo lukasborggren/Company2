@@ -25,9 +25,9 @@ export class HistoryComponent implements OnInit {
     public lineChartType = 'line';
     public lineChartPlugins = [pluginAnnotations];
     private vitalSign: string;
-    private vitalArray: any[] = [];
-    private vitalArray2: any[] = [];
-    private timeArray: any[] = [];
+    vitalArray: any[] = [];
+    vitalArray2: any[] = [];
+    timeArray: any[] = [];
     private boxMin: any[] = [];
     private boxMax: any[] = [];
     private yaxisMax: any;
