@@ -169,11 +169,11 @@ export class HistoryComponent implements OnInit {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].systolic;
                     this.vitalArray2[i] = data.resultSet[(data.resultSet.length - 1) - i].diastolic;
-                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11,19);
+                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
             });
             this.changeLineColor('rgb(5, 0, 140)', 0);
-            this.changeLineColor('rgb(201, 7, 0)', 1);
+            this.changeLineColor('rgb(0, 0, 0)', 1);
             this.chartData[0].pointStyle = 'triangle';
             this.setChartOptions(50, 220, 10);
             this.chartData[0].label = 'Systoliskt';
@@ -184,7 +184,7 @@ export class HistoryComponent implements OnInit {
             this.patientservice.getHistoricRespiration().subscribe(data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
-                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11,19);
+                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
             });
             this.setChartOptions(0, 1, 1);
@@ -194,7 +194,7 @@ export class HistoryComponent implements OnInit {
         } else if (this.vitalSign === 'getHistoricACVPU') {
             this.patientservice[this.vitalSign]().subscribe(data => {
                 for (let i = 0; i < 4; i++) {
-                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11,19);
+                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                     if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Alert') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 5;
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Confusion') {
@@ -216,23 +216,24 @@ export class HistoryComponent implements OnInit {
             this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe(data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].vitalsign;
-                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11,19);
+                    this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
             });
             if (this.vitalSign === 'getHistoricRespiration') {
                 this.chartData[0].label = 'Andningsfrekvens';
-                this.setChartOptions(7 , 26, 3);
+                this.setChartOptions(7, 26, 3);
                 this.boxMax = [26, 24, 0, 11, 0, 9];
                 this.boxMin = [24, 21, 0, 9, 0, 7];
             } else if (this.vitalSign === 'getHistoricTemperature') {
                 this.chartData[0].label = 'Temperatur';
-                this.setChartOptions(33, 42, 1);
+                this.setChartOptions(33, 42, 1);  
+                this.changeLineColor('rgb(6, 201, 58)', 0);
                 this.boxMax = [0, 42, 39, 36, 0, 36];
                 this.boxMin = [0, 39, 38, 35, 0, 33];
             } else if (this.vitalSign === 'getHistoricPulse') {
                 this.chartData[0].label = 'Pulsfrekvens';
-                this.changeLineColor('rgb(191, 0, 0)', 0);
                 this.setChartOptions(20, 160, 10);
+                this.changeLineColor('rgb(201, 7, 0)', 0);
                 this.boxMax = [160, 130, 110, 50, 0, 40];
                 this.boxMin = [130, 110, 90, 40, 0, 20];
             } else if (this.vitalSign === 'getHistoricOximetry') {
