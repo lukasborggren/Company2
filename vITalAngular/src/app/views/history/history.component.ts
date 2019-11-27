@@ -1,15 +1,11 @@
-import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, BaseChartDirective, Label } from 'ng2-charts';
 import * as pluginAnnotations from 'chartjs-plugin-annotation';
 import * as pluginlabels from 'chartjs-plugin-datalabels';
-import { PatientService } from '../../services/patient.service';
-import { Router } from '@angular/router';
+import {PatientService} from '../../services/patient.service';
+import {Router} from '@angular/router';
 import { state } from '@angular/animations';
-import { templateJitUrl } from '@angular/compiler';
-import { tick } from '@angular/core/testing';
-import { callbackify } from 'util';
 
 
 @Component({
@@ -20,20 +16,22 @@ import { callbackify } from 'util';
 
 export class HistoryComponent implements OnInit {
 
-    constructor(private location: Location,
-        private router: Router,
-        private patientservice: PatientService) {
+    constructor(private router: Router,
+                private patientservice: PatientService) {
     }
     public chartType = 'line';
     public lineChartLegend = true;
     public lineChartType = 'line';
     public lineChartPlugins = [pluginAnnotations, pluginlabels];
     private vitalSign: string;
-    private vitalArray: any[] = [];
-    private vitalArray2: any[] = [];
-    private timeArray: any[] = [];
+    vitalArray: any[] = [];
+    vitalArray2: any[] = [];
+    timeArray: any[] = [];
     private boxMin: any[] = [];
     private boxMax: any[] = [];
+    private yaxisMax: any;
+    private yaxisMin: any;
+    private stepSize: any;
 
     public chartData: ChartDataSets[] = [
         {
@@ -43,7 +41,7 @@ export class HistoryComponent implements OnInit {
             pointStyle: 'circle',
             pointRotation: 180,
             fill: false,
-            borderColor: 'rgba(20, 20, 250, 1)', // Change the color of the line
+            borderColor: 'rgb(0,0,0)', // Change the color of the line
             borderWidth: 2,
             pointRadius: 4,
             pointBackgroundColor: 'rgb(0, 0, 0)', // Change the color of the point
@@ -64,7 +62,7 @@ export class HistoryComponent implements OnInit {
         },
     ];
     public chartLabels: Label[] = [];
-    public chartOptions: (ChartOptions /*& { annotation: any }*/);
+    public chartOptions: (ChartOptions /*& { annotation: any }*/);    
     public setChartOptions(max, min, steplength) {
         this.chartOptions = {
             plugins: {
@@ -149,6 +147,7 @@ export class HistoryComponent implements OnInit {
              },*/
         };
     }
+
     public changeLineColor(color, number) {
         this.chartData[number].pointBackgroundColor = color;
         this.chartData[number].borderColor = color;
@@ -158,17 +157,17 @@ export class HistoryComponent implements OnInit {
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
     public fetchDataApi() {
-        this.changeLineColor('rgb(0, 0, 0)', 0);
         if (localStorage.getItem('outputVitalParameter') === null) {
             localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
         }
         this.vitalSign = localStorage.getItem('outputVitalParameter');
 
         if (this.vitalSign === 'getHistoricBloodpressure') {
-            this.patientservice[this.vitalSign]().subscribe(data => {
+            this.patientservice[this.vitalSign]().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].systolic;
                     this.vitalArray2[i] = data.resultSet[(data.resultSet.length - 1) - i].diastolic;
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
             });
@@ -178,22 +177,29 @@ export class HistoryComponent implements OnInit {
             this.setChartOptions(50, 220, 10);
             this.chartData[0].label = 'Systoliskt';
             this.chartData[1].label = 'Diastoliskt';
+            this.yaxisMin = 50;
+            this.yaxisMax = 220;
+            this.stepSize = 10;
             this.boxMax = [200, 0, 0, 100, 90, 50];
             this.boxMin = [220, 0, 0, 110, 100, 90];
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-            this.patientservice.getHistoricRespiration().subscribe(data => {
+            this.patientservice.getHistoricRespiration().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
             });
-            this.setChartOptions(0, 1, 1);
             this.chartData[0].label = 'Tillfört Syre';
+            this.yaxisMin = 0;
+            this.yaxisMax = 2;
+            this.stepSize = 1;
             this.boxMax = [0, 0, 0, 0, 2, 0];
             this.boxMin = [0, 0, 0, 0, 1, 0];
         } else if (this.vitalSign === 'getHistoricACVPU') {
-            this.patientservice[this.vitalSign]().subscribe(data => {
+            this.patientservice[this.vitalSign]().subscribe( data => {
                 for (let i = 0; i < 4; i++) {
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                     if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Alert') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 5;
@@ -209,13 +215,16 @@ export class HistoryComponent implements OnInit {
                 }
             });
             this.chartData[0].label = 'Medvetandegrad';
-            this.setChartOptions(1, 6, 1);
+            this.yaxisMin = 1;
+            this.yaxisMax = 6;
+            this.stepSize = 1;
             this.boxMax = [0, 0, 0, 0, 0, 4];
             this.boxMin = [0, 0, 0, 0, 0, 1];
         } else {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe(data => {
+            this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].vitalsign;
+                    this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
             });
@@ -238,20 +247,16 @@ export class HistoryComponent implements OnInit {
                 this.boxMin = [130, 110, 90, 40, 0, 20];
             } else if (this.vitalSign === 'getHistoricOximetry') {
                 this.chartData[0].label = 'Syremättnad';
-                this.changeLineColor('rgb(0, 112, 13)', 0);
-                this.setChartOptions(88, 100, 1);
+                this.yaxisMin = 88;
+                this.yaxisMax = 100;
+                this.stepSize = 1;
                 this.boxMax = [0, 0, 0, 96, 94, 92];
                 this.boxMin = [0, 0, 0, 94, 92, 88];
             }
+            console.log(this.timeArray);
         }
     }
     ngOnInit() {
         this.fetchDataApi();
     }
-    goBack() {
-        // om du ska använda denna måste du skapa den i konstruktorn som jag gjorde ovanför.
-        // pillade lite med unittests och detta crasha allt hela tiden ;)
-        this.location.back();
-    }
-
 }

@@ -1,48 +1,113 @@
+
 <div class="containerHistoryGraph">
     <h2 class="historyTitle">Historik:</h2>
-    <div class="historyTableDiv">
-        <table class="table history-table table-bordered" style="max-width: 95%">
+    <div class="historyTableDiv">  
+        <div class="row">
+                <div class="rowGraph">
+                            <span style="float: right;">
+                                <div style="float: left; padding-top: 2px; padding-right: 3px;">
+                                News key
+                                </div>
+                                <div class="floatBox" style="background-color: #f59681;">
+                                    3
+                                </div>
+                                <div class="floatBox" style="background-color: #fdc889;">
+                                    2
+                                </div>
+                                <div class="floatBox" style="background-color: #fff1ab;">
+                                    1
+                                </div>
+                                <div class="floatBox" style="background-color: white;">
+                                    0
+                                </div>
+                            </span>            
+                    </div>
+            <div class="col">
+                <ul class="nameOfTable">
+                    Datum
+                </ul>
+                <ul *ngFor="let time of timeArray">
+                    {{ time | date:'dd/MM/yy'}}
+                </ul>
+            </div>
+            <div class="col">
+                    <ul class="nameOfTable">
+                            Tid
+                        </ul>
+                <ul *ngFor="let time of timeArray">
+                    {{ time | date:'HH:mm'}}
+                </ul>
+            </div>
+            <div class="col">
+                    <ul class="nameOfTable">
+                            Parameter 1
+                        </ul>
+                <ul *ngFor="let vitalsign of vitalArray">
+                    {{ vitalsign }}
+                </ul>
+            </div>
+            <div class="col" *ngIf="vitalSign == 'getHistoricBloodpressure'">
+                    <ul class="nameOfTable">
+                            Parameter 2
+                        </ul>
+                <ul *ngFor="let vitalsign of vitalArray2">
+                    {{ vitalsign }}
+                </ul>
+            </div>
+            <div class="col">
+                    <ul class="nameOfTable">
+                            News2
+                        </ul>
+                <ul *ngFor="let vitalsign of vitalArray">
+                    values
+                </ul>
+            </div>
+        </div>
+        
+        
+        <!--<table class="table history-table table-bordered" style = "max-width: 95%">
             <thead style="background-color: #d8d8d8; text-align: start ">
-                <tr>
-                    <th scope="col">Datum</th>
-                    <th scope="col">Tid</th>
-                    <th scope="col">andningsfrekvens<br>andetag/min</th>
-                    <th scope="col">News2</th>
-                </tr>
+            <tr>
+                <th scope="col">Datum</th>
+                <th scope="col">Tid</th>
+                <th scope="col">andningsfrekvens<br>andetag/min</th>
+                <th scope="col">News2</th>
+            </tr>
             </thead>
-
+        
             <tbody>
-                <tr>
-                    <th scope="row">27-11-19</th>
-                    <td>15:30</td>
-                    <td>14</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th scope="row">27-11-19</th>
-                    <td>15:00</td>
-                    <td>13</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <th scope="row">27-11-19</th>
-                    <td>14:30</td>
-                    <td>11</td>
-                    <td style="background-color: #FFF1AB ">1</td>
-
-                </tr>
-                <tr>
-                    <th scope="row">27-11-19</th>
-                    <td>14:00</td>
-                    <td>13</td>
-                    <td>0</td>
-                </tr>
+            <tr>
+                <th scope = "row" >27-11-19</th>
+                <td>15:30</td>
+                <td>14</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <th scope="row">27-11-19</th>
+                <td>15:00</td>
+                <td>13</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <th scope="row">27-11-19</th>
+                <td>14:30</td>
+                <td>11</td>
+                <td style = "background-color: #FFF1AB ">1</td>
+        
+            </tr>
+            <tr>
+            <th scope="row">27-11-19</th>
+            <td>14:00</td>
+                <td>13</td>
+                <td>0</td>
+            </tr>
             </tbody>
-        </table>
+        </table>-->
+
     </div>
 
     <div class="GraphContainer">
-        <div class="row">
+        <div class="rowGraph">
             <div>
                 <span>Diagram</span>
             </div>

@@ -12,7 +12,7 @@ import {PatientService} from '../../services/patient.service';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
   showPatient: boolean;
-  pid: string;
+  pId: string;
   h: string;
   name: string;
 
@@ -28,8 +28,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pId=sessionStorage.getItem('PID');
+    this.name=sessionStorage.getItem('NAME');
     this.routeEvent();
-    this.getPid();
   }
 
   public goToLogout() {
@@ -43,15 +44,6 @@ export class HeaderComponent implements OnInit {
         this.isLoggedIn = !(currentLocation === '/login' || currentLocation === '/');
         this.showPatient = currentLocation === '/history' || currentLocation.substring(0, 5) === '/pid/';
       }
-    });
-  }
-
-  getPid() {
-    this.feedData.getPid().subscribe(pid => {
-      this.pid = pid;
-      this.patientdata.getPatientInformation(this.pid).subscribe(data => {
-        this.name=data.parties[0].firstNames + " " + data.parties[0].lastNames;
-      });
     });
   }
 }
