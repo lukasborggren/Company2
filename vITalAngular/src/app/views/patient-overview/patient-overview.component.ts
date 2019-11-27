@@ -13,15 +13,7 @@ import {BarcodeScannerService} from '../../barcode-scanner.service';
 })
 export class PatientOverviewComponent implements OnInit, OnDestroy {
   form: FormGroup;
-  patientinfo: string;
   personnumber: string;
-  info: string;
-
-  barcodevalue: string;
-  stopScanButtonVisible: boolean;
-  pid: string;
-  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
-  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
 
   respiratoryScore: number;
   saturationScore: number;
@@ -30,7 +22,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   systolicScore: number;
   consciousnessACVPUScore: number;
   supplementalOxygenScore: number;
-  tempTotal: number;
   accordionState: Array<boolean>; // Icon toggle for the accordion
   onAir: boolean;
 
@@ -42,7 +33,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   latestOxidation: string;
   latestOxidationTime: string;
   latestOxygen: string;
-  latestOxygenTime: any;
   latestSystolic: string;
   latestDiastolic: string;
   latestBPTime: any;
@@ -64,7 +54,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private newsScoreCalculator: NewsScoreCalculatorService,
-    private barcodeScanner: BarcodeScannerService,
   ) {
   }
 
@@ -339,14 +328,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.newsScoreCalculator.isFull = true;
     }
-  }
-  updateSupplementOxygenScore(e, score: number) {
-    if (e.target.checked) {
-      this.supplementalOxygenScore = score;
-    }
-    this.updateTotalNews2Score();
-    this.updateClinicalRisk();
-    this.updateIsEmpty();
   }
 
   getConsciousnessACVPUScore() {
