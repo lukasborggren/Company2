@@ -218,7 +218,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateSupplementalOxygenScore(val: number) {
-    if (val === 1) {
+    if (val == 1) {
       this.supplementalOxygenScore = 2;
       this.onAir = true;
     } else if (val) {
