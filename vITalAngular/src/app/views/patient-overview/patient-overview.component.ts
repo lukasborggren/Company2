@@ -127,7 +127,6 @@ export class PatientOverviewComponent implements OnInit {
         } else {
           this.latestOxygen = 'Luft';
         }
-
         });
     this.patientService.getHistoricBloodpressure().subscribe(data => {
           this.latestSystolic = data.resultSet[0].systolic;
@@ -140,7 +139,6 @@ export class PatientOverviewComponent implements OnInit {
         });
     this.patientService.getHistoricACVPU().subscribe(data => {
           this.latestAlertness = data.resultSet[0].acvpu;
-          console.log(this.latestAlertness);
           this.latestAlertnessTime = data.resultSet[0].time;
 
         });
