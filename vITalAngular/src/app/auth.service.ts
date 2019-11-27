@@ -64,7 +64,9 @@ export class AuthService {
         sessionStorage.getItem('ACCESS_TOKEN')
     );
     this.http.post(url, null, {headers: headers})
-        .subscribe((res) => {},
+        .subscribe((res) => {
+          console.log(res)
+        },
         err => {
           console.error(err);
         });

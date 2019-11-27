@@ -80,12 +80,12 @@
                 <div class="form-check form-check-inline radio-check mr-2" style="display: inline-block;">
                   <div class = "mb-2">
                        <label class="form-check-label mr-3" for="inlineRadio1">Skala 1</label>
-                        <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option1" (change)="this.newsScoreCalculator.oxygenSaturationScale1($event, true)">
+                        <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option1" (change)="this.updateOxygenSatScale($event, true)">
                   </div>
 
                   <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
                      <label class="form-check-label mr-3" for="inlineRadio1">Skala 2</label>
-                     <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option2" (change)="this.newsScoreCalculator.oxygenSaturationScale1($event, false)">
+                     <input class="form-check-input" type="radio" name="oxygenSaturation" id="inlineRadio1" value="option2" (change)="this.updateOxygenSatScale($event, false)">
                   </div>
               </div>
              </div>

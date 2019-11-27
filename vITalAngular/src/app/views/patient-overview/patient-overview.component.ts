@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {PatientService} from '../../services/patient.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
@@ -16,7 +16,6 @@ export class PatientOverviewComponent implements OnInit {
   patientinfo: string;
   personnumber: string;
   info: string;
-  clinicalRisk: string;
 
   barcodevalue: string;
   stopScanButtonVisible: boolean;
@@ -31,7 +30,6 @@ export class PatientOverviewComponent implements OnInit {
   systolicScore: number;
   consciousnessScore: number;
   supplementalOxygenScore: number;
-  totalScore: number;
   tempTotal: number;
   accordionState: Array<boolean>; // Icon toggle for the accordion
 
@@ -231,6 +229,11 @@ export class PatientOverviewComponent implements OnInit {
     });
 
   }
+
+  @HostListener('click') onClick() {
+    localStorage.setItem('TIMER_ACTIVE', 'F');
+  }
+
   updateIsEmpty() {
     if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
        (this.pulseScore == null) && (this.respiratoryScore == null) &&
@@ -269,9 +272,10 @@ export class PatientOverviewComponent implements OnInit {
     this.updateIsEmpty();
   }
 
-  updateOxygenSatScale(e, type: number) {
+  updateOxygenSatScale(e, scale1: boolean) {
     if (e.target.checked) {
-      this.oxSatScale = type;
+      scale1 ? this.oxSatScale = 1 : this.oxSatScale = 2;
+      this.newsScoreCalculator.oxygenSaturationScale1(scale1);
     }
   }
 
@@ -287,32 +291,19 @@ export class PatientOverviewComponent implements OnInit {
   updateTotalNews2Score() {
     this.updateIsEmpty();
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
-      this.totalScore = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
+      this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
           this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
           this.temperatureScore);
       this.updateClinicalRisk();
     } else {
-      this.totalScore = null;
+      this.newsScoreCalculator.totalScore = null;
     }
   }
 
 
   updateClinicalRisk() {
     if (this.getSupplementOxygenScore() != null && this.getConsciousnessScore() != null && this.form.valid) {
-      const temp = this.newsScoreCalculator.getTotalNEWS(this.respiratoryScore, this.saturationScore,
-          this.supplementalOxygenScore, this.systolicScore, this.pulseScore, this.consciousnessScore,
-          this.temperatureScore);
-      if (temp === 0) {
-        this.clinicalRisk = 'Låg';
-      } else if (temp === 1) {
-        this.clinicalRisk = 'Låg/medium';
-      } else if (temp === 2) {
-        this.clinicalRisk = 'Medium';
-      } else if (temp === 3) {
-        this.clinicalRisk = 'Hög';
-      }
-    } else {
-      this.clinicalRisk = null;
+      this.newsScoreCalculator.getClinicalRisk();
     }
   }
 
