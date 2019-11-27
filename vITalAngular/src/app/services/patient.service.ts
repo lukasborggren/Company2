@@ -58,13 +58,19 @@ export class PatientService {
           }, this.jsonComp);
     }
 
-    if (blPrSys !== '' && blPrSys !== null && blPrDia !== '' && blPrDia !== null) {
+    if (blPrSys !== '' && blPrSys !== null) {
       this.jsonComp = Object.assign(
           {
             'vital-parameters/blodtryck:0/ospecificerad_händelse:0/systoliskt|magnitude': blPrSys,
-            'vital-parameters/blodtryck:0/ospecificerad_händelse:0/systoliskt|unit': 'mm[Hg]',
+            'vital-parameters/blodtryck:0/ospecificerad_händelse:0/systoliskt|unit': 'mm[Hg]'
+          }, this.jsonComp);
+    }
+
+    if (blPrDia !== '' && blPrDia !== null) {
+      this.jsonComp = Object.assign(
+          {
             'vital-parameters/blodtryck:0/ospecificerad_händelse:0/diastoliskt|magnitude': blPrDia,
-            'vital-parameters/blodtryck:0/ospecificerad_händelse:0/diastoliskt|unit': 'mm[Hg]',
+            'vital-parameters/blodtryck:0/ospecificerad_händelse:0/diastoliskt|unit': 'mm[Hg]'
           }, this.jsonComp);
     }
 

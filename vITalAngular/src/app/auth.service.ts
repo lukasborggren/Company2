@@ -47,7 +47,7 @@ export class AuthService {
         'Authorization',
         sessionStorage.getItem('ACCESS_TOKEN')
     );
-    return this.http.get<boolean>(url, {headers: headers})
+    return this.http.get<boolean>(url, {headers})
         .pipe(map((res: any) => {
               return res.status === 'success';
             }),
@@ -63,9 +63,9 @@ export class AuthService {
         'Authorization',
         sessionStorage.getItem('ACCESS_TOKEN')
     );
-    this.http.post(url, null, {headers: headers})
+    this.http.post(url, null, {headers})
         .subscribe((res) => {
-          console.log(res)
+          console.log(res);
         },
         err => {
           console.error(err);
