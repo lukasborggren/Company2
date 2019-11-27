@@ -12,7 +12,6 @@ import { LoginComponent } from './views/login/login.component';
 import {RouterModule} from '@angular/router';
 import { LogoutComponent } from './views/logout/logout.component';
 import { PatientOverviewComponent } from './views/patient-overview/patient-overview.component';
-import { PopupWindowComponent } from './views/shared-components/popup-window/popup-window.component';
 import { DialogWindowComponent } from './views/shared-components/dialog-window/dialog-window.component';
 import { ConfirmSubmitComponent } from './views/shared-components/confirm-submit/confirm-submit.component';
 import { HistoryComponent } from './views/history/history.component';
@@ -29,7 +28,6 @@ import { FooterComponent } from './views/footer/footer.component';
     LoginComponent,
     LogoutComponent,
     PatientOverviewComponent,
-    PopupWindowComponent,
     DialogWindowComponent,
     ConfirmSubmitComponent,
     HistoryComponent,
@@ -49,7 +47,7 @@ import { FooterComponent } from './views/footer/footer.component';
     RouterModule,
     ChartsModule
   ],
-  entryComponents: [ManualInputDialogComponent, PopupWindowComponent, DialogWindowComponent, ConfirmSubmitComponent],
+  entryComponents: [ManualInputDialogComponent, DialogWindowComponent, ConfirmSubmitComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
