@@ -12,11 +12,11 @@ import {PatientService} from '../../services/patient.service';
 })
 export class BarcodeScannerPageComponent implements OnInit {
 
-  protected title: 'Scannerpage';
-  private barcodeValue: string;
-  private stopScanButtonVisible: boolean;
-  private BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
-  private PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
+  title: 'Scannerpage';
+  barcodeValue: string;
+  stopScanButtonVisible: boolean;
+  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
+  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -43,18 +43,18 @@ export class BarcodeScannerPageComponent implements OnInit {
     });
   }
 
-  private startScanner() {
+  startScanner() {
     this.barcodeValue = 'scanning';
     this.stopScanButtonVisible = true;
     this.barcodeScanner.startScanner();
   }
 
-  private stopScanner() {
+  stopScanner() {
     this.stopScanButtonVisible = false;
     this.barcodeScanner.StopScanner();
   }
 
-  private openDialog() {
+  openDialog() {
     if (this.stopScanButtonVisible) {
       this.stopScanner();
     }
