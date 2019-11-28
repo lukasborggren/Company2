@@ -367,7 +367,18 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
 
 
     toggleAccordion(id: number) { // Icon toggle for the accordion
-      this.accordionState[id] = !this.accordionState[id];
+      
+      if(!this.isAccordionOpen(id))
+      {
+        for (let index = 0; index < this.accordionState.length; index++) {
+          this.accordionState[index] = false;
+        }
+        this.accordionState[id] = true;
+      }
+      else
+      {
+        this.accordionState[id] = !this.accordionState[id];
+      }
     }
 
     isAccordionOpen(id: number) {
