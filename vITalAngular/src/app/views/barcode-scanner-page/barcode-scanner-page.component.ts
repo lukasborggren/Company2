@@ -4,8 +4,6 @@ import {MatDialog, MatDialogConfig} from '@angular/material';
 import {ManualInputDialogComponent} from '../shared-components/manual-input-dialog/manual-input-dialog.component';
 import {Router} from '@angular/router';
 import {PatientService} from '../../services/patient.service';
-import {FeedDataService} from '../../services/feed-data.service';
-
 
 @Component({
   selector: 'app-barcode-scanner-page',
@@ -13,42 +11,57 @@ import {FeedDataService} from '../../services/feed-data.service';
   styleUrls: ['./barcode-scanner-page.component.css']
 })
 export class BarcodeScannerPageComponent implements OnInit {
-  title: 'Scannerpage';
-  barcodevalue: string;
-  stopScanButtonVisible: boolean;
-  pid: string;
-  BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
-  PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
+
+  protected title: 'Scannerpage';
+  private barcodeValue: string;
+  private stopScanButtonVisible: boolean;
+  private BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
+  private PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
       private dialog: MatDialog,
       private router: Router,
       private patientService: PatientService,
-      private feedData: FeedDataService
-  ) {
+  ) { }
+
+  ngOnInit() {
+    localStorage.removeItem('form');
+    this.stopScanButtonVisible = false;
+    this.barcodeScanner.barcodeObs.subscribe(barcode => {
+      this.barcodeValue = barcode;
+      console.log('barcode: ' + barcode);
+      if (this.barcodeValue) {
+        this.stopScanButtonVisible = false;
+        if (!this.BARCODE_PATTERN.test(barcode)) {
+          console.log('Invalid input format');
+        } else {
+          const pid = barcode.substr(0, 8) + '-' + barcode.substr(9, 4);
+          this.validPidProvided(pid);
+        }
+      }
+    });
   }
 
-  startScanner() {
-    this.barcodevalue = 'scanning';
+  private startScanner() {
+    this.barcodeValue = 'scanning';
     this.stopScanButtonVisible = true;
     this.barcodeScanner.startScanner();
   }
 
-  stopScanner() {
+  private stopScanner() {
     this.stopScanButtonVisible = false;
     this.barcodeScanner.StopScanner();
   }
 
-  openDialog() {
+  private openDialog() {
     if (this.stopScanButtonVisible) {
       this.stopScanner();
     }
-    const dialogConfig = new MatDialogConfig();
 
+    const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-
     dialogConfig.data = {
       id: 1,
       title: 'Angular For Beginners',
@@ -56,55 +69,28 @@ export class BarcodeScannerPageComponent implements OnInit {
     };
 
     const dialogRef = this.dialog.open(ManualInputDialogComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(
         data => {
           if (this.PERSONID_PATTERN.test(data.description)) {
-            this.feedData.nextPid(data.description);
-            sessionStorage.setItem('PID', data.description);
-            this.patientService.getPatientInformation(data.description).subscribe(
-                response => {
-                  const ehrId = response.parties[0].additionalInfo.ehrId;
-                  sessionStorage.setItem('EHR_ID', ehrId);
-                  sessionStorage.setItem('NAME', response.parties[0].firstNames + " " + response.parties[0].lastNames);
-                  this.router.navigate(['/pid/' + data.description]);
-                },
-                error => console.log(error)
-            );
+            this.validPidProvided(data.description)
           }
         });
   }
 
-  ngOnInit() {
-    localStorage.removeItem('form');
-    this.stopScanButtonVisible = false;
-    this.barcodeScanner.barcodeObs.subscribe(barcode => {
-      this.barcodevalue = barcode;
-      console.log('barcode: ' + barcode);
-      if (this.barcodevalue) {
-        this.stopScanButtonVisible = false;
-        if (!this.BARCODE_PATTERN.test(barcode)) {
-          console.log('Invalid input format');
-        } else {
-          this.pid = barcode.substr(0, 8) + '-' + barcode.substr(9, 4);
-          this.feedData.nextPid(this.pid);
-          sessionStorage.setItem('PID', this.pid);
-          this.patientService.getPatientInformation(this.pid).subscribe(
-              response => {
-                const ehrId = response.parties[0].additionalInfo.ehrId;
-                sessionStorage.setItem('EHR_ID', ehrId);
-                sessionStorage.setItem('NAME', response.parties[0].firstNames + " " + response.parties[0].lastNames);
-                this.router.navigate(['/pid/' + this.pid]);
-              },
-              error => console.log(error)
-          );
-      }
-    }
-    });
+  private validPidProvided(pid: string) {
+    sessionStorage.setItem('PID', pid);
+    this.patientService.getPatientInformation(pid).subscribe(
+        response => {
+          const ehrId = response.parties[0].additionalInfo.ehrId;
+          sessionStorage.setItem('EHR_ID', ehrId);
+          sessionStorage.setItem('NAME', response.parties[0].firstNames + ' ' + response.parties[0].lastNames);
+          this.router.navigate(['/pid/' + pid]);
+        },
+        error => console.log(error)
+    );
   }
+
   public goToLogout() {
     this.router.navigate(['/logout']);
   }
-
-
 }
