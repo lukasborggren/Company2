@@ -12,6 +12,7 @@ import {PatientService} from '../../services/patient.service';
 export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
   showPatient: boolean;
+  patientOverview: boolean;
   pId: string;
   name: string;
   @Output() philipsData = new EventEmitter<boolean>();
@@ -47,6 +48,7 @@ export class HeaderComponent implements OnInit {
         const currentLocation = event.url;
         this.isLoggedIn = !(currentLocation === '/login' || currentLocation === '/');
         this.showPatient = currentLocation === '/history' || currentLocation.substring(0, 5) === '/pid/';
+        this.patientOverview = currentLocation.substring(0, 5) === '/pid/';
       }
     });
   }
