@@ -10,12 +10,10 @@ import {PatientService} from '../../services/patient.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn: boolean;
   showPatient: boolean;
   patientOverview: boolean;
   pId: string;
   name: string;
-  @Output() philipsData = new EventEmitter<boolean>();
 
   constructor(
       private patientdata: PatientService,
