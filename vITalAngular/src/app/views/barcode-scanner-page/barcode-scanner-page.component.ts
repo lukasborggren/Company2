@@ -61,7 +61,7 @@ export class BarcodeScannerPageComponent implements OnInit {
         data => {
           if (this.PERSONID_PATTERN.test(data.description)) {
             this.feedData.nextPid(data.description);
-              sessionStorage.setItem('PID', data.description);
+            sessionStorage.setItem('PID', data.description);
             this.patientService.getPatientInformation(data.description).subscribe(
                 response => {
                   const ehrId = response.parties[0].additionalInfo.ehrId;
@@ -88,9 +88,18 @@ export class BarcodeScannerPageComponent implements OnInit {
         } else {
           this.pid = barcode.substr(0, 8) + '-' + barcode.substr(9, 4);
           this.feedData.nextPid(this.pid);
-          this.router.navigate(['/pid/' + this.pid]);
-        }
+          sessionStorage.setItem('PID', this.pid);
+          this.patientService.getPatientInformation(this.pid).subscribe(
+              response => {
+                const ehrId = response.parties[0].additionalInfo.ehrId;
+                sessionStorage.setItem('EHR_ID', ehrId);
+                sessionStorage.setItem('NAME', response.parties[0].firstNames + " " + response.parties[0].lastNames);
+                this.router.navigate(['/pid/' + this.pid]);
+              },
+              error => console.log(error)
+          );
       }
+    }
     });
   }
   public goToLogout() {
