@@ -19,8 +19,7 @@ export class HeaderComponent implements OnInit {
   constructor(
       private patientdata: PatientService,
       private location: Location,
-      private router: Router,
-      private feedData: FeedDataService
+      private router: Router
       ) { }
 
   goBack() {
@@ -28,8 +27,6 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pId=sessionStorage.getItem('PID');
-    this.name=sessionStorage.getItem('NAME');
     this.routeEvent();
   }
 
@@ -37,9 +34,11 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/logout']);
   }
 
-  routeEvent(){
+  routeEvent() {
     this.router.events.subscribe(event => {
-      if(event instanceof NavigationEnd) {
+      this.pId = sessionStorage.getItem('PID');
+      this.name = sessionStorage.getItem('NAME');
+      if (event instanceof NavigationEnd) {
         const currentLocation = event.url;
         this.isLoggedIn = !(currentLocation === '/login' || currentLocation === '/');
         this.showPatient = currentLocation === '/history' || currentLocation.substring(0, 5) === '/pid/';

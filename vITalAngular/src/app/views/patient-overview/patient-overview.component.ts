@@ -204,7 +204,9 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateOxSatScale(val: number) {
+    console.log(val)
     if (val == 1) {
+      console.log("hej")
       this.oxSatScale = 1;
       this.newsScoreCalculator.oxygenSaturationScale1(this.scale1 = true);
     } else if (val == 2) {
