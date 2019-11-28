@@ -42,3 +42,8 @@ p {
   align-items: center;
   justify-content: center;
 }
+
+.get-data {
+  position: fixed;
+  right: 10px;
+}

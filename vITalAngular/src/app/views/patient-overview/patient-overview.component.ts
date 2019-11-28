@@ -5,6 +5,9 @@ import {MatDialog} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NewsScoreCalculatorService} from '../../services/news-score-calculator.service';
 import {BarcodeScannerService} from '../../barcode-scanner.service';
+import {FeedDataService} from '../../services/feed-data.service';
+import {PhilipsService} from '../../services/philips.service';
+
 
 @Component({
   selector: 'app-patient-overview',
@@ -54,6 +57,8 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private newsScoreCalculator: NewsScoreCalculatorService,
+    private feedData: FeedDataService,
+    private philips: PhilipsService
   ) {
   }
 
@@ -153,6 +158,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
     this.updateCalculations();
     this.onChanges();
+    this.philipsData();
   }
 
 
@@ -389,4 +395,22 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
         this.router.navigate(['history']);
       }
 
+      philipsData() {
+        this.feedData.setPhilipsData().subscribe(
+            setPhilipsData => {
+              if (setPhilipsData) {
+                const philipsSubscription = this.philips.getPhilipsData(sessionStorage.getItem('PID')).subscribe(
+                    data => {
+                      this.form.patchValue({
+                        respiratoryRate : data.breathing_rate,
+                        systolicBloodPressure: data.systolic_bp,
+                        diastolicBloodPressure: data.diastolic_bp,
+                        oxygenSaturation: data.oxygen_saturation
+                      });
+                      philipsSubscription.unsubscribe();
+                    });
+              }
+            });
+      }
     }
+

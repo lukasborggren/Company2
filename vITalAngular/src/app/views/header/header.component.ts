@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Location } from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 import {FeedDataService} from '../../services/feed-data.service';
@@ -13,13 +13,14 @@ export class HeaderComponent implements OnInit {
   isLoggedIn: boolean;
   showPatient: boolean;
   pId: string;
-  h: string;
   name: string;
+  @Output() philipsData = new EventEmitter<boolean>();
 
   constructor(
       private patientdata: PatientService,
       private location: Location,
-      private router: Router
+      private router: Router,
+      private feedData: FeedDataService
       ) { }
 
   goBack() {
@@ -32,6 +33,10 @@ export class HeaderComponent implements OnInit {
 
   public goToLogout() {
     this.router.navigate(['/logout']);
+  }
+
+  public philipsDataOn() {
+    this.feedData.nextPhilipsData(true);
   }
 
   routeEvent() {
