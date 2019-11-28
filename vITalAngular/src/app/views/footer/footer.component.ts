@@ -13,7 +13,6 @@ import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confir
 export class FooterComponent implements OnInit {
 
   @Output() mdSubmitChange = new EventEmitter<boolean>();
-  // isLoggedIn: boolean;
   patientOverview: boolean;
   history: boolean;
 
@@ -45,7 +44,6 @@ export class FooterComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentLocation = event.url;
-        // this.isLoggedIn = currentLocation !== '/login';
         this.patientOverview = currentLocation.substring(0, 5) === '/pid/';
         this.history = currentLocation === '/history';
       }

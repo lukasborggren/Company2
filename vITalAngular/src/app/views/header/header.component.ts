@@ -46,7 +46,6 @@ export class HeaderComponent implements OnInit {
       this.name = sessionStorage.getItem('NAME');
       if (event instanceof NavigationEnd) {
         const currentLocation = event.url;
-        this.isLoggedIn = !(currentLocation === '/login' || currentLocation === '/');
         this.showPatient = currentLocation === '/history' || currentLocation.substring(0, 5) === '/pid/';
         this.patientOverview = currentLocation.substring(0, 5) === '/pid/';
       }
