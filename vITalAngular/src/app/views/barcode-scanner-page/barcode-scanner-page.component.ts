@@ -76,7 +76,7 @@ export class BarcodeScannerPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
         data => {
           if (this.PERSONID_PATTERN.test(data.description)) {
-            this.validPidProvided(data.description)
+            this.validPidProvided(data.description);
           }
         });
   }
