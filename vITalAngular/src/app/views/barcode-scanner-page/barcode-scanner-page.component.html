@@ -1,6 +1,6 @@
 <div align="center">
 
-<img id="logo" src="assets/img/logo.jpg" alt="vITal logotyp" *ngIf="!stopScanButtonVisible" >
+  <img id="logo" src="assets/img/logo.jpg" alt="vITal logotyp" *ngIf="!stopScanButtonVisible" >
 
   <div id="interactive" class="viewport" >
     <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true" ></video>
@@ -25,6 +25,7 @@
 
   <button class="standardButton" (click)="goToLogout()">Logga ut</button>
 
-  <p>19791111-0017</p>
-
+</div>
+<div class="userInfo">
+Inloggad som: placeholder
 </div>
