@@ -1,0 +1,12 @@
+.logoutContainer {
+  height: 80vh;
+  width: 80%;
+  margin: auto;
+}
+
+.border {
+  width: 80%;
+  height: auto;
+  padding: 20px;
+  background-color: #D0d0d0;
+}

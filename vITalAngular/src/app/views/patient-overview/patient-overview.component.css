@@ -1,0 +1,111 @@
+.parameterTitle {
+    /* Problematic font size when desktop mode.. */
+    font-size: 4vw;
+}
+
+.vertical {
+    float: left;
+
+}
+.vertical  > *{
+    display :block;
+    margin: .2rem;
+}
+
+.form-check-label{
+    position: relative;
+}
+
+.parameterRow {
+    background-color: #D8D8D8;
+    padding: .5rem .1rem .5rem 1rem;;
+    border: 1px solid black;
+    /* height: 70px; */
+}
+.RLS-class {
+  font-size: 100%;
+  margin-bottom: 40px;
+  margin-left:10px;
+  width: 500px;
+  /*margin-left: 250px;*/
+}
+.inputField {
+    border: solid 2px;
+    border-color: #000000;
+    border-radius: 0;
+}
+
+.alert {
+    margin: 0;
+    background-color: #D0D0D0;
+    border: solid 2px;
+    border-color: #909090;
+    border-radius: 9px;
+    width: 2.5em;
+    height: 2.5em;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.historikKnapp {
+  background-color: white;
+  border: solid black 1px;
+  border-radius: 9px;
+  color:black;
+}
+
+.expandBtn {
+  background-color: white;
+  border: solid black 1px;
+  border-radius: 9px;
+}
+
+.collapseCard {
+  background-color: #d8d8d8;
+  border: 0px;
+}
+
+#between {
+    font-size: 40px;
+    position: relative;
+    padding: 1px;
+    font-weight: 100;
+}
+
+.newsscore1 {
+  background-color: #FFF1AB;
+}
+
+.newsscore2 {
+  background-color: #FDC889;
+}
+
+.newsscore3 {
+  background-color: #F59681;
+}
+/*
+input[type=radio] {
+  -ms-transform: scale(2);
+  -moz-transform: scale(2);
+  -webkit-transform: scale(2);
+  -o-transform: scale(2);
+  transform: scale(2);
+  padding: 10px;
+}
+*/
+.vertical2 {
+    float: left;
+     /*padding-right:10px;*/
+
+}
+.vertical2  > *{
+    display :block;
+    margin: .2rem;
+
+}
+
+.form-check-label2 {
+   padding-right: 10px;
+}

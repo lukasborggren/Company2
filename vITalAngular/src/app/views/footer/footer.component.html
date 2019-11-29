@@ -1,0 +1,21 @@
+<footer class = "fix-bottom" *ngIf="patientOverview">
+    <!-- When at patientOverview elements go here -->
+  <div class = "d-flex align-items-center justify-content-between h-100 p-3">
+    <div class="text">Totalt<br>värde </div>
+    <div class="totalNews alert alert-secondary alert-sm" [ngClass]="{'bg-white': getClinicalRisk() == 0, 'newsscore1': getClinicalRisk() == 1, 'newsscore2': getClinicalRisk() == 2, 'newsscore3': getClinicalRisk() == 3}">
+      {{getTotalScore()}} </div>
+    <div class=" clinical d-flex flex-column justify-content-center">
+    <div class="text">
+        Klinisk risk:
+      </div>
+      <div class="clinicalLabel alert alert-secondary alert-sm" [ngClass]="{'bg-white': getClinicalRisk() == 0, 'newsscore1': getClinicalRisk() == 1, 'newsscore2': getClinicalRisk() == 2, 'newsscore3': getClinicalRisk() == 3}">
+        <p class="labelText">{{getClinicalRiskText()}}</p>
+      </div>
+    </div>
+    <button class=standardButton *ngIf="this.isSubmitActive()"(click)="openPopup('error')">Spara</button>
+    <button class=standardButton disabled *ngIf="!this.isSubmitActive()"(click)="openPopup('error')">Spara</button>
+</div>
+</footer>
+
+<footer class = "fix-bottom" *ngIf="history">
+</footer>

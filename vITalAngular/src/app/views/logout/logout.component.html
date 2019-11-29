@@ -1,0 +1,21 @@
+
+<div class="logoutContainer d-flex flex-column justify-content-center align-items-center">
+  <div class="border d-flex flex-column justify-content-center align-items-center">
+    <h5 class="text-center">Är du säker på att <br> du vill logga ut?</h5>
+      <div class="d-flex flex-row">
+        <div>
+          <button type="button" class="standardButton m-2" (click)="logout()">
+            Ja 
+          </button>
+        </div>
+        <div>
+          <button type="button" class=" standardButton m-2" (click)="goToScannerPage()">
+            Nej
+          </button>
+        </div>
+      </div>
+  </div>
+    <!-- <p>
+        A choice for handling several active sessions should be added
+    </p> -->
+</div>
