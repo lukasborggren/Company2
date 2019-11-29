@@ -1,5 +1,5 @@
 <header class = "fix-top" *ngIf="showPatient">
-    <!-- When logged in elements go here -->
+  <!-- When logged in elements go here -->
   <div class="header d-flex flex-row align-items-center p-1">
 
     <button type="button" class="btn fa fa-angle-left" (click)="goBack()" ></button>
@@ -8,7 +8,5 @@
       <p class = "person-number">{{pId}}</p>
     </div>
     <button type="button" class="standardButton get-data" *ngIf="patientOverview" (click)="philipsDataOn()">Hämta Philips-data</button>
-
-      <!-- <button type="button" class="btn btn-info ml-auto" (click)="goToLogout()">Logga ut</button> -->
   </div>
 </header>

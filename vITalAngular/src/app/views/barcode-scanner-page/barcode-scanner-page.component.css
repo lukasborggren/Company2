@@ -15,6 +15,10 @@
     max-width: 400px;
 }
 
+video {
+  height: 0px;
+}
+
 #interactive.viewport>canvas,
 #interactive.viewport>video {
     max-width: 100%;
@@ -24,4 +28,10 @@
 #manualButton {
   margin-top: 10px;
   margin-bottom: 40px;
+}
+
+#logo {
+  height: 150px;
+  margin-bottom: 0;
+  margin-top: 20px;
 }
