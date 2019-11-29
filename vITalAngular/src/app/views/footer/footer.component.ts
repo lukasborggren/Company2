@@ -60,5 +60,12 @@ export class FooterComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
   }
 
+  isSubmitActive(): boolean {
+    let submitActive = false;
+    if (!this.newsScoreCalculator.isEmpty && this.newsScoreCalculator.isInputValid()) {
+      submitActive = true;
+    }
+    return submitActive;
+  }
 
 }

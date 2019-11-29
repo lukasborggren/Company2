@@ -12,16 +12,18 @@ export class NewsScoreCalculatorService {
     isFull: boolean;
     scale1: boolean;
     isOnAir: boolean;
+    validInputs: boolean[];
 
   constructor() {
     this.scale1 = true;
     this.isOnAir = true;
+    this.validInputs = [true, true, true, true, true, true, true];
   }
   ngOnInit() {
     console.log('NgOnINit körs');
     this.isEmpty = true;
     this.isFull = false;
-    
+
   }
   setOnAir(val : boolean){
     this.isOnAir = val;
@@ -167,16 +169,29 @@ export class NewsScoreCalculatorService {
     }
   }
 
-oxygenSaturationScale1(scale1: boolean) {
+  oxygenSaturationScale1(scale1: boolean) {
     this.scale1 = scale1;
 
 }
 
-getTotalScore() {
+  getTotalScore() {
   if (this.isFull === false ) {
     return null;
   }
   return this.totalScore;
   }
+
+  updateInputValidity(index: number, valid: boolean) {
+    this.validInputs[index] = valid;
+  }
+
+  isInputValid(): boolean {
+    let validInput = true;
+    for (const val of this.validInputs) {
+      validInput = validInput && val;
+    }
+    return validInput;
+  }
+
 }
 

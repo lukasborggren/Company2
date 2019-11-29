@@ -46,9 +46,13 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   latestTemperature: string;
   latestTemperatureTime: any;
 
-  validationOxygenSaturation = true;
-  validationTemperature = true;
   validationRespiratoryRate = true;
+  validationOxygenSaturation = true;
+  validationSystolic = true;
+  validationDiastolic = true;
+  validationPulse = true;
+  validationRls = true;
+  validationTemperature = true;
 
   constructor(
     private patientService: PatientService,
@@ -192,6 +196,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.validationRespiratoryRate = false;
     }
+    this.newsScoreCalculator.updateInputValidity(0, this.validationRespiratoryRate);
     if (this.form.controls.respiratoryRate.valid && this.validationRespiratoryRate && this.form.controls.respiratoryRate.value) {
       this.respiratoryScore = this.newsScoreCalculator.getRespiratoryScore(val);
     } else {
@@ -205,6 +210,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.validationOxygenSaturation = false;
     }
+    this.newsScoreCalculator.updateInputValidity(1, this.validationOxygenSaturation);
     if (this.form.controls.oxygenSaturation.valid && this.validationOxygenSaturation && this.form.controls.oxygenSaturation.value) {
       this.saturationScore = this.newsScoreCalculator.getSaturationScore(val);
     } else {
@@ -213,9 +219,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateOxSatScale(val: number) {
-    console.log(val)
     if (val == 1) {
-      console.log("hej")
       this.oxSatScale = 1;
       this.newsScoreCalculator.oxygenSaturationScale1(this.scale1 = true);
     } else if (val == 2) {
@@ -229,7 +233,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateSupplementalOxygenScore(val: number) {
-    
     if (val == 1) {
       this.supplementalOxygenScore = 2;
       this.onAir = false;
@@ -241,6 +244,12 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateSystolicBloodPressureScore(val: number) {
+    if (val <= 999 && val >= 0) {
+      this.validationSystolic = true;
+    } else {
+      this.validationSystolic = false;
+    }
+    this.newsScoreCalculator.updateInputValidity(2, this.validationSystolic);
     if (this.form.controls.systolicBloodPressure.valid && this.form.controls.systolicBloodPressure.value) {
       this.systolicScore = this.newsScoreCalculator.getSystolicScore(val);
     } else {
@@ -249,6 +258,12 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updatePulseScore(val: number) {
+    if (val <= 999 && val >= 0) {
+      this.validationPulse = true;
+    } else {
+      this.validationPulse = false;
+    }
+    this.newsScoreCalculator.updateInputValidity(4, this.validationPulse);
     if (this.form.controls.pulseRate.valid && this.form.controls.pulseRate.value) {
       this.pulseScore = this.newsScoreCalculator.getPulseScore(val);
     } else {
@@ -270,6 +285,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     } else {
       this.validationTemperature = false;
     }
+    this.newsScoreCalculator.updateInputValidity(6, this.validationTemperature);
     if (this.form.controls.temperature.valid && this.validationTemperature && this.form.controls.temperature.value) {
       this.temperatureScore = this.newsScoreCalculator.getTemperatureScore(val);
     } else {
@@ -278,7 +294,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   onChanges() {
-    
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.updateRespiratoryScore(val);
       this.updateCalculations();
@@ -301,6 +316,14 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.updateSystolicBloodPressureScore(val);
       this.updateCalculations();
     });
+    this.form.get('diastolicBloodPressure').valueChanges.subscribe(val => {
+      if (val <= 999 && val >= 0) {
+        this.validationDiastolic = true;
+      } else {
+        this.validationDiastolic = false;
+      }
+      this.newsScoreCalculator.updateInputValidity(3, this.validationDiastolic);
+    });
     this.form.get('pulseRate').valueChanges.subscribe(val => {
       this.updatePulseScore(val);
       this.updateCalculations();
@@ -313,13 +336,18 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       // DO
       // this.updateConsciousnessScore(val);
       // this.updateCalculations();
+      if ((val <= 8 && val >= 1) || val == null) {
+        this.validationRls = true;
+      } else {
+        this.validationRls = false;
+      }
+      console.log('rls ok?', this.validationRls);
+      this.newsScoreCalculator.updateInputValidity(5, this.validationRls);
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
       this.updateTemperatureScore(val);
       this.updateCalculations();
     });
-
-
   }
 
   @HostListener('click') onClick() {
@@ -394,6 +422,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     }
 
     packVitalsAsJson() {
+    console
       this.patientService.createJsonComp(
         this.form.get('respiratoryRate').value,
         this.form.get('oxygenSaturation').value,
