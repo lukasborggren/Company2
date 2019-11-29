@@ -422,7 +422,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     }
 
     packVitalsAsJson() {
-    console
       this.patientService.createJsonComp(
         this.form.get('respiratoryRate').value,
         this.form.get('oxygenSaturation').value,
