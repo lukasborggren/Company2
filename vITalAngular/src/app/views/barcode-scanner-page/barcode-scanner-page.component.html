@@ -1,14 +1,13 @@
 <div align="center">
 
-  <img id="logo" src="assets/img/logo.jpg" alt="vITal logotyp" *ngIf="!stopScanButtonVisible" >
+  <img id="logo" src="assets/img/vital-transparent.png" alt="vITal logotyp" *ngIf="!stopScanButtonVisible" >
 
   <div id="interactive" class="viewport" >
     <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true" ></video>
     <!-- The following line of code removes all the whitespace under the camera after the the button to stat scan have been clicked. -->
     <canvas class="drawingBuffer" width="0" height="0"></canvas>
   </div>
-
-
+  
   <button type="button" class="standardButton" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
     Skanna streckkod
   </button>
@@ -27,5 +26,5 @@
 
 </div>
 <div class="userInfo">
-Inloggad som: placeholder
+  Inloggad som: placeholder
 </div>
