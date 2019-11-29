@@ -109,3 +109,7 @@ input[type=radio] {
 .form-check-label2 {
    padding-right: 10px;
 }
+
+.accordionArrow {
+  color: #3F3F3F;
+}
