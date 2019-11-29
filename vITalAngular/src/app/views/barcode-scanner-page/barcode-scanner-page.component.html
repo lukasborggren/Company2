@@ -7,7 +7,7 @@
     <!-- The following line of code removes all the whitespace under the camera after the the button to stat scan have been clicked. -->
     <canvas class="drawingBuffer" width="0" height="0"></canvas>
   </div>
-  
+
   <button type="button" class="standardButton" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
     Skanna streckkod
   </button>
@@ -26,5 +26,5 @@
 
 </div>
 <div class="userInfo">
-  Inloggad som: placeholder
+Inloggad som: {{username}}
 </div>

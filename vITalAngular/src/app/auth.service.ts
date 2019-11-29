@@ -31,6 +31,7 @@ export class AuthService {
                 const encodedString = btoa(userInfo.username + ':' + userInfo.password);
                 sessionStorage.setItem('ENCODED_STRING', encodedString);
                 sessionStorage.setItem('ACCESS_TOKEN', res.auth_token);
+                sessionStorage.setItem('USERNAME', userInfo.username);
                 this.loggedIn.next(true);
             }
             return valid;
@@ -74,6 +75,7 @@ export class AuthService {
     sessionStorage.removeItem('ACCESS_TOKEN');
     sessionStorage.removeItem('EHR_ID');
     sessionStorage.removeItem('PID');
+    sessionStorage.removeItem('USERNAME');
     this.loggedIn.next(false);
   }
 }
