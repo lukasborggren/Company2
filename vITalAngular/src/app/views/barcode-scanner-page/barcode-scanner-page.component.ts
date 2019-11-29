@@ -17,6 +17,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   stopScanButtonVisible: boolean;
   BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
   PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
+  username: string;
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -41,6 +42,7 @@ export class BarcodeScannerPageComponent implements OnInit {
         }
       }
     });
+    this.username = sessionStorage.getItem('USERNAME');
   }
 
   startScanner() {
