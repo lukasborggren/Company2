@@ -14,6 +14,7 @@ import {timer} from 'rxjs';
 export class ConfirmSubmitComponent implements OnInit {
 
   dialogMessage: string;
+  questionMessage: string;
 
   constructor(
       private dialogAlert: MatDialogRef<DialogWindowComponent>,
@@ -26,6 +27,11 @@ export class ConfirmSubmitComponent implements OnInit {
   }
 
   ngOnInit() {
+      if (this.patientService.areParamsMissing()) {
+          this.questionMessage = 'Alla fält är inte ifyllda, vill du spara ändå?';
+      } else {
+          this.questionMessage = 'Är du säker på att du vill spara?';
+      }
   }
 
   close() {
