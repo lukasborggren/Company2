@@ -70,6 +70,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    
     this.accordionState = [false, false, false, false, false, false, false];
     this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
@@ -168,6 +169,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.updateScores(loadedForm);
     }
     this.updateTotalNews2Score();
+    this.updateTotalNews2Score();
     this.updateClinicalRisk();
     this.updateIsEmpty();
   }
@@ -177,6 +179,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     this.updateOxygenSaturationScore(loadedForm.oxygenSaturation);
     this.updateOxSatScale(loadedForm.oxSatScale);
     this.updateSupplementalOxygenScore(loadedForm.supplementalOxygen);
+    this.updateOxygenSaturationScore(loadedForm.oxygenSaturation);
     this.updateSystolicBloodPressureScore(loadedForm.systolicBloodPressure);
     this.updatePulseScore(loadedForm.pulseRate);
     this.updateConsciousnessACVPUScore(loadedForm.consciousnessACVPU);
@@ -226,13 +229,15 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateSupplementalOxygenScore(val: number) {
+    
     if (val == 1) {
       this.supplementalOxygenScore = 2;
-      this.onAir = true;
+      this.onAir = false;
     } else if (val) {
       this.supplementalOxygenScore = 0;
-      this.onAir = false;
+      this.onAir = true;
     }
+    this.newsScoreCalculator.setOnAir(this.onAir);
   }
 
   updateSystolicBloodPressureScore(val: number) {
@@ -273,6 +278,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   onChanges() {
+    
     this.form.get('respiratoryRate').valueChanges.subscribe(val => {
       this.updateRespiratoryScore(val);
       this.updateCalculations();
@@ -287,6 +293,8 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
     this.form.get('supplementalOxygen').valueChanges.subscribe(val => {
       this.updateSupplementalOxygenScore(val);
+      this.updateCalculations();
+      this.updateOxygenSaturationScore(this.form.get('oxygenSaturation').value);
       this.updateCalculations();
     });
     this.form.get('systolicBloodPressure').valueChanges.subscribe(val => {
