@@ -44,6 +44,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   }
 
   startScanner() {
+    document.querySelector("video").style.height = "200px";
     this.barcodeValue = 'scanning';
     this.stopScanButtonVisible = true;
     this.barcodeScanner.startScanner();
@@ -52,6 +53,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   stopScanner() {
     this.stopScanButtonVisible = false;
     this.barcodeScanner.StopScanner();
+    document.querySelector("video").style.height = "0px";
   }
 
   openDialog() {
