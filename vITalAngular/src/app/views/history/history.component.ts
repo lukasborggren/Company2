@@ -235,7 +235,7 @@ export class HistoryComponent implements OnInit {
                 this.boxMin = [24, 21, 0, 9, 0, 7];
             } else if (this.vitalSign === 'getHistoricTemperature') {
                 this.chartData[0].label = 'Temperatur';
-                this.setChartOptions(33, 42, 1);  
+                this.setChartOptions(33, 42, 1);
                 this.changeLineColor('rgb(6, 201, 58)', 0);
                 this.boxMax = [0, 42, 39, 36, 0, 36];
                 this.boxMin = [0, 39, 38, 35, 0, 33];
@@ -256,7 +256,55 @@ export class HistoryComponent implements OnInit {
             console.log(this.timeArray);
         }
     }
+
+    private setCurrentData() {
+        console.log(localStorage.getItem('form'));
+        const data = JSON.parse(localStorage.getItem('form'));
+        let setCurrentData = false;
+
+        if (this.vitalSign === 'getHistoricBloodpressure') {
+            if (data.systolicBloodPressure !== '') {
+                this.vitalArray[4] = data.systolicBloodPressure;
+                setCurrentData = true;
+            }
+            if (data.diastolicBloodPressure !== '') {
+                this.vitalArray2[4] = data.diastolicBloodPressure;
+                setCurrentData = true;
+            }
+        } else if (this.vitalSign === 'getHistoricRespirationAdded') {
+            if (data.supplementalOxygen === '2') {
+                this.vitalArray[4] = 'false';
+                setCurrentData = true;
+            } else if (data.supplementalOxygen === '1') {
+                this.vitalArray[4] = 'true';
+                setCurrentData = true;
+            }
+        } else if (this.vitalSign === 'getHistoricACVPU' && data.consciousnessACVPU !== '') {
+            this.vitalArray[4] = data.consciousnessACVPU;
+            setCurrentData = true;
+        } else if (this.vitalSign === 'getHistoricRespiration' && data.respiratoryRate !== '') {
+            this.vitalArray[4] = data.respiratoryRate;
+            setCurrentData = true;
+        } else if (this.vitalSign === 'getHistoricTemperature' && data.temperature !== '') {
+            this.vitalArray[4] = data.temperature;
+            setCurrentData = true;
+        } else if (this.vitalSign === 'getHistoricPulse' && data.pulseRate !== '') {
+            this.vitalArray[4] = data.pulseRate;
+            setCurrentData = true;
+        } else if (this.vitalSign === 'getHistoricOximetry' && data.oxygenSaturation !== '') {
+            this.vitalArray[4] = data.oxygenSaturation;
+            setCurrentData = true;
+        }
+        if (setCurrentData) {
+            this.timeArray[4] = new Date();
+            this.chartLabels[4] = 'Nuvarande värde';
+            // const date = new Date();
+            // this.timeArray[4] = new Date();
+            // this.chartLabels[4] = date.toTimeString().substring(0, 8);
+        }
+    }
     ngOnInit() {
         this.fetchDataApi();
+        this.setCurrentData();
     }
 }
