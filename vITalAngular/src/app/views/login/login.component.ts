@@ -11,6 +11,7 @@ import { AuthService } from '../../auth.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   isInvalid: boolean;
+  loading: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,12 +32,14 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.authService.login(this.loginForm.value).subscribe((valid) => {
       if (valid) {
         this.router.navigate(['/scannerpage']);
       } else {
         this.isInvalid = true;
       }
+      this.loading = false;
     },
     err => {
       this.isInvalid = true;

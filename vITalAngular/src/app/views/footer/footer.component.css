@@ -67,3 +67,7 @@ opacity: 0.2;
 .newsscore3 {
   background-color: #F59681;
 }
+
+.standardButton {
+  width: 70px;
+}

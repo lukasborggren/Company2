@@ -19,7 +19,10 @@
           Invalid username or password!
         </div>
         <div class="form-group">
-          <button class="standardButton">Logga in</button>
+          <button class="standardButton">
+              <span [ngClass]="{'spinner-border': loading, 'spinner-border-sm': loading}" class="text-secondary" role="status" aria-hidden="true"></span>
+              <span *ngIf = "!loading">Logga in</span>
+          </button>
         </div>
       </form>
     </div>

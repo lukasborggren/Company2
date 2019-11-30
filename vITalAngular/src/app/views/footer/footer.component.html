@@ -12,7 +12,10 @@
         <p class="labelText">{{getClinicalRiskText()}}</p>
       </div>
     </div>
-    <button class=standardButton *ngIf="this.isSubmitActive()"(click)="openPopup('error')">Spara</button>
+    <button class=standardButton *ngIf="this.isSubmitActive()"(click)="openPopup('error')">
+      <span [ngClass]="{'spinner-border': loading, 'spinner-border-sm': loading}" class="text-secondary" role="status" aria-hidden="true"></span>
+      <span *ngIf = "!loading">Spara</span>
+    </button>
     <button class=standardButton disabled *ngIf="!this.isSubmitActive()"(click)="openPopup('error')">Spara</button>
 </div>
 </footer>

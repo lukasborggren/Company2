@@ -73,11 +73,13 @@ export class ConfirmSubmitComponent implements OnInit {
                 console.log(resp)
                   if (resp.action === 'CREATE') {
                       this.viewConfirmation('Värden sparade');
+                      this.close();
                   }
               },
               error => {
                   console.log(error);
                   this.viewConfirmation('Ett fel uppstod, värden ej sparade');
+                  this.close();
               }
           );
       this.close();
