@@ -1,5 +1,7 @@
 .margin {
-    padding-top: 72px;
+   /* padding-top: 72px; */
+    height: 100vh;
+    padding: 72px 0px 64px 0px;
     z-index: 2;
-    padding-bottom: 64px;
+   /* padding-bottom: 64px; */
 }
