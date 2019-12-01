@@ -62,7 +62,7 @@ export class HistoryComponent implements OnInit {
         },
     ];
     public chartLabels: Label[] = [];
-    public chartOptions: (ChartOptions /*& { annotation: any }*/);    
+    public chartOptions: (ChartOptions /*& { annotation: any }*/);
     public setChartOptions(max, min, steplength) {
         this.chartOptions = {
             plugins: {
@@ -162,8 +162,8 @@ export class HistoryComponent implements OnInit {
         }
         this.vitalSign = localStorage.getItem('outputVitalParameter');
 
-        if (this.vitalSign === 'getHistoricBloodpressure') {
-            this.patientservice[this.vitalSign]().subscribe( data => {
+        if (this.vitalSign === 'bloodPressure') {
+            this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].systolic;
                     this.vitalArray2[i] = data.resultSet[(data.resultSet.length - 1) - i].diastolic;
@@ -183,7 +183,7 @@ export class HistoryComponent implements OnInit {
             this.boxMax = [200, 0, 0, 100, 90, 50];
             this.boxMin = [220, 0, 0, 110, 100, 90];
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-            this.patientservice.getHistoricRespiration().subscribe( data => {
+            this.patientservice.getGenericHistory('Respiration').subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
@@ -196,8 +196,8 @@ export class HistoryComponent implements OnInit {
             this.stepSize = 1;
             this.boxMax = [0, 0, 0, 0, 2, 0];
             this.boxMin = [0, 0, 0, 0, 1, 0];
-        } else if (this.vitalSign === 'getHistoricACVPU') {
-            this.patientservice[this.vitalSign]().subscribe( data => {
+        } else if (this.vitalSign === 'ACVPU') {
+            this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
@@ -221,31 +221,31 @@ export class HistoryComponent implements OnInit {
             this.boxMax = [0, 0, 0, 0, 0, 4];
             this.boxMin = [0, 0, 0, 0, 0, 1];
         } else {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe( data => {
+            this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].vitalsign;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
             });
-            if (this.vitalSign === 'getHistoricRespiration') {
+            if (this.vitalSign === 'Respiration') {
                 this.chartData[0].label = 'Andningsfrekvens';
                 this.setChartOptions(7, 26, 3);
                 this.boxMax = [26, 24, 0, 11, 0, 9];
                 this.boxMin = [24, 21, 0, 9, 0, 7];
-            } else if (this.vitalSign === 'getHistoricTemperature') {
+            } else if (this.vitalSign === 'Temperature') {
                 this.chartData[0].label = 'Temperatur';
                 this.setChartOptions(33, 42, 1);
                 this.changeLineColor('rgb(6, 201, 58)', 0);
                 this.boxMax = [0, 42, 39, 36, 0, 36];
                 this.boxMin = [0, 39, 38, 35, 0, 33];
-            } else if (this.vitalSign === 'getHistoricPulse') {
+            } else if (this.vitalSign === 'Pulse') {
                 this.chartData[0].label = 'Pulsfrekvens';
                 this.setChartOptions(20, 160, 10);
                 this.changeLineColor('rgb(201, 7, 0)', 0);
                 this.boxMax = [160, 130, 110, 50, 0, 40];
                 this.boxMin = [130, 110, 90, 40, 0, 20];
-            } else if (this.vitalSign === 'getHistoricOximetry') {
+            } else if (this.vitalSign === 'Oximetry') {
                 this.chartData[0].label = 'Syremättnad';
                 this.yaxisMin = 88;
                 this.yaxisMax = 100;
@@ -262,7 +262,7 @@ export class HistoryComponent implements OnInit {
         const data = JSON.parse(localStorage.getItem('form'));
         let setCurrentData = false;
 
-        if (this.vitalSign === 'getHistoricBloodpressure') {
+        if (this.vitalSign === 'bloodPressure') {
             if (data.systolicBloodPressure !== '') {
                 this.vitalArray[4] = data.systolicBloodPressure;
                 setCurrentData = true;
@@ -279,19 +279,19 @@ export class HistoryComponent implements OnInit {
                 this.vitalArray[4] = 'true';
                 setCurrentData = true;
             }
-        } else if (this.vitalSign === 'getHistoricACVPU' && data.consciousnessACVPU !== '') {
+        } else if (this.vitalSign === 'ACVPU' && data.consciousnessACVPU !== '') {
             this.vitalArray[4] = data.consciousnessACVPU;
             setCurrentData = true;
-        } else if (this.vitalSign === 'getHistoricRespiration' && data.respiratoryRate !== '') {
+        } else if (this.vitalSign === 'Respiration' && data.respiratoryRate !== '') {
             this.vitalArray[4] = data.respiratoryRate;
             setCurrentData = true;
-        } else if (this.vitalSign === 'getHistoricTemperature' && data.temperature !== '') {
+        } else if (this.vitalSign === 'Temperature' && data.temperature !== '') {
             this.vitalArray[4] = data.temperature;
             setCurrentData = true;
-        } else if (this.vitalSign === 'getHistoricPulse' && data.pulseRate !== '') {
+        } else if (this.vitalSign === 'Pulse' && data.pulseRate !== '') {
             this.vitalArray[4] = data.pulseRate;
             setCurrentData = true;
-        } else if (this.vitalSign === 'getHistoricOximetry' && data.oxygenSaturation !== '') {
+        } else if (this.vitalSign === 'Oximetry' && data.oxygenSaturation !== '') {
             this.vitalArray[4] = data.oxygenSaturation;
             setCurrentData = true;
         }

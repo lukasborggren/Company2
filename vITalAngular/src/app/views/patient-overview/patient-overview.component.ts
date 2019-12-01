@@ -74,7 +74,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+
     this.accordionState = [false, false, false, false, false, false, false];
     this.newsScoreCalculator.isEmpty = true;
     const pid = this.route.snapshot.paramMap.get('personid');
@@ -128,11 +128,11 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     }
 
 
-    this.patientService.getHistoricRespiration().subscribe(data => {
+    this.patientService.getGenericHistory('Respiration').subscribe(data => {
       this.latestRespiration = data.resultSet[0].vitalsign;
       this.latestRespirationTime = data.resultSet[0].time;
     });
-    this.patientService.getHistoricOximetry().subscribe(data => {
+    this.patientService.getGenericHistory('Oximetry').subscribe(data => {
       this.latestOxidation = data.resultSet[0].vitalsign;
       this.latestOxidationTime = data.resultSet[0].time;
       if (data.resultSet[0].syre) {
@@ -142,21 +142,21 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       }
 
     });
-    this.patientService.getHistoricBloodpressure().subscribe(data => {
+    this.patientService.getGenericHistory('bloodPressure').subscribe(data => {
       this.latestSystolic = data.resultSet[0].systolic;
       this.latestDiastolic = data.resultSet[0].diastolic;
       this.latestBPTime = data.resultSet[0].time;
     });
-    this.patientService.getHistoricPulse().subscribe(data => {
+    this.patientService.getGenericHistory('Pulse').subscribe(data => {
       this.latestPulse = data.resultSet[0].vitalsign;
       this.latestPulseTime = data.resultSet[0].time;
     });
-    this.patientService.getHistoricACVPU().subscribe(data => {
+    this.patientService.getGenericHistory('ACVPU').subscribe(data => {
       this.latestAlertness = data.resultSet[0].acvpu;
       this.latestAlertnessTime = data.resultSet[0].time;
 
     });
-    this.patientService.getHistoricTemperature().subscribe(data => {
+    this.patientService.getGenericHistory('Temperature').subscribe(data => {
       this.latestTemperature = data.resultSet[0].vitalsign;
       this.latestTemperatureTime = data.resultSet[0].time;
 
@@ -403,7 +403,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
 
 
     toggleAccordion(id: number) { // Icon toggle for the accordion
-      
+
       if(!this.isAccordionOpen(id))
       {
         for (let index = 0; index < this.accordionState.length; index++) {
@@ -460,4 +460,3 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
             });
       }
     }
-
