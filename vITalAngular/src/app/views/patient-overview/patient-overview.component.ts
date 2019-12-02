@@ -350,7 +350,8 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('click') onClick() {
+  @HostListener('window:click') onClick() {
+    console.log('timer off');
     localStorage.setItem('TIMER_ACTIVE', 'F');
   }
 
