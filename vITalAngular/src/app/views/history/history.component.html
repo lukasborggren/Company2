@@ -3,7 +3,7 @@
     <h2 class="historyTitle">Historik:</h2>
     <div class="historyTableDiv">
         <div class="row">
-                <div class="rowGraph">
+            <div class="rowGraph">
                             <span style="float: right;">
                                 <div style="float: left; padding-top: 2px; padding-right: 3px;">
                                 News key
@@ -21,7 +21,7 @@
                                     0
                                 </div>
                             </span>
-                    </div>
+            </div>
             <div class="col">
                 <ul class="nameOfTable">
                     Datum
@@ -31,35 +31,35 @@
                 </ul>
             </div>
             <div class="col">
-                    <ul class="nameOfTable">
-                            Tid
-                        </ul>
+                <ul class="nameOfTable">
+                    Tid
+                </ul>
                 <ul *ngFor="let time of timeArray">
                     {{ time | date:'HH:mm'}}
                 </ul>
             </div>
             <div class="col">
-                    <ul class="nameOfTable">
-                            Parameter1
-                        </ul>
+                <ul class="nameOfTable">
+                    Parameter1
+                </ul>
                 <ul *ngFor="let vitalsign of vitalArray">
                     {{ vitalsign }}
                 </ul>
             </div>
             <div class="col" *ngIf="vitalSign == 'bloodPressure'">
-                    <ul class="nameOfTable">
-                            Parameter2
-                        </ul>
+                <ul class="nameOfTable">
+                    Parameter2
+                </ul>
                 <ul *ngFor="let vitalsign of vitalArray2">
                     {{ vitalsign }}
                 </ul>
             </div>
             <div class="col">
-                    <ul class="nameOfTable">
-                            News2
-                        </ul>
-                <ul *ngFor="let vitalsign of vitalArray">
-                    values
+                <ul class="nameOfTable">
+                    News2
+                </ul>
+                <ul *ngFor="let news of newsArray">
+                   <div [ngClass]="{'bg-white': news === 0, 'newsscore1': news === 1, 'newsscore2': news === 2, 'newsscore3': news === 3}"> {{news}} </div>
                 </ul>
             </div>
         </div>
@@ -116,7 +116,7 @@
 
         <div style="display: block; max-width: 95vw; margin-left: 10px;" *ngIf="chartOptions">
             <canvas baseChart id="graphId" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
-                [chartType]="chartType">
+                    [chartType]="chartType">
             </canvas>
         </div>
     </div>

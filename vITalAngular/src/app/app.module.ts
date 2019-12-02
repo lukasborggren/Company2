@@ -19,7 +19,6 @@ import { ChartsModule } from 'ng2-charts';
 import { HeaderComponent } from './views/header/header.component';
 import { FooterComponent } from './views/footer/footer.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,19 +33,19 @@ import { FooterComponent } from './views/footer/footer.component';
     HeaderComponent,
     FooterComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatButtonModule,
-    MatDialogModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    HttpClientModule,
-    RouterModule,
-    ChartsModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatButtonModule,
+        MatDialogModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        HttpClientModule,
+        RouterModule,
+        ChartsModule,
+    ],
   entryComponents: [ManualInputDialogComponent, DialogWindowComponent, ConfirmSubmitComponent],
   providers: [],
   bootstrap: [AppComponent]
