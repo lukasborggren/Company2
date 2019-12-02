@@ -126,47 +126,44 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.form.patchValue(loadedForm);
       this.updateCalculations(loadedForm);
     }
+    this.updateCalculations();
+    this.onChanges();
+    this.philipsData();
+    this.setLatestData();
+    this.updateLatestData();
+  }
 
-
-    this.patientService.getGenericHistory('Respiration').subscribe(data => {
-      this.latestRespiration = data.resultSet[0].vitalsign;
-      this.latestRespirationTime = data.resultSet[0].time;
+  private updateLatestData() {
+    this.feedData.getUpdateLatestData().subscribe( update => {
+      if (update) {
+        this.setLatestData();
+      }
     });
-    this.patientService.getGenericHistory('Oximetry').subscribe(data => {
-      this.latestOxidation = data.resultSet[0].vitalsign;
-      this.latestOxidationTime = data.resultSet[0].time;
-      if (data.resultSet[0].syre) {
+  }
+
+  private setLatestData() {
+    this.patientService.getLatestHistory().subscribe(data => {
+      this.latestRespiration = data[0].resultSet[0].vitalsign;
+      this.latestRespirationTime = data[0].resultSet[0].time;
+      this.latestOxidation = data[1].resultSet[0].vitalsign;
+      this.latestOxidationTime = data[1].resultSet[0].time;
+      if (data[0].resultSet[0].syre) {
         this.latestOxygen = 'Syre';
       } else {
         this.latestOxygen = 'Luft';
       }
+      this.latestSystolic = data[2].resultSet[0].systolic;
+      this.latestDiastolic = data[2].resultSet[0].diastolic;
+      this.latestBPTime = data[2].resultSet[0].time;
+      this.latestPulse = data[5].resultSet[0].vitalsign;
+      this.latestPulseTime = data[5].resultSet[0].time;
+      this.latestAlertness = data[3].resultSet[0].acvpu;
+      this.latestAlertnessTime = data[3].resultSet[0].time;
+      this.latestTemperature = data[4].resultSet[0].vitalsign;
+      this.latestTemperatureTime = data[4].resultSet[0].time;
 
     });
-    this.patientService.getGenericHistory('bloodPressure').subscribe(data => {
-      this.latestSystolic = data.resultSet[0].systolic;
-      this.latestDiastolic = data.resultSet[0].diastolic;
-      this.latestBPTime = data.resultSet[0].time;
-    });
-    this.patientService.getGenericHistory('Pulse').subscribe(data => {
-      this.latestPulse = data.resultSet[0].vitalsign;
-      this.latestPulseTime = data.resultSet[0].time;
-    });
-    this.patientService.getGenericHistory('ACVPU').subscribe(data => {
-      this.latestAlertness = data.resultSet[0].acvpu;
-      this.latestAlertnessTime = data.resultSet[0].time;
-
-    });
-    this.patientService.getGenericHistory('Temperature').subscribe(data => {
-      this.latestTemperature = data.resultSet[0].vitalsign;
-      this.latestTemperatureTime = data.resultSet[0].time;
-
-    });
-    this.updateCalculations();
-    this.onChanges();
-    this.philipsData();
   }
-
-
 
   updateCalculations(loadedForm: FormGroup = null) {
     if (loadedForm != null) {

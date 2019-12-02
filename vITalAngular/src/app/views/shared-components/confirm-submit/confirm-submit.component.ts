@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {PatientService} from '../../../services/patient.service';
 import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
 import {timer} from 'rxjs';
+import {FeedDataService} from '../../../services/feed-data.service';
+
 
 @Component({
   selector: 'app-confirm-submit',
@@ -22,6 +24,7 @@ export class ConfirmSubmitComponent implements OnInit {
       private dialog: MatDialog,
       private router: Router,
       private patientService: PatientService,
+      private feedData: FeedDataService
   ) {
     this.dialogMessage = data.dialogMessage;
   }
@@ -72,6 +75,8 @@ export class ConfirmSubmitComponent implements OnInit {
               resp => {
                   if (resp.action === 'CREATE') {
                       this.viewConfirmation('Värden sparade');
+                      this.feedData.nextUpdateLatestData(true);
+                      this.close();
                   }
               },
               error => {
