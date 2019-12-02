@@ -50,7 +50,7 @@ export class PatientService {
           }, this.jsonComp);
     }
 
-    if (onAir !== '' && onAir !== null) {
+    if (onAir !== undefined && onAir !== null) {
       paramCnt++;
       this.jsonComp = Object.assign(
           {
@@ -72,7 +72,6 @@ export class PatientService {
 
     if (blPrSys !== '' && blPrSys !== null) {
       paramCnt++;
-      console.log(paramCnt);
       this.jsonComp = Object.assign(
           {
             'vital-parameters/blodtryck:0/ospecificerad_händelse:0/systoliskt|magnitude': blPrSys,
