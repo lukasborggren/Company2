@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -202,44 +202,19 @@ export class PatientService {
 
 
 
+    public getLatestHistory():Observable<any>{
+        const ehrId = sessionStorage.getItem('EHR_ID');
+      const httpOptions = {
+        headers: this.headers.append('Authorization', 'Basic ' + sessionStorage.getItem('ENCODED_STRING'))
+      };
+      const respiration = this.http.get(this.baseUrl + "/query?aql=select a_b/items[at0057]/value/value as syre, a/context/start_time/value as time, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/magnitude as vitalsign from EHR e[ehr_id/value='"+ ehrId +"'] contains COMPOSITION a contains (OBSERVATION a_a[openEHR-EHR-OBSERVATION.respiration.v1] and CLUSTER a_b[openEHR-EHR-CLUSTER.inspired_oxygen.v1]) order by a/context/start_time desc offset 0 limit 1", httpOptions);
+      const oximetry = this.http.get(this.baseUrl + "/query?aql=select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0006, 'SpO₂']/value/numerator as vitalsign, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0058, 'Tolkning']/value/value as scale, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.pulse_oximetry.v1] order by a/context/start_time/value desc offset 0 limit 1", httpOptions);
+      const bloodPressure = this.http.get(this.baseUrl + "/query?aql=select a_a/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude as systolic, a_a/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude as diastolic, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.blood_pressure.v2] order by a/context/start_time/value desc offset 0 limit 1", httpOptions);
+      const acvpu = this.http.get(this.baseUrl + "/query?aql=select a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004.1]/value/defining_code as code, a_a/data[at0001]/events[at0002]/data[at0003]/items[at0004.1]/value/value as acvpu, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.avpu-c.v0] order by a/context/start_time/value desc offset 0 limit 1", httpOptions);
+      const temperature = this.http.get(this.baseUrl + "/query?aql=select a_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as vitalsign, a/context/start_time/value as time from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.body_temperature.v2] order by a/context/start_time/value desc offset 0 limit 1", httpOptions);
+      const pulse = this.http.get(this.baseUrl + "/query?aql=select a_a/data[at0002]/events[at0003]/data[at0001]/items[at1059]/value/value as comment, a/context/start_time/value as time, a_a/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as vitalsign from EHR e[ehr_id/value='" + ehrId + "'] contains COMPOSITION a contains OBSERVATION a_a[openEHR-EHR-OBSERVATION.pulse.v1] order by a/context/start_time/value desc offset 0 limit 1", httpOptions);
+      return forkJoin([respiration, oximetry, bloodPressure, acvpu, temperature, pulse]);
+    }
 
-  public getAllHistory(): Observable<any> {
-    const ehrId = sessionStorage.getItem('EHR_ID');
-    const aql = "select " +
-        "a/context/start_time/value as time, " +
-        "a_j/data[at0002]/events[at0003]/data[at0001]/items[at1059]/value/value as pulse, " +
-        "a_h/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/value as rlcscore, " +
-        "a_g/data[at0001]/events[at0002]/data[at0003]/items[at0004.1]/value/value as acvpuScore, " +
-        "a_b/items[at0057]/value/value as extraOxygen, " +
-        "a_a/data[at0001]/events[at0002]/data[at0003]/items[at0028]/value/magnitude as news2Score, " +
-        "a_f/data[at0001]/events[at0006]/data[at0003]/items[at0004]/value/magnitude as systolic, " +
-        "a_f/data[at0001]/events[at0006]/data[at0003]/items[at0005]/value/magnitude as diastolic , " +
-        "a_i/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as temperature, " +
-        "a_d/data[at0001]/events[at0002]/data[at0003]/items[at0006, 'SpO₂']/value/numerator as SpO2, " +
-        "a_d/data[at0001]/events[at0002]/data[at0003]/items[at0058, 'Tolkning']/value/value as SpO2scale, " +
-        "a_c/data[at0001]/events[at0002]/data[at0003]/items[at0004]/value/magnitude as respiration, " +
-        "a_j/data[at0002]/events[at0003]/data[at0001]/items[at0004]/value/magnitude as pulse " +
-        "from EHR e[ehr_id/value='" + ehrId + "'] " +
-        "contains COMPOSITION a " +
-        "contains ( " +
-        "OBSERVATION a_a[openEHR-EHR-OBSERVATION.news2.v0] and " +
-        "CLUSTER a_b[openEHR-EHR-CLUSTER.inspired_oxygen.v1] and " +
-        "OBSERVATION a_c[openEHR-EHR-OBSERVATION.respiration.v1] and " +
-        "OBSERVATION a_d[openEHR-EHR-OBSERVATION.pulse_oximetry.v1] and " +
-        "OBSERVATION a_f[openEHR-EHR-OBSERVATION.blood_pressure.v2] and " +
-        "OBSERVATION a_g[openEHR-EHR-OBSERVATION.avpu-c.v0] and " +
-        "OBSERVATION a_h[openEHR-EHR-OBSERVATION.rls85.v0] and " +
-        "OBSERVATION a_i[openEHR-EHR-OBSERVATION.body_temperature.v2] and " +
-        "OBSERVATION a_j[openEHR-EHR-OBSERVATION.pulse.v1]) " +
-        "order by a/context/start_time/value desc" +
-        "offset 0 limit 10";
-
-    const httpOptions = {
-      headers: this.headers.append('Authorization', 'Basic ' + sessionStorage.getItem('ENCODED_STRING')),
-      params: new HttpParams()
-          .set('aql', aql )
-    };
-    return this.http.get(this.baseUrl + '/query', httpOptions);
-  }
 
 }
