@@ -126,8 +126,22 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.form.patchValue(loadedForm);
       this.updateCalculations(loadedForm);
     }
+    this.updateCalculations();
+    this.onChanges();
+    this.philipsData();
+    this.setLatestData();
+    this.updateLatestData();
+  }
 
+  private updateLatestData() {
+    this.feedData.getUpdateLatestData().subscribe( update => {
+      if (update) {
+        this.setLatestData();
+      }
+    });
+  }
 
+  private setLatestData() {
     this.patientService.getGenericHistory('Respiration').subscribe(data => {
       this.latestRespiration = data.resultSet[0].vitalsign;
       this.latestRespirationTime = data.resultSet[0].time;
@@ -161,12 +175,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       this.latestTemperatureTime = data.resultSet[0].time;
 
     });
-    this.updateCalculations();
-    this.onChanges();
-    this.philipsData();
   }
-
-
 
   updateCalculations(loadedForm: FormGroup = null) {
     if (loadedForm != null) {
