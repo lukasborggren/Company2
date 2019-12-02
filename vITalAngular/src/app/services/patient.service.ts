@@ -94,7 +94,7 @@ export class PatientService {
           {
             'vital-parameters/acvpu:0/any_event:0/observation|code': this.acvpuCodes[acvpu - 1]
           }, this.jsonComp);
-    } else if (rls !== '') {
+    } else if (rls !== '' && rls !== null) {
       paramCnt++;
       this.jsonComp = Object.assign(
           {
