@@ -350,7 +350,6 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       } else {
         this.validationRls = false;
       }
-      console.log('rls ok?', this.validationRls);
       this.newsScoreCalculator.updateInputValidity(5, this.validationRls);
     });
     this.form.get('temperature').valueChanges.subscribe(val => {
@@ -359,7 +358,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('click') onClick() {
+  @HostListener('window:click') onClick() {
     localStorage.setItem('TIMER_ACTIVE', 'F');
   }
 
@@ -444,8 +443,8 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
         this.form.get('diastolicBloodPressure').value,
         this.form.get('pulseRate').value,
         true,
-        this.form.get('rls').value,
         this.form.get('consciousnessACVPU').value,
+        this.form.get('rls').value,
         this.form.get('temperature').value,
         this.newsScoreCalculator.getTotalScore());
       }

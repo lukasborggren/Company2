@@ -75,13 +75,16 @@ export class ConfirmSubmitComponent implements OnInit {
               resp => {
                   if (resp.action === 'CREATE') {
                       this.viewConfirmation('Värden sparade');
+<<<<<<< HEAD
                       this.close();
                       this.feedData.nextUpdateLatestData(true);
+=======
+>>>>>>> b117e511a131a565b61433cfae7083a8b83c09e1
                   }
               },
               error => {
+                  console.log(error);
                   this.viewConfirmation('Ett fel uppstod, värden ej sparade');
-                  this.close();
               }
           );
       this.close();
