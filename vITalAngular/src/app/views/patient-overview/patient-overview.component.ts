@@ -354,6 +354,10 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     localStorage.setItem('TIMER_ACTIVE', 'F');
   }
 
+  @HostListener('window:scroll') onScroll() {
+    localStorage.setItem('TIMER_ACTIVE', 'F');
+  }
+
   updateIsEmpty() {
     if ((this.systolicScore == null) && (this.temperatureScore == null ) &&
     (this.pulseScore == null) && (this.respiratoryScore == null) &&
