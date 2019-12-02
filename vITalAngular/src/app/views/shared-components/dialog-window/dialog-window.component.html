@@ -1,7 +1,7 @@
 <div mat-dialog-content>
-    <p>{{dialogMessage}}</p>
+    <h4>{{dialogMessage}}</h4>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="close(false)">Ok</button>
-    <button mat-button (click)="close(true)">Skanna en ny patient</button>
+    <button class="standardButton" (click)="close(false)">Ok</button>
+    <button class="standardButton" (click)="close(true)">Skanna en ny patient</button>
 </div>
