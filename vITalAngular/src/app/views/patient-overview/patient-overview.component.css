@@ -18,8 +18,9 @@
 
 .parameterRow {
     background-color: #D8D8D8;
-    /*padding: .5rem .1rem .5rem 1rem;*/
+    padding: .5rem .1rem .5rem 1rem;
     border: 1px solid black;
+    display: grid;
     /* height: 70px; */
 }
 .RLS-class {
