@@ -27,6 +27,13 @@ export class BarcodeScannerPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    //Sets EHR_ID to null everytime scannerpages is redirected to. This is to disallow entering patient overview without entering a pid every time.
+    let patientkey = sessionStorage.getItem('EHR_ID');
+    if (patientkey !== null) {
+      patientkey = null;
+      sessionStorage.setItem('EHR_ID', patientkey);
+    }
+    
     localStorage.removeItem('form');
     this.stopScanButtonVisible = false;
     this.barcodeScanner.barcodeObs.subscribe(barcode => {
