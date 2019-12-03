@@ -19,19 +19,15 @@
         <div *ngIf="form.controls.respiratoryRate.invalid || !validationRespiratoryRate" class="alert-danger">
           <div *ngIf="respiratoryScore == null">Mata in ett värde mellan 0 och 200</div>
         </div>
-        <div *ngIf="isAccordionOpen(0)">
-          <div class="accordion">
-            <div class="card collapseCard" style="height: 9rem" >
-              <div class="card-head text-left">
-                  <p class="card-text ml-2"><u>Senaste värde:</u></p>
-                    <div class="btn-group-vertical ml-2">
-                      <button type="button" class="btn btn-sm expandBtn"><strong>{{latestRespirationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
-                      <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestRespiration}}/MIN</strong></button>
-                    </div>
-                <div class="d-flex justify-content-end">
-                  <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('Respiration')">Mer historik</button>
-                </div>
-              </div>
+        <div class="collapseField d-flex flex-column" *ngIf="isAccordionOpen(0)">
+          <div class="ml-2"><u>Senaste värde:</u></div>
+          <div class="d-flex ml-2">
+            <div class="mb-3 mr-auto">
+              <button type="button" class="btn btn-sm expandBtn"><strong>{{latestRespirationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
+              <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestRespiration}}/MIN</strong></button>
+            </div>
+            <div class="mt-4 p-2">
+              <button type="button" class="btn historikKnapp btn-sm" (click)="goToHistory('Respiration')">Mer historik</button>
             </div>
           </div>
         </div>
