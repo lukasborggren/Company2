@@ -180,13 +180,13 @@ export class HistoryComponent implements OnInit {
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
             this.patientservice.getGenericHistory('Respiration').subscribe( data => {
                 for (let i = 0; i < 4; i++) {
-                    this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
+                    this.vitalArray[i] = data.resultSet[i].syre;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                     if ( this.vitalArray[i] === false) {
                         this.newsArray[i] = 0;
                     } else {
-                        this.newsArray[i] = 3;
+                        this.newsArray[i] = 2;
                     }
                 }
             });
@@ -279,7 +279,7 @@ export class HistoryComponent implements OnInit {
                 setCurrentData = true;
             } else if (data.supplementalOxygen === '1') {
                 this.vitalArray[4] = true;
-                this.newsArray[4] = 3;
+                this.newsArray[4] = 2;
                 setCurrentData = true;
             }
         } else if (this.vitalSign === 'ACVPU' && data.consciousnessACVPU !== '' && data.consciousnessACVPU !== null) {
