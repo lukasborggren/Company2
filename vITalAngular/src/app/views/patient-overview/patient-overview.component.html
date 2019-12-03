@@ -21,7 +21,7 @@
         </div>
         <div class="collapseField d-flex flex-column" *ngIf="isAccordionOpen(0)">
           <div class="latestTitle"><u>Senaste värde:</u></div>
-          <div class="d-flex">
+          <div class="d-flex align-items-center">
             <div class="mr-auto">
               <button type="button" class="btn btn-sm expandBtn"><strong>{{latestRespirationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
               <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestRespiration}}/MIN</strong></button>
@@ -60,7 +60,7 @@
 
       <div class="collapseField d-flex flex-column" *ngIf="isAccordionOpen(1)">
         <div class="latestTitle"><u>Senaste värde:</u></div>
-        <div class="d-flex">
+        <div class="d-flex align-items-center">
           <div>
             <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
             <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxidation}}%</strong></button>
@@ -68,12 +68,12 @@
           <div class="form-check form-check-inline radio-check mr-2" style="display: inline-block;">
             <div class = "mb-2 ml-2">
                  <label class="form-check-label" for="oxSatScale">Skala 1</label>
-                  <input class="form-check-input" type="radio" formControlName="oxSatScale" id="inlineRadio1" value='1'>
+                  <input class="form-check-input ml-1" type="radio" formControlName="oxSatScale" id="inlineRadio1" value='1'>
             </div>
 
             <div class="form-check form-check-inline radio-check ml-2" style="display: inline-block;">
                <label class="form-check-label" for="oxSatScale">Skala 2</label>
-               <input class="form-check-input" type="radio" formControlName="oxSatScale" id="inlineRadio1" value='2'>
+               <input class="form-check-input ml-1" type="radio" formControlName="oxSatScale" id="inlineRadio1" value='2'>
             </div>
             </div>
             <div class="ml-auto">
@@ -120,7 +120,7 @@
 
             <div class="collapseField d-flex flex-column" *ngIf="isAccordionOpen(2)">
               <div class="latestTitle"><u>Senaste värde:</u></div>
-              <div class="d-flex">
+              <div class="d-flex align-items-center">
                 <div class="mr-auto">
                   <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime |date:'dd/MM/yy HH:mm'}}</strong></button>
                   <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxygen}}</strong></button>
@@ -161,7 +161,7 @@
 
   <div class="collapseField d-flex flex-column" *ngIf="isAccordionOpen(3)">
     <div class="latestTitle"><u>Senaste värde:</u></div>
-    <div class="d-flex">
+    <div class="d-flex align-items-center">
       <div class="mr-auto">
         <button type="button" class="btn btn-sm expandBtn"><strong>{{latestBPTime| date:'dd/MM/yy HH:mm'}}</strong></button>
         <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestSystolic}}/{{latestDiastolic}} mmHg</strong></button>
@@ -197,7 +197,7 @@
 
   <div class="collapseField d-flex flex-column" *ngIf="isAccordionOpen(4)">
     <div class="latestTitle"><u>Senaste värde:</u></div>
-    <div class="d-flex">
+    <div class="d-flex align-items-center">
       <div>
         <button type="button" class="btn btn-sm expandBtn"><strong>{{latestPulseTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
         <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestPulse}}/min</strong></button>
@@ -225,56 +225,56 @@
   <div class="d-flex align-items-center">
     <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessACVPUScore() == 0, 'newsscore1': getConsciousnessACVPUScore() == 1, 'newsscore2': getConsciousnessACVPUScore() == 2, 'newsscore3': getConsciousnessACVPUScore() == 3}"> {{getConsciousnessACVPUScore()}} </div>
     <div class="parameterTitle mr-auto col-3">
-      Medvetande<span class="consiousIphone"><br></span>grad</div>
-        <!-- Default inline 1-->
-    <!-- This input shall have five check boxes for the alertness scale, see Prototype -->
+      Medvetande<span class="consiousIphone">-<br></span>grad</div>
+      <!-- Default inline 1-->
+      <!-- This input shall have five check boxes for the alertness scale, see Prototype -->
       <!-- this is the radio check-boxes code-->
       <!--div-->
       <div class="form-check form-check-inline radio-check mr-0" style="display: inline-block;">
         <div class="vertical">
           <label class="form-check-label" for="consciousnessACVPU">A</label>
           <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio1"
-                 value='5'>
-                 </div>
-      <!--/div-->
+          value='5'>
+        </div>
+        <!--/div-->
 
-          <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
+        <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
 
-              <div class="vertical">
-                <label class="form-check-label" for="consciousnessACVPU">C</label>
-              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio2"
-                     value='4'>
-                     </div>
-          <!--/div-->
+        <div class="vertical">
+          <label class="form-check-label" for="consciousnessACVPU">C</label>
+          <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio2"
+          value='4'>
+        </div>
+        <!--/div-->
 
-          <!--div class="form-check form-check-inline radio-check " style="display: inline-block;"-->
-<div class="vertical">
-              <label class="form-check-label" for="consciousnessACVPU">V</label>
-              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio3"
-                     value='3'>
-                     </div>
-          <!--/div-->
+        <!--div class="form-check form-check-inline radio-check " style="display: inline-block;"-->
+        <div class="vertical">
+          <label class="form-check-label" for="consciousnessACVPU">V</label>
+          <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio3"
+          value='3'>
+        </div>
+        <!--/div-->
 
-          <!--div class="form-check form-check-inline radio-check" style= "display: inline-block;"-->
-<div class="vertical">
-              <label class="form-check-label" for="consciousnessACVPU">P</label>
-              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio4"
-                     value='2'>
-                     </div>
-          <!--/div-->
+        <!--div class="form-check form-check-inline radio-check" style= "display: inline-block;"-->
+        <div class="vertical">
+          <label class="form-check-label" for="consciousnessACVPU">P</label>
+          <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio4"
+          value='2'>
+        </div>
+        <!--/div-->
 
-          <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
-<div class="vertical">
-              <label class="form-check-label" for="consciousnessACVPU">U</label>
-              <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio5"
-                     value='1'>
-                     </div>
-          <!--/div-->
-    </div>
+        <!--div class="form-check form-check-inline radio-check" style="display: inline-block;"-->
+        <div class="vertical">
+          <label class="form-check-label" for="consciousnessACVPU">U</label>
+          <input class="form-check-input" type="radio" formControlName="consciousnessACVPU" id="inlineRadio5"
+          value='1'>
+        </div>
+        <!--/div-->
+      </div>
 
-    <!--  This is the old input field for this parameter using a text input, may be removed if teh new input works as desired
-          <input type="number" formControlName="consciousnessACVPU" class="inputField col-2 ml-auto form-control-lg p-2">
-          -->
+      <!--  This is the old input field for this parameter using a text input, may be removed if teh new input works as desired
+      <input type="number" formControlName="consciousnessACVPU" class="inputField col-2 ml-auto form-control-lg p-2">
+    -->
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(5)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(5)" class="fa fa-angle-double-up fa-2x"></i>
@@ -287,29 +287,21 @@
   </div>
 
 
-  <div *ngIf="isAccordionOpen(5)">
-
-
-    <div class="accordion">
-      <div class="d-flex flex-row">
-        <p class="ml-2"><u>Senaste värde:</u></p>
+  <div class="collapseField d-flex flex-column"*ngIf="isAccordionOpen(5)">
+    <div class="latestTitle"><u>Senaste värde:</u></div>
+    <div class="d-flex align-items-center">
+      <div class="mr-2">
+        <button type="button" class="btn btn-sm expandBtn"><strong>{{latestAlertnessTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
+        <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestAlertness}}</strong></button>
       </div>
+      <!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
+      <label class="form-check-label" for="rls">RLS</label>
+      <input type="number" formControlName="rls" class="inputField col-2 ml-auto form-control-lg p-2 ">
 
-      <div class="d-flex flex-row ">
-          <div class="btn-group-vertical">
-              <!--Hämta senaaste mätvärde med {{latestAlertness}} och {{latestAlertnessTime |date:'short'}} -->
-            <button type="button" class="btn btn-sm expandBtn"><strong>{{latestAlertnessTime |date:'dd/MM/yy HH:mm'}}</strong></button>
-            <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestAlertness}}</strong></button>
-          </div>
-
-<!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
-        <div class="RLS-class"> RLS
-          <input type="number" formControlName="rls" class="inputField col-3 ml-auto form-control-lg p-2 ">
+      <div class="ml-auto">
+        <div class="mt-4 p-2">
+          <button type="button" class="btn historikKnapp btn-sm ml-2" (click)="goToHistory('ACVPU')">Mer historik</button>
         </div>
-      </div>
-
-      <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('ACVPU')">Mer historik</button>
       </div>
     </div>
   </div>
@@ -338,7 +330,7 @@
 
   <div class="collapseField d-flex flex-column" *ngIf="isAccordionOpen(6)">
     <div class="latestTitle"><u>Senaste värde:</u></div>
-    <div class="d-flex">
+    <div class="d-flex align-items-center">
       <div class="mr-auto">
         <button type="button" class="btn btn-sm expandBtn"><strong>{{latestTemperatureTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
         <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestTemperature}}°C</strong></button>
