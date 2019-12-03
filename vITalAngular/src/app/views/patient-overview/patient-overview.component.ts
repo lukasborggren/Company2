@@ -269,7 +269,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   }
 
   updateConsciousnessACVPUScore(val: number) {
-    if (val == 1) {
+    if (val == 5) {
       this.consciousnessACVPUScore = 0;
     } else if (val) {
       this.consciousnessACVPUScore = 3;

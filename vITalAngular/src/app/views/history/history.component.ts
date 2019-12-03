@@ -284,7 +284,7 @@ export class HistoryComponent implements OnInit {
             }
         } else if (this.vitalSign === 'ACVPU' && data.consciousnessACVPU !== '' && data.consciousnessACVPU !== null) {
             this.vitalArray[4] = data.consciousnessACVPU;
-            if (data.consciousnessACVPU === 'Alert') {
+            if (data.consciousnessACVPU === '5') {
                 this.newsArray[4] = 0;
             } else {
                 this.newsArray[4] = 3;
