@@ -13,9 +13,9 @@ import {ConfirmSubmitComponent} from '../shared-components/confirm-submit/confir
 export class FooterComponent implements OnInit {
 
   @Output() mdSubmitChange = new EventEmitter<boolean>();
-  // isLoggedIn: boolean;
   patientOverview: boolean;
   history: boolean;
+  loading: boolean = false;
 
 
   constructor(
@@ -45,7 +45,6 @@ export class FooterComponent implements OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentLocation = event.url;
-        // this.isLoggedIn = currentLocation !== '/login';
         this.patientOverview = currentLocation.substring(0, 5) === '/pid/';
         this.history = currentLocation === '/history';
       }
@@ -53,6 +52,7 @@ export class FooterComponent implements OnInit {
   }
 
   openPopup(errorMessage: string) {
+    this.loading = true;
     const submit = true;
     this.mdSubmitChange.emit(submit);
     const dialogConfig = new MatDialogConfig();
@@ -60,7 +60,17 @@ export class FooterComponent implements OnInit {
       dialogMessage: errorMessage,
     };
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(val => {
+      this.loading = val;
+    })
   }
 
+  isSubmitActive(): boolean {
+    let submitActive = false;
+    if (!this.newsScoreCalculator.isEmpty && this.newsScoreCalculator.isInputValid()) {
+      submitActive = true;
+    }
+    return submitActive;
+  }
 
 }

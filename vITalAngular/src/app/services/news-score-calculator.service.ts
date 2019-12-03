@@ -11,16 +11,24 @@ export class NewsScoreCalculatorService {
     isEmpty: boolean;
     isFull: boolean;
     scale1: boolean;
+    isOnAir: boolean;
+    validInputs: boolean[];
 
   constructor() {
     this.scale1 = true;
+    this.isOnAir = true;
+    this.validInputs = [true, true, true, true, true, true, true];
   }
   ngOnInit() {
     console.log('NgOnINit körs');
     this.isEmpty = true;
     this.isFull = false;
-  }
 
+  }
+  setOnAir(val : boolean){
+    this.isOnAir = val;
+    
+  }
   getRespiratoryScore(respiratoryRate: number) {
     if (respiratoryRate >= 25 || respiratoryRate <= 8) {
       return 3;
@@ -44,7 +52,8 @@ export class NewsScoreCalculatorService {
       } else {
         return 0;
       }
-    } else {
+    } 
+    else if(this.isOnAir == false) {
       if (oxygenSaturation <= 83 || oxygenSaturation >= 97 ) {
         return 3;
       } else if (oxygenSaturation >= 84 && oxygenSaturation <= 85) {
@@ -53,6 +62,17 @@ export class NewsScoreCalculatorService {
         return 2;
       } else if (oxygenSaturation >= 93 && oxygenSaturation <= 94) {
         return 1;
+      } else if (oxygenSaturation >= 86 && oxygenSaturation <= 87) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+    else{
+      if (oxygenSaturation <= 83 ) {
+        return 3;
+      } else if (oxygenSaturation >= 84 && oxygenSaturation <= 85) {
+        return 2;
       } else if (oxygenSaturation >= 86 && oxygenSaturation <= 87) {
         return 1;
       } else {
@@ -74,7 +94,7 @@ export class NewsScoreCalculatorService {
   }
 
   getPulseScore(pulseRate: number) {
-    if (pulseRate <= 31 || pulseRate >= 131) {
+    if (pulseRate <= 40 || pulseRate >= 131) {
       return 3;
     } else if (pulseRate >= 111 && pulseRate <= 130) {
       return 2;
@@ -94,7 +114,7 @@ export class NewsScoreCalculatorService {
       return 2;
     } else if (temperature >= 38.1 && temperature <= 39) {
       return 1;
-    } else if (temperature >= 36 && temperature <= 35.1) {
+    } else if (temperature <= 36 && temperature >= 35.1) {
       return 1;
     } else {
       return 0;
@@ -106,6 +126,7 @@ export class NewsScoreCalculatorService {
 
     this.totalScore = respiratoryScore + saturationScore + supplementalOxygenScore + systolicScore + pulseScore +
         consciousnessScore + temperatureScore;
+
     if (this.isFull === false) {
       this.totalScore = null;
       return null;
@@ -148,15 +169,29 @@ export class NewsScoreCalculatorService {
     }
   }
 
-oxygenSaturationScale1(scale1: boolean) {
+  oxygenSaturationScale1(scale1: boolean) {
     this.scale1 = scale1;
+
 }
 
-getTotalScore() {
+  getTotalScore() {
   if (this.isFull === false ) {
     return null;
   }
   return this.totalScore;
   }
+
+  updateInputValidity(index: number, valid: boolean) {
+    this.validInputs[index] = valid;
+  }
+
+  isInputValid(): boolean {
+    let validInput = true;
+    for (const val of this.validInputs) {
+      validInput = validInput && val;
+    }
+    return validInput;
+  }
+
 }
 

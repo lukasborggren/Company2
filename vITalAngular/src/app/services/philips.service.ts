@@ -14,7 +14,7 @@ export class PhilipsService {
 
   // pId should be on the form "XXXXXXXX-XXXX"
   public getPhilipsData(pID: string): Observable<any> {
-    const url = 'http://134.209.226.62/api/philips_mock';
+    const url = 'https://brewinabox.se/api/philips_mock';
     const body = {
       //PatientPID: '19791111-0017'
       PatientPID: pID

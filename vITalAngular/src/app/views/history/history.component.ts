@@ -6,6 +6,7 @@ import * as pluginlabels from 'chartjs-plugin-datalabels';
 import {PatientService} from '../../services/patient.service';
 import {Router} from '@angular/router';
 import { state } from '@angular/animations';
+import { NewsScoreCalculatorService } from '../../services/news-score-calculator.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ import { state } from '@angular/animations';
 export class HistoryComponent implements OnInit {
 
     constructor(private router: Router,
-                private patientservice: PatientService) {
+                private patientservice: PatientService,
+                private newsScoreCalculatorService: NewsScoreCalculatorService) {
     }
     public chartType = 'line';
     public lineChartLegend = true;
@@ -27,6 +29,7 @@ export class HistoryComponent implements OnInit {
     vitalArray: any[] = [];
     vitalArray2: any[] = [];
     timeArray: any[] = [];
+    newsArray: any[] = [];
     private boxMin: any[] = [];
     private boxMax: any[] = [];
     private yaxisMax: any;
@@ -62,7 +65,7 @@ export class HistoryComponent implements OnInit {
         },
     ];
     public chartLabels: Label[] = [];
-    public chartOptions: (ChartOptions /*& { annotation: any }*/);    
+    public chartOptions: (ChartOptions /*& { annotation: any }*/);
     public setChartOptions(max, min, steplength) {
         this.chartOptions = {
             plugins: {
@@ -79,8 +82,8 @@ export class HistoryComponent implements OnInit {
             scales: {
                 yAxes: [{
                     ticks: {
-                        max: min,
-                        min: max,
+                        max: max,
+                        min: min,
                         stepSize: steplength
                     }
                 }],
@@ -161,29 +164,26 @@ export class HistoryComponent implements OnInit {
             localStorage.setItem('outputVitalParameter', 'getHistoricBloodpressure');
         }
         this.vitalSign = localStorage.getItem('outputVitalParameter');
-
-        if (this.vitalSign === 'getHistoricBloodpressure') {
-            this.patientservice[this.vitalSign]().subscribe( data => {
+        //-----------If the history for bloodpressure is viewed the following code is run------------
+        if (this.vitalSign === 'bloodPressure') {
+            this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].systolic;
                     this.vitalArray2[i] = data.resultSet[(data.resultSet.length - 1) - i].diastolic;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
+                    this.newsArray[i] = this.newsScoreCalculatorService.getSystolicScore(this.vitalArray[i]);
                 }
             });
             this.changeLineColor('rgb(5, 0, 140)', 0);
             this.changeLineColor('rgb(0, 0, 0)', 1);
             this.chartData[0].pointStyle = 'triangle';
-            this.setChartOptions(50, 220, 10);
+            this.setChartOptions(220, 50, 10);
             this.chartData[0].label = 'Systoliskt';
             this.chartData[1].label = 'Diastoliskt';
-            this.yaxisMin = 50;
-            this.yaxisMax = 220;
-            this.stepSize = 10;
-            this.boxMax = [200, 0, 0, 100, 90, 50];
-            this.boxMin = [220, 0, 0, 110, 100, 90];
+            //-------------If the history for syrgas is viewed the following code is run---------------
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-            this.patientservice.getHistoricRespiration().subscribe( data => {
+            this.patientservice.getGenericHistory('Respiration').subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
@@ -191,72 +191,130 @@ export class HistoryComponent implements OnInit {
                 }
             });
             this.chartData[0].label = 'Tillfört Syre';
-            this.yaxisMin = 0;
-            this.yaxisMax = 2;
-            this.stepSize = 1;
-            this.boxMax = [0, 0, 0, 0, 2, 0];
-            this.boxMin = [0, 0, 0, 0, 1, 0];
-        } else if (this.vitalSign === 'getHistoricACVPU') {
-            this.patientservice[this.vitalSign]().subscribe( data => {
+            this.setChartOptions(2, 0, 1);
+            //--------------If the history for medvetandegrad is viewed the following code is run---------------
+        } else if (this.vitalSign === 'ACVPU') {
+            this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                     if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Alert') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 5;
-                    } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Confusion') {
+                        this.newsArray[i] = 0;
+                    } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Förvirring') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 4;
-                    } else if (data.resultSet[i].acvpu === 'Verbal') {
+                        this.newsArray[i] = 3;
+                    } else if (data.resultSet[i].acvpu === 'Voice') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 3;
+                        this.newsArray[i] = 3;
                     } else if (data.resultSet[i].acvpu === 'Pain') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 2;
+                        this.newsArray[i] = 3;
                     } else if (data.resultSet[i].acvpu === 'Unresponsive') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 1;
+                        this.newsArray[i] = 3;
                     }
                 }
             });
             this.chartData[0].label = 'Medvetandegrad';
-            this.yaxisMin = 1;
-            this.yaxisMax = 6;
-            this.stepSize = 1;
-            this.boxMax = [0, 0, 0, 0, 0, 4];
-            this.boxMin = [0, 0, 0, 0, 0, 1];
+            this.setChartOptions(6, 0, 1);
+            //----------If the history for puls, temperatur, andningsfrekvens or syremättnad is viewed the following code is run-----------------
         } else {
-            this.patientservice[this.vitalSign](localStorage.getItem('EHR_ID')).subscribe( data => {
+            this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].vitalsign;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                 }
+                if (this.vitalSign === 'Respiration') {
+                    this.chartData[0].label = 'Andningsfrekvens';
+                    this.setChartOptions(26, 7, 3);
+                    for (let i = 0; i < 4; i++) {
+                        this.newsArray[i] = this.newsScoreCalculatorService.getRespiratoryScore(this.vitalArray[i]);
+                    }
+                } else if (this.vitalSign === 'Temperature') {
+                    this.chartData[0].label = 'Temperatur';
+                    this.setChartOptions(42, 33, 1);
+                    this.changeLineColor('rgb(6, 201, 58)', 0);
+                    for (let i = 0; i < 4; i++) {
+                        this.newsArray[i] = this.newsScoreCalculatorService.getTemperatureScore(this.vitalArray[i]);
+                    }
+                } else if (this.vitalSign === 'Pulse') {
+                    this.chartData[0].label = 'Pulsfrekvens';
+                    this.setChartOptions(160, 20, 10);
+                    this.changeLineColor('rgb(201, 7, 0)', 0);
+                    for (let i = 0; i < 4; i++) {
+                        this.newsArray[i] = this.newsScoreCalculatorService.getPulseScore(this.vitalArray[i]);
+                    }
+                } else if (this.vitalSign === 'Oximetry') {
+                    this.chartData[0].label = 'Syremättnad';
+                    this.setChartOptions(100, 82, 2);
+                    for (let i = 0; i < 4; i++) {
+                        this.newsArray[i] = this.newsScoreCalculatorService.getSaturationScore(this.vitalArray[i]);
+                    }
+                }
             });
-            if (this.vitalSign === 'getHistoricRespiration') {
-                this.chartData[0].label = 'Andningsfrekvens';
-                this.setChartOptions(7, 26, 3);
-                this.boxMax = [26, 24, 0, 11, 0, 9];
-                this.boxMin = [24, 21, 0, 9, 0, 7];
-            } else if (this.vitalSign === 'getHistoricTemperature') {
-                this.chartData[0].label = 'Temperatur';
-                this.setChartOptions(33, 42, 1);  
-                this.changeLineColor('rgb(6, 201, 58)', 0);
-                this.boxMax = [0, 42, 39, 36, 0, 36];
-                this.boxMin = [0, 39, 38, 35, 0, 33];
-            } else if (this.vitalSign === 'getHistoricPulse') {
-                this.chartData[0].label = 'Pulsfrekvens';
-                this.setChartOptions(20, 160, 10);
-                this.changeLineColor('rgb(201, 7, 0)', 0);
-                this.boxMax = [160, 130, 110, 50, 0, 40];
-                this.boxMin = [130, 110, 90, 40, 0, 20];
-            } else if (this.vitalSign === 'getHistoricOximetry') {
-                this.chartData[0].label = 'Syremättnad';
-                this.yaxisMin = 88;
-                this.yaxisMax = 100;
-                this.stepSize = 1;
-                this.boxMax = [0, 0, 0, 96, 94, 92];
-                this.boxMin = [0, 0, 0, 94, 92, 88];
+        }
+    }
+
+    private setCurrentData() {
+        console.log(localStorage.getItem('form'));
+        const data = JSON.parse(localStorage.getItem('form'));
+        let setCurrentData = false;
+
+        if (this.vitalSign === 'bloodPressure') {
+            if (data.systolicBloodPressure !== '' && data.systolicBloodPressure !== null)  {
+                this.vitalArray[4] = data.systolicBloodPressure;
+                this.newsArray[4] = this.newsScoreCalculatorService.getSystolicScore(data.systolicBloodPressure);
+                setCurrentData = true;
             }
-            console.log(this.timeArray);
+            if (data.diastolicBloodPressure !== '') {
+                this.vitalArray2[4] = data.diastolicBloodPressure;
+                setCurrentData = true;
+            }
+        } else if (this.vitalSign === 'getHistoricRespirationAdded') {
+            if (data.supplementalOxygen === '2') {
+                this.vitalArray[4] = 'false';
+                setCurrentData = true;
+            } else if (data.supplementalOxygen === '1') {
+                this.vitalArray[4] = 'true';
+                setCurrentData = true;
+            }
+        } else if (this.vitalSign === 'ACVPU' && data.consciousnessACVPU !== '' && data.consciousnessACVPU !== null) {
+            this.vitalArray[4] = data.consciousnessACVPU;
+            if (data.consciousnessACVPU === 'Alert') {
+                this.newsArray[4] = 0;
+            } else {
+                this.newsArray[4] = 3;
+            }
+            setCurrentData = true;
+        } else if (this.vitalSign === 'Respiration' && data.respiratoryRate !== '' && data.respiratoryRate !== null) {
+            this.vitalArray[4] = data.respiratoryRate;
+            this.newsArray[4] = this.newsScoreCalculatorService.getRespiratoryScore(data.respiratoryRate);
+            setCurrentData = true;
+        } else if (this.vitalSign === 'Temperature' && data.temperature !== '' && data.temperature !== null) {
+            this.vitalArray[4] = data.temperature;
+            this.newsArray[4] = this.newsScoreCalculatorService.getTemperatureScore(data.temperature);
+            setCurrentData = true;
+        } else if (this.vitalSign === 'Pulse' && data.pulseRate !== '' && data.pulseRate !== null) {
+            this.vitalArray[4] = data.pulseRate;
+            this.newsArray[4] = this.newsScoreCalculatorService.getPulseScore(data.pulseRate);
+            setCurrentData = true;
+        } else if (this.vitalSign === 'Oximetry' && data.oxygenSaturation !== '' && data.oxygenSaturation !== null) {
+            this.vitalArray[4] = data.oxygenSaturation;
+            this.newsArray[4] = this.newsScoreCalculatorService.getSaturationScore(data.oxygenSaturation);
+            setCurrentData = true;
+        }
+        if (setCurrentData) {
+            this.timeArray[4] = new Date();
+            this.chartLabels[4] = 'Nuvarande värde';
+            // const date = new Date();
+            // this.timeArray[4] = new Date();
+            // this.chartLabels[4] = date.toTimeString().substring(0, 8);
         }
     }
     ngOnInit() {
         this.fetchDataApi();
+        this.setCurrentData();
     }
 }

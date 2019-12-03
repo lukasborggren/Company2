@@ -1,12 +1,10 @@
 <div class="m-4">
 
-<!-- The company logotype should be here -->
   <div class="text-center">
-    <img id="logo" src="assets/img/logo.jpg" alt="vITal logotyp">
+    <img id="logo" src="assets/img/vital-transparent.png" alt="vITal logotyp">
   </div>
 
   <div id="login" align="center">
-
     <div id=loginFields>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group" align="left">
@@ -21,16 +19,12 @@
           Invalid username or password!
         </div>
         <div class="form-group">
-          <button class="standardButton">Logga in</button>
+          <button class="standardButton">
+              <span [ngClass]="{'spinner-border': loading, 'spinner-border-sm': loading}" class="text-secondary" role="status" aria-hidden="true"></span>
+              <span *ngIf = "!loading">Logga in</span>
+          </button>
         </div>
       </form>
     </div>
-
   </div>
-
-  <!-- Temporary username and password just for testing-->
-  <div>
-    <p>See slack for username and pw</p>
-  </div>
-
 </div>

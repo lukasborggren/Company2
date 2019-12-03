@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {PatientService} from '../../../services/patient.service';
 import {DialogWindowComponent} from '../dialog-window/dialog-window.component';
 import {timer} from 'rxjs';
+import {FeedDataService} from '../../../services/feed-data.service';
+
 
 @Component({
   selector: 'app-confirm-submit',
@@ -14,6 +16,7 @@ import {timer} from 'rxjs';
 export class ConfirmSubmitComponent implements OnInit {
 
   dialogMessage: string;
+  questionMessage: string;
 
   constructor(
       private dialogAlert: MatDialogRef<DialogWindowComponent>,
@@ -21,11 +24,17 @@ export class ConfirmSubmitComponent implements OnInit {
       private dialog: MatDialog,
       private router: Router,
       private patientService: PatientService,
+      private feedData: FeedDataService
   ) {
     this.dialogMessage = data.dialogMessage;
   }
 
   ngOnInit() {
+      if (this.patientService.areParamsMissing()) {
+          this.questionMessage = 'Alla fält är inte ifyllda, vill du spara ändå?';
+      } else {
+          this.questionMessage = 'Är du säker på att du vill spara?';
+      }
   }
 
   close() {
@@ -64,9 +73,10 @@ export class ConfirmSubmitComponent implements OnInit {
       this.patientService.postComposition()
           .subscribe(
               resp => {
-                console.log(resp)
                   if (resp.action === 'CREATE') {
                       this.viewConfirmation('Värden sparade');
+                      this.feedData.nextUpdateLatestData(true);
+                      this.close();
                   }
               },
               error => {

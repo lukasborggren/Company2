@@ -7,6 +7,7 @@
     z-index: 1;
     height: 64px;
 }
+
 .text {
   color: #FFFFFF;
   text-align: center;
@@ -65,4 +66,8 @@ opacity: 0.2;
 
 .newsscore3 {
   background-color: #F59681;
+}
+
+.standardButton {
+  width: 70px;
 }

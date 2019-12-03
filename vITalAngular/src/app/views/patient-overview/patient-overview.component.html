@@ -1,16 +1,16 @@
-<div>
-    <form [formGroup]="form">
+<div class="wrappar">
+    <form class = "wrap" [formGroup]="form">
 
 <!-----------------Andningsfrekvens----------------->
       <div class="parameterRow">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center ml-2">
           <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews" [ngClass]="{'bg-white': respiratoryScore == 0, 'newsscore1': respiratoryScore == 1, 'newsscore2': respiratoryScore == 2, 'newsscore3': respiratoryScore == 3}"> {{this.respiratoryScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Andningsfrekvens
           </div>
           <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
           <div class="collapseButton p-2">
-            <button (click)="toggleAccordion(0)" class="btn">
+            <button (click)="toggleAccordion(0)" class="btn accordionArrow">
               <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(0)" class="fa fa-angle-double-down fa-2x"></i>
             </button>
@@ -29,7 +29,7 @@
                       <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestRespiration}}/MIN</strong></button>
                     </div>
                 <div class="d-flex justify-content-end">
-                  <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricRespiration')">Mer historik</button>
+                  <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('Respiration')">Mer historik</button>
                 </div>
               </div>
             </div>
@@ -41,14 +41,14 @@
 
 <!-----------------Syremättnad----------------->
       <div class="parameterRow">
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center ml-2">
           <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': saturationScore == 0, 'newsscore1': saturationScore == 1, 'newsscore2': saturationScore == 2, 'newsscore3': saturationScore == 3}"> {{this.saturationScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Syremättnad
           </div>
           <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
           <div class="collapseButton p-2">
-            <button (click)="toggleAccordion(1)" class="btn">
+            <button (click)="toggleAccordion(1)" class="btn accordionArrow">
               <i *ngIf="isAccordionOpen(1)" class="fa fa-angle-double-up fa-2x"></i>
               <i *ngIf="!isAccordionOpen(1)" class="fa fa-angle-double-down fa-2x"></i>
             </button>
@@ -75,7 +75,6 @@
             <!-- Lägg till senaste värde med {{latestOxidation}} och {latestOxidationTime | date:'short'}} -->
 
 
-              <!-- KNAPPAR HÄR -->
               <div class="p-2">
                 <div class="form-check form-check-inline radio-check mr-2" style="display: inline-block;">
                   <div class = "mb-2">
@@ -92,7 +91,7 @@
             </div>
 
           <div class="d-flex flex-row-reverse">
-            <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('getHistoricOximetry')">Mer historik</button>
+            <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('Oximetry')">Mer historik</button>
           </div>
 
 
@@ -104,7 +103,7 @@
 
 <!-----------------Tillförd syrgas----------------->
         <div class="parameterRow">
-          <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center ml-2">
             <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getSupplementOxygenScore() == 0, 'newsscore1': getSupplementOxygenScore() == 1, 'newsscore2': getSupplementOxygenScore() == 2, 'newsscore3': getSupplementOxygenScore() == 3}"> {{getSupplementOxygenScore()}}</div>
             <div class="parameterTitle mr-auto col-4">
               Tillförd syrgas
@@ -127,7 +126,7 @@
                 </div>
 
             <div class="accordion p-2">
-              <button (click)="toggleAccordion(2)" class="btn">
+              <button (click)="toggleAccordion(2)" class="btn accordionArrow">
                 <i *ngIf="isAccordionOpen(2)" class="fa fa-angle-double-up fa-2x"></i>
                 <i *ngIf="!isAccordionOpen(2)" class="fa fa-angle-double-down fa-2x"></i>
               </button>
@@ -154,7 +153,7 @@
 
 <!-----------------Blodtryck----------------->
 <div class="parameterRow">
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center ml-2">
     <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': systolicScore == 0, 'newsscore1': systolicScore == 1, 'newsscore2': systolicScore == 2, 'newsscore3': systolicScore == 3}"> {{this.systolicScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Blodtryck
@@ -164,7 +163,7 @@
       <div class="ml-auto" id="between">/</div>
     <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-2">
     <div class="collapseButton p-2">
-      <button (click)="toggleAccordion(3)" class="btn">
+      <button (click)="toggleAccordion(3)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(3)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(3)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
@@ -188,7 +187,7 @@
                   <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestSystolic}}/{{latestDiastolic}} mm Hg</strong></button>
                 </div>
             <div class="d-flex justify-content-end">
-              <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricBloodpressure')">Mer historik</button>
+              <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('bloodPressure')">Mer historik</button>
             </div>
           </div>
         </div>
@@ -198,14 +197,14 @@
 
 <!-----------------Pulsfrekvens----------------->
 <div class="parameterRow">
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center ml-2">
     <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': pulseScore == 0, 'newsscore1': pulseScore == 1, 'newsscore2': pulseScore == 2, 'newsscore3': pulseScore == 3}"> {{this.pulseScore}}</div>
     <div class="parameterTitle mr-auto col-4">
       Pulsfrekvens
     </div>
     <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
     <div class="collapseButton p-2">
-      <button (click)="toggleAccordion(4)" class="btn">
+      <button (click)="toggleAccordion(4)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(4)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(4)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
@@ -226,7 +225,15 @@
                 <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestPulse}}/min</strong></button>
               </div>
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricPulse')">Mer historik</button>
+            <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('Pulse')">Mer historik</button>
+          </div>
+          <div class="hfc">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+              Hjärtfrekvens
+            </label>
+          </div>
           </div>
         </div>
       </div>
@@ -236,7 +243,7 @@
 
 <!-----------------Medvetandegrad----------------->
 <div class="parameterRow">
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center ml-2">
     <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessACVPUScore() == 0, 'newsscore1': getConsciousnessACVPUScore() == 1, 'newsscore2': getConsciousnessACVPUScore() == 2, 'newsscore3': getConsciousnessACVPUScore() == 3}"> {{getConsciousnessACVPUScore()}} </div>
     <div class="parameterTitle mr-auto col-3">
       Medvetande-<br>grad </div>
@@ -290,7 +297,7 @@
           <input type="number" formControlName="consciousnessACVPU" class="inputField col-2 ml-auto form-control-lg p-2">
           -->
     <div class="collapseButton p-2">
-      <button (click)="toggleAccordion(5)" class="btn">
+      <button (click)="toggleAccordion(5)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(5)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(5)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
@@ -323,7 +330,7 @@
       </div>
 
       <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('getHistoricACVPU')">Mer historik</button>
+        <button type="button" class="btn historikKnapp btn-sm mr-2 mb-2" (click)="goToHistory('ACVPU')">Mer historik</button>
       </div>
     </div>
   </div>
@@ -332,14 +339,14 @@
 
 <!-----------------Temperatur----------------->
 <div class="parameterRow">
-  <div class="d-flex align-items-center">
+  <div class="d-flex align-items-center ml-2">
     <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': temperatureScore == 0, 'newsscore1': temperatureScore == 1, 'newsscore2': temperatureScore == 2, 'newsscore3': temperatureScore == 3}"> {{this.temperatureScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Temperatur
     </div>
     <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
     <div class="collapseButton p-2">
-      <button (click)="toggleAccordion(6)" class="btn">
+      <button (click)="toggleAccordion(6)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(6)" class="fa fa-angle-double-up fa-2x"></i>
         <i *ngIf="!isAccordionOpen(6)" class="fa fa-angle-double-down fa-2x"></i>
       </button>
@@ -357,10 +364,10 @@
             <p class="card-text ml-2"><u>Senaste värde:</u></p>
               <div class="btn-group-vertical ml-2">
                 <button type="button" class="btn btn-sm expandBtn"><strong>{{latestTemperatureTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
-                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestTemperature}} C</strong></button>
+                <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestTemperature}}°C</strong></button>
               </div>
           <div class="d-flex justify-content-end">
-            <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('getHistoricTemperature')">Mer historik</button>
+            <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('Temperature')">Mer historik</button>
           </div>
         </div>
       </div>

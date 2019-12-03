@@ -1,44 +1,44 @@
 <div align="center">
 
-  <!-- The new code that is replacing the one that is hidden by comments below, starts here:  -->
+  <img id="logo" src="assets/img/vital-transparent.png" alt="vITal logotyp" *ngIf="!stopScanButtonVisible" >
 
-  <div id="interactive" class="viewport">
-    <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
+  <!-- Scanner function -->
+  <div id="interactive" class="viewport" >
+    <video id="camera" autoplay="true" preload="auto" src muted="true" playsinline="true" ></video>
     <!-- The following line of code removes all the whitespace under the camera after the the button to stat scan have been clicked. -->
     <canvas class="drawingBuffer" width="0" height="0"></canvas>
   </div>
 
-  <!-- This is the end of the new code. -->
-
-  <button type="button" class="standardButton" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
-    Skanna streckkod
+  <!-- Buttons -->
+  <button type="button" name="scan" class="row largeButton" *ngIf="!stopScanButtonVisible" (click)="startScanner()">
+    <img src="assets/img/skanna-streckkod.png" alt="" class="icon col-2">
+    <div class="buttonText col-8">Skanna streckkod</div>
+    <div class="empty col-2"> </div>
   </button>
 
-  <button type="button" class="standardButton" *ngIf="stopScanButtonVisible" (click)="stopScanner()">
-    Sluta skanna
+  <button type="button" name="stopScan" class="row largeButton" *ngIf="stopScanButtonVisible" (click)="stopScanner()">
+    <img src="assets/img/skanna-streckkod.png" alt="" class="icon col-2">
+    <div class="buttonText col-8">Sluta skanna</div>
+    <div class="empty col-2"> </div>
   </button>
-
-  <label *ngIf="barcodevalue">Skannad streckkod = {{barcodevalue}}</label>
-
-  <!-- This is the code that have been working properly but not viewed properly in the window.
-      If needed this can be taken back and used:
-
-    <div class="input-group">
-      <div id="inputBarcode" style="position: static">
-        <div id="interactive" class="viewport">
-          <video autoplay="true" preload="auto" src muted="true" playsinline="true"></video>
-        </div>
-      </div>
-    </div>
-
-    -->
 
   <div id="manualButton">
-    <button class="standardButton" (click)="openDialog()">Manuell inmatning</button>
+    <button type="button" name="manual" class="row largeButton"(click)="openDialog()">
+      <img src="assets/img/skriv-in-manuellt.png" alt="" class="icon col-2" id="pen">
+      <div class="buttonText col-8">Manuell inmatning</div>
+      <div class="empty col-2"> </div>
+    </button>
   </div>
 
-  <button class="standardButton" (click)="goToLogout()">Logga ut</button>
+  <button type="button" name="logOut" class="row largeButton" (click)="goToLogout()">
+    <img src="assets/img/logga-ut.png" alt="" class="icon col-2">
+    <div class="buttonText col-8">Logga ut</div>
+    <div class="empty col-2"> </div>
+  </button>
 
-  <p>19791111-0017</p>
+  <label *ngIf="barcodeValue">Skannad streckkod = {{barcodeValue}}</label>
 
+</div>
+<div class="userInfo">
+  Inloggad som: {{username}}
 </div>

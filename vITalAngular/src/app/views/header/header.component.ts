@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Location } from '@angular/common';
 import {NavigationEnd, Router} from '@angular/router';
 import {FeedDataService} from '../../services/feed-data.service';
@@ -10,16 +10,16 @@ import {PatientService} from '../../services/patient.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn: boolean;
   showPatient: boolean;
+  patientOverview: boolean;
   pId: string;
-  h: string;
   name: string;
 
   constructor(
       private patientdata: PatientService,
       private location: Location,
-      private router: Router
+      private router: Router,
+      private feedData: FeedDataService
       ) { }
 
   goBack() {
@@ -34,14 +34,18 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/logout']);
   }
 
+  public philipsDataOn() {
+    this.feedData.nextPhilipsData(true);
+  }
+
   routeEvent() {
     this.router.events.subscribe(event => {
       this.pId = sessionStorage.getItem('PID');
       this.name = sessionStorage.getItem('NAME');
       if (event instanceof NavigationEnd) {
         const currentLocation = event.url;
-        this.isLoggedIn = !(currentLocation === '/login' || currentLocation === '/');
         this.showPatient = currentLocation === '/history' || currentLocation.substring(0, 5) === '/pid/';
+        this.patientOverview = currentLocation.substring(0, 5) === '/pid/';
       }
     });
   }

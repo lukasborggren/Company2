@@ -18,7 +18,7 @@
 
 .parameterRow {
     background-color: #D8D8D8;
-    padding: .5rem .1rem .5rem 1rem;;
+    /*padding: .5rem .1rem .5rem 1rem;*/
     border: 1px solid black;
     /* height: 70px; */
 }
@@ -26,7 +26,6 @@
   font-size: 100%;
   margin-bottom: 40px;
   margin-left:10px;
-  width: 500px;
   /*margin-left: 250px;*/
 }
 .inputField {
@@ -34,7 +33,11 @@
     border-color: #000000;
     border-radius: 0;
 }
-
+.hfc {
+  position: absolute;
+  top:0;
+  right:0;
+}
 .alert {
     margin: 0;
     background-color: #D0D0D0;
@@ -85,6 +88,10 @@
 .newsscore3 {
   background-color: #F59681;
 }
+
+body > app-root > div > div
+
+
 /*
 input[type=radio] {
   -ms-transform: scale(2);
@@ -108,4 +115,24 @@ input[type=radio] {
 
 .form-check-label2 {
    padding-right: 10px;
+}
+
+.accordionArrow {
+  color: #3F3F3F;
+}
+
+.wrap{
+    display: grid;
+    position: relative;
+    height: 100%;
+    width: 100%;
+   /* padding: 0px 0px 62px 0px; */
+
+}
+
+.wrappar {
+    position: relative;
+    height: 100%;
+    width: 100%;
+
 }

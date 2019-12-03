@@ -27,6 +27,7 @@ p {
 .btn {
   padding: 0;
 }
+
 .fa:before {
   font-size: 40px;
   background-color: #909090;
@@ -41,4 +42,9 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.get-data {
+  position: fixed;
+  right: 10px;
 }
