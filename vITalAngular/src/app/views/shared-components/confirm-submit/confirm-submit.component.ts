@@ -76,7 +76,6 @@ export class ConfirmSubmitComponent implements OnInit {
                   if (resp.action === 'CREATE') {
                       this.viewConfirmation('Värden sparade');
                       this.feedData.nextUpdateLatestData(true);
-                      this.close();
                   }
               },
               error => {
@@ -87,3 +86,4 @@ export class ConfirmSubmitComponent implements OnInit {
       this.close();
   }
 }
+

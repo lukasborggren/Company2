@@ -107,7 +107,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
         ]
       ],
-      heartScale: [0, [
+      heartScale: [false, [
         ]
       ],
       consciousnessACVPU: ['', [
@@ -447,7 +447,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
         this.form.get('systolicBloodPressure').value,
         this.form.get('diastolicBloodPressure').value,
         this.form.get('pulseRate').value,
-        true,
+        this.form.get('heartScale').value,
         this.form.get('consciousnessACVPU').value,
         this.form.get('rls').value,
         this.form.get('temperature').value,
