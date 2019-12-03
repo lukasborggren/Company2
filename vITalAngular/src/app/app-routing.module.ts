@@ -10,13 +10,14 @@ import { AuthGuardService as AuthGuard } from './auth-guard.service';
 import { AuthGuardTwoService as AuthGuardTwo } from './auth-guard-two.service';
 import { PatientOverviewComponent } from './views/patient-overview/patient-overview.component';
 import { HistoryComponent } from './views/history/history.component';
+import { AuthGuardThreeGuard as AuthGuardThree } from './auth-guard-three.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuardTwo] },
   { path: 'logout', component: LogoutComponent, canActivate: [AuthGuard] },
   { path: 'history', component: HistoryComponent, canActivate: [AuthGuard] },
   { path: 'scannerpage', component: BarcodeScannerPageComponent, canActivate: [AuthGuard] },
-  { path: 'pid/:personid', component: PatientOverviewComponent, canActivate: [AuthGuard] },
+  { path: 'pid/:personid', component: PatientOverviewComponent, canActivate: [AuthGuardThree] },
   { path: '**', redirectTo: 'login' },
   { path: '', redirectTo: 'scannerpage', pathMatch: 'full'}
 ];
