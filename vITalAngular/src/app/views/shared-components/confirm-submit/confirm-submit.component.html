@@ -1,6 +1,8 @@
-<h3>{{questionMessage}}</h3>
+<div mat-dialog-content>
+  <h4>{{questionMessage}}</h4>
+</div>
 
 <mat-dialog-actions>
-    <button class="mat-raised-button" (click)="submit()">Ja</button>
-    <button class="mat-raised-button" (click)="close()">Nej</button>
+    <button class="standardButton" id="leftButton" (click)="submit()">Ja</button>
+    <button class="standardButton" id="rightButton" (click)="close()">Nej</button>
 </mat-dialog-actions>

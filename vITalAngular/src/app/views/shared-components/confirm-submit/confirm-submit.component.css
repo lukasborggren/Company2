@@ -1,0 +1,14 @@
+#leftButton {
+  margin-right: 10px;
+  width: 60px;
+}
+
+#rightButton {
+  margin-left: 10px;
+  width: 60px;
+}
+
+.mat-dialog-actions {
+display: flex;
+justify-content: center;
+}
