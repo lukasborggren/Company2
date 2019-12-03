@@ -146,8 +146,32 @@ input[type=radio] {
     width: 100%;
 }
 
+.consiousIphone {
+  display: none;
+}
+
 @media only screen and (min-width: 768px) {
     .parameterTitle{
         font-size: 35px;
     }
+}
+
+@media only screen and (max-width: 360px) {
+  .collapseField {
+    font-size: 4vw;
+  }
+
+  .historikKnapp {
+    font-size: 4vw;
+    padding: 2px;
+  }
+
+  .expandBtn {
+    font-size: 4vw;
+    padding: 2px;
+  }
+
+  .consiousIphone {
+    display: inline;
+  }
 }

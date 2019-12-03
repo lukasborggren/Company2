@@ -71,3 +71,17 @@ opacity: 0.2;
 .standardButton {
   width: 70px;
 }
+
+@media only screen and (max-width: 360px) {
+  .footer {
+    font-size: 4vw;
+  }
+
+  .totalNews {
+    margin-right: 5px;
+  }
+
+  .clinical {
+    margin-right: 5px;
+  }
+}
