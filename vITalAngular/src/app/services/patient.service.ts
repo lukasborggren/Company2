@@ -14,7 +14,7 @@ export class PatientService {
   });
 
   private jsonComp: any;
-  private acvpuCodes = ['at0005', 'at0.15', 'at0006', 'at0007', 'at0008'];
+  private acvpuCodes = ['at0008', 'at0007', 'at0006', 'at0.15', 'at0005'];
   private rlsCodes = ['at0005', 'at0006', 'at0007', 'at0008', 'at0009', 'at0010', 'at0011', 'at0012'];
   protected paramsMissing = true;
 
