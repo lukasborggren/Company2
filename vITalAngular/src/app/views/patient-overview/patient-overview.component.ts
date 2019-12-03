@@ -29,6 +29,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   onAir: boolean;
 
   private oxSatScale = 1;
+  private heartScale: boolean = false;
   scale1: boolean;
 
   latestRespiration: string;
@@ -104,6 +105,9 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
       ],
       pulseRate: ['', [
         Validators.pattern(/^([0-9]{1,3}(\.[0-9])?)$/)
+        ]
+      ],
+      heartScale: [0, [
         ]
       ],
       consciousnessACVPU: ['', [
@@ -183,6 +187,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     this.updateOxygenSaturationScore(loadedForm.oxygenSaturation);
     this.updateSystolicBloodPressureScore(loadedForm.systolicBloodPressure);
     this.updatePulseScore(loadedForm.pulseRate);
+    this.updateHeartScale(loadedForm.heartScale);
     this.updateConsciousnessACVPUScore(loadedForm.consciousnessACVPU);
     this.updateTemperatureScore(loadedForm.temperature);
   }
@@ -268,6 +273,14 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateHeartScale(val: number) {
+    if (val == 1) {
+      this.heartScale = true;
+    } else if (val != 1) {
+      this.heartScale = false;
+    }
+  }
+
   updateConsciousnessACVPUScore(val: number) {
     if (val == 5) {
       this.consciousnessACVPUScore = 0;
@@ -323,6 +336,10 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     });
     this.form.get('pulseRate').valueChanges.subscribe(val => {
       this.updatePulseScore(val);
+      this.updateCalculations();
+    });
+    this.form.get('heartScale').valueChanges.subscribe(val => {
+      this.updateHeartScale(val);
       this.updateCalculations();
     });
     this.form.get('consciousnessACVPU').valueChanges.subscribe(val => {

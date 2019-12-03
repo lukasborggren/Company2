@@ -46,11 +46,7 @@
     border-color: #000000;
     border-radius: 0;
 }
-.hfc {
-  position: absolute;
-  top:0;
-  right:0;
-}
+
 .alert {
     margin: 0;
     background-color: #D0D0D0;
