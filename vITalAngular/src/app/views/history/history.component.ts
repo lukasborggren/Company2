@@ -199,19 +199,19 @@ export class HistoryComponent implements OnInit {
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                     if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Alert') {
-                        this.vitalArray[(data.resultSet.length - 1) - i] = 5;
+                        this.vitalArray[i] = 5;
                         this.newsArray[i] = 0;
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Förvirring') {
-                        this.vitalArray[(data.resultSet.length - 1) - i] = 4;
+                        this.vitalArray[i] = 4;
                         this.newsArray[i] = 3;
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Voice') {
-                        this.vitalArray[(data.resultSet.length - 1) - i] = 3;
+                        this.vitalArray[i] = 3;
                         this.newsArray[i] = 3;
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Pain') {
-                        this.vitalArray[(data.resultSet.length - 1) - i] = 2;
+                        this.vitalArray[i] = 2;
                         this.newsArray[i] = 3;
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Unresponsive') {
-                        this.vitalArray[(data.resultSet.length - 1) - i] = 1;
+                        this.vitalArray[i] = 1;
                         this.newsArray[i] = 3;
                     }
                 }
