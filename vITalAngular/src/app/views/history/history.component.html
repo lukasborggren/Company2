@@ -40,7 +40,7 @@
             </div>
             <div class="col">
                 <ul class="nameOfTable">
-                    Parameter1
+                    {{chartData[0].label}}
                 </ul>
                 <ul *ngFor="let vitalsign of vitalArray">
                     {{ vitalsign }}
@@ -48,7 +48,7 @@
             </div>
             <div class="col" *ngIf="vitalSign == 'bloodPressure'">
                 <ul class="nameOfTable">
-                    Parameter2
+                    {{chartData[0].label}}
                 </ul>
                 <ul *ngFor="let vitalsign of vitalArray2">
                     {{ vitalsign }}

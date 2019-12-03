@@ -30,11 +30,6 @@ export class HistoryComponent implements OnInit {
     vitalArray2: any[] = [];
     timeArray: any[] = [];
     newsArray: any[] = [];
-    private boxMin: any[] = [];
-    private boxMax: any[] = [];
-    private yaxisMax: any;
-    private yaxisMin: any;
-    private stepSize: any;
 
     public chartData: ChartDataSets[] = [
         {
