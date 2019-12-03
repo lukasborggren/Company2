@@ -3,6 +3,12 @@
     font-size: 4vw;
 }
 
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+  display: grid;
+}
+
 .vertical {
     float: left;
 
@@ -126,7 +132,6 @@ input[type=radio] {
     position: relative;
     height: 100%;
     width: 100%;
-    overflow:scroll;
    /* padding: 0px 0px 62px 0px; */
 
 }
