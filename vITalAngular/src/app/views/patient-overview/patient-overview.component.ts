@@ -29,7 +29,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
   onAir: boolean;
 
   private oxSatScale = 1;
-  private heartScale = 0;
+  private heartScale: boolean = false;
   scale1: boolean;
 
   latestRespiration: string;
@@ -275,13 +275,9 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
 
   updateHeartScale(val: number) {
     if (val == 1) {
-      this.heartScale = 1;
+      this.heartScale = true;
     } else if (val != 1) {
-      this.heartScale = 0;
-    }
-    const oxygenSaturation = this.form.controls.oxygenSaturation.value;
-    if (oxygenSaturation != null && oxygenSaturation !== '') {
-      this.updateOxygenSaturationScore(oxygenSaturation);
+      this.heartScale = false;
     }
   }
 
