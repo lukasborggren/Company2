@@ -58,8 +58,8 @@
                 <ul class="nameOfTable">
                     News2
                 </ul>
-                <ul *ngFor="let news of newsArray">
-                   <div [ngClass]="{'bg-white': news === 0, 'newsscore1': news === 1, 'newsscore2': news === 2, 'newsscore3': news === 3}"> {{news}} </div>
+                <ul *ngFor="let news of newsArray" [ngClass]="{'bg-white': news === 0, 'newsscore1': news === 1, 'newsscore2': news === 2, 'newsscore3': news === 3}">
+                   {{news}}
                 </ul>
             </div>
         </div>
