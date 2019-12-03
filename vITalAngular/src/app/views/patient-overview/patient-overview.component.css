@@ -30,6 +30,11 @@
     display: grid;
     /* height: 70px; */
 }
+
+.latestTitle{
+    padding:3px;
+}
+
 .RLS-class {
   font-size: 100%;
   margin-bottom: 40px;
