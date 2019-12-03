@@ -183,6 +183,11 @@ export class HistoryComponent implements OnInit {
                     this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
+                    if ( this.vitalArray[i] === false) {
+                        this.newsArray[i] = 0;
+                    } else {
+                        this.newsArray[i] = 3;
+                    }
                 }
             });
             this.chartData[0].label = 'Tillfört Syre';
@@ -199,13 +204,13 @@ export class HistoryComponent implements OnInit {
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Förvirring') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 4;
                         this.newsArray[i] = 3;
-                    } else if (data.resultSet[i].acvpu === 'Voice') {
+                    } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Voice') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 3;
                         this.newsArray[i] = 3;
-                    } else if (data.resultSet[i].acvpu === 'Pain') {
+                    } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Pain') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 2;
                         this.newsArray[i] = 3;
-                    } else if (data.resultSet[i].acvpu === 'Unresponsive') {
+                    } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Unresponsive') {
                         this.vitalArray[(data.resultSet.length - 1) - i] = 1;
                         this.newsArray[i] = 3;
                     }
@@ -269,10 +274,12 @@ export class HistoryComponent implements OnInit {
             }
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
             if (data.supplementalOxygen === '2') {
-                this.vitalArray[4] = 'false';
+                this.vitalArray[4] = false;
+                this.newsArray[4] = 0;
                 setCurrentData = true;
             } else if (data.supplementalOxygen === '1') {
-                this.vitalArray[4] = 'true';
+                this.vitalArray[4] = true;
+                this.newsArray[4] = 3;
                 setCurrentData = true;
             }
         } else if (this.vitalSign === 'ACVPU' && data.consciousnessACVPU !== '' && data.consciousnessACVPU !== null) {
