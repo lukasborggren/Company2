@@ -4,11 +4,11 @@
 <!-----------------Andningsfrekvens----------------->
       <div class="row parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm" id="respiratoryNews" [ngClass]="{'bg-white': respiratoryScore == 0, 'newsscore1': respiratoryScore == 1, 'newsscore2': respiratoryScore == 2, 'newsscore3': respiratoryScore == 3}"> {{this.respiratoryScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm numbers" id="respiratoryNews" [ngClass]="{'bg-white': respiratoryScore == 0, 'newsscore1': respiratoryScore == 1, 'newsscore2': respiratoryScore == 2, 'newsscore3': respiratoryScore == 3}"> {{this.respiratoryScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Andningsfrekvens
           </div>
-          <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2">
+          <input type="number" formControlName="respiratoryRate" class="inputField col-2 ml-auto form-control-lg p-2 numbers">
           <div class="collapseButton p-2">
             <button (click)="toggleAccordion(0)" class="btn accordionArrow">
               <i *ngIf="isAccordionOpen(0)" class="fa fa-angle-double-up fa-2x"></i>
@@ -40,11 +40,11 @@
 <!-----------------Syremättnad----------------->
       <div class="row parameterRow">
         <div class="d-flex align-items-center">
-          <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': saturationScore == 0, 'newsscore1': saturationScore == 1, 'newsscore2': saturationScore == 2, 'newsscore3': saturationScore == 3}"> {{this.saturationScore}} </div>
+          <div class="individualNews alert alert-secondary alert-sm numbers" id="respiratoryNews" [ngClass]="{'bg-white': saturationScore == 0, 'newsscore1': saturationScore == 1, 'newsscore2': saturationScore == 2, 'newsscore3': saturationScore == 3}"> {{this.saturationScore}} </div>
           <div class="parameterTitle mr-auto col-4">
             Syremättnad
           </div>
-          <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2">
+          <input type="number" formControlName="oxygenSaturation" class="inputField col-2 ml-auto form-control-lg p-2 numbers">
           <div class="collapseButton p-2">
             <button (click)="toggleAccordion(1)" class="btn accordionArrow">
               <i *ngIf="isAccordionOpen(1)" class="fa fa-angle-double-up fa-2x"></i>
@@ -90,7 +90,7 @@
 <!-----------------Tillförd syrgas----------------->
         <div class="row parameterRow">
           <div class="d-flex align-items-center">
-            <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getSupplementOxygenScore() == 0, 'newsscore1': getSupplementOxygenScore() == 1, 'newsscore2': getSupplementOxygenScore() == 2, 'newsscore3': getSupplementOxygenScore() == 3}"> {{getSupplementOxygenScore()}}</div>
+            <div class="individualNews alert alert-secondary alert-sm numbers" id="respiratoryNews" [ngClass]="{'bg-white': getSupplementOxygenScore() == 0, 'newsscore1': getSupplementOxygenScore() == 1, 'newsscore2': getSupplementOxygenScore() == 2, 'newsscore3': getSupplementOxygenScore() == 3}"> {{getSupplementOxygenScore()}}</div>
             <div class="parameterTitle mr-auto col-4"> Tillförd syrgas
             </div>
             <!-- This input shall be "yes" or "no" options, not text -->
@@ -137,14 +137,14 @@
 <!-----------------Blodtryck----------------->
 <div class="row parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': systolicScore == 0, 'newsscore1': systolicScore == 1, 'newsscore2': systolicScore == 2, 'newsscore3': systolicScore == 3}"> {{this.systolicScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm numbers" id="respiratoryNews" [ngClass]="{'bg-white': systolicScore == 0, 'newsscore1': systolicScore == 1, 'newsscore2': systolicScore == 2, 'newsscore3': systolicScore == 3}"> {{this.systolicScore}} </div>
     <div class="parameterTitle mr-auto col-3">
       Blodtryck
     </div>
     <!-- This input shall have two input fields options, one for systolic and one for diastolic -->
-    <input type="number" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-1">
+    <input type="number" formControlName="systolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-1 numbers">
       <div class="ml-auto" id="between">/</div>
-    <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-1">
+    <input type="number" id=bloodPressureInput formControlName="diastolicBloodPressure" class="inputField col-2 ml-auto form-control-lg p-1 numbers">
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(3)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(3)" class="fa fa-angle-double-up fa-2x"></i>
@@ -178,11 +178,11 @@
 <!-----------------Pulsfrekvens----------------->
 <div class="row parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': pulseScore == 0, 'newsscore1': pulseScore == 1, 'newsscore2': pulseScore == 2, 'newsscore3': pulseScore == 3}"> {{this.pulseScore}}</div>
+    <div class="individualNews alert alert-secondary alert-sm numbers" id="respiratoryNews" [ngClass]="{'bg-white': pulseScore == 0, 'newsscore1': pulseScore == 1, 'newsscore2': pulseScore == 2, 'newsscore3': pulseScore == 3}"> {{this.pulseScore}}</div>
     <div class="parameterTitle mr-auto col-4">
       Pulsfrekvens
     </div>
-    <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2">
+    <input type="number" formControlName="pulseRate" class="inputField col-2 ml-auto form-control-lg p-2 numbers">
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(4)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(4)" class="fa fa-angle-double-up fa-2x"></i>
@@ -223,7 +223,7 @@
 <!-----------------Medvetandegrad----------------->
 <div class="row parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessACVPUScore() == 0, 'newsscore1': getConsciousnessACVPUScore() == 1, 'newsscore2': getConsciousnessACVPUScore() == 2, 'newsscore3': getConsciousnessACVPUScore() == 3}"> {{getConsciousnessACVPUScore()}} </div>
+    <div class="individualNews alert alert-secondary alert-sm numbers " id="respiratoryNews" [ngClass]="{'bg-white': getConsciousnessACVPUScore() == 0, 'newsscore1': getConsciousnessACVPUScore() == 1, 'newsscore2': getConsciousnessACVPUScore() == 2, 'newsscore3': getConsciousnessACVPUScore() == 3}"> {{getConsciousnessACVPUScore()}} </div>
     <div class="parameterTitle mr-auto col-3">
       Medvetande<span class="consiousIphone">-<br></span>grad</div>
       <!-- Default inline 1-->
@@ -296,7 +296,7 @@
       </div>
       <!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
       <label class="form-check-label" for="rls">RLS</label>
-      <input type="number" formControlName="rls" class="inputField col-2 ml-auto form-control-lg p-2 ">
+      <input type="number" formControlName="rls" class="inputField col-2 ml-auto form-control-lg p-2 numbers">
 
       <div class="ml-auto">
         <div class="mt-4 p-2">
@@ -311,11 +311,11 @@
 <!-----------------Temperatur----------------->
 <div class="row parameterRow">
   <div class="d-flex align-items-center">
-    <div class="individualNews alert alert-secondary alert-sm " id="respiratoryNews" [ngClass]="{'bg-white': temperatureScore == 0, 'newsscore1': temperatureScore == 1, 'newsscore2': temperatureScore == 2, 'newsscore3': temperatureScore == 3}"> {{this.temperatureScore}} </div>
+    <div class="individualNews alert alert-secondary alert-sm numbers" id="respiratoryNews" [ngClass]="{'bg-white': temperatureScore == 0, 'newsscore1': temperatureScore == 1, 'newsscore2': temperatureScore == 2, 'newsscore3': temperatureScore == 3}"> {{this.temperatureScore}} </div>
     <div class="parameterTitle mr-auto col-4">
       Temperatur
     </div>
-    <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2">
+    <input type="number" formControlName="temperature" class="inputField col-2 ml-auto form-control-lg p-2 numbers">
     <div class="collapseButton p-2">
       <button (click)="toggleAccordion(6)" class="btn accordionArrow">
         <i *ngIf="isAccordionOpen(6)" class="fa fa-angle-double-up fa-2x"></i>
@@ -344,12 +344,3 @@
 
     </form>
 </div>
-
-<!-----------------Save button----------------->
-    <!-- This is the old button in the inaccurate style, can be removed when everything works as expected with the new button below.
-    <button mat-raised-button color="accent" (click)="openPopup('error')">Spara</button>
-    -->
-
-   <!-- Removing save-button as it is placed in footer instead
-    <button class=standardButton (click)="openPopup('error')">Spara</button>
-    -->

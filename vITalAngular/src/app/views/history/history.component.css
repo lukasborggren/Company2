@@ -42,6 +42,7 @@
 .historyTitle{
     padding-left: 1rem;
     padding-top: 1rem;
+    font-weight: bold;
 }
 .rowGraph{
     color: white;
