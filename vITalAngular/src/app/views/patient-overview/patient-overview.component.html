@@ -28,7 +28,7 @@
             </div>
             <div class="ml-auto">
               <div class="mt-4 p-2">
-                <button type="button" class="btn historikKnapp btn-sm" (click)="goToHistory('Respiration')">Mer historik</button>
+                <button type="button" class="btn standardButton btn-sm" (click)="goToHistory('Respiration')">Mer historik</button>
               </div>
             </div>
           </div>
@@ -80,7 +80,7 @@
 
 
           <div class="mt-4 p-2">
-            <button type="button" class="btn historikKnapp btn-sm ml-2" (click)="goToHistory('Oximetry')">Mer historik</button>
+            <button type="button" class="btn standardButton btn-sm ml-2" (click)="goToHistory('Oximetry')">Mer historik</button>
           </div>
             </div>
         </div>
@@ -127,7 +127,7 @@
                 </div>
                 <div class="ml-auto">
                   <div class="mt-4 p-2">
-                    <button type="button" class="btn historikKnapp btn-sm" (click)="goToHistory('getHistoricRespirationAdded')">Mer historik</button>
+                    <button type="button" class="btn standardButton btn-sm" (click)="goToHistory('getHistoricRespirationAdded')">Mer historik</button>
                   </div>
                 </div>
               </div>
@@ -168,7 +168,7 @@
       </div>
       <div class="ml-auto">
         <div class="mt-4 p-2">
-          <button type="button" class="btn historikKnapp btn-sm" (click)="goToHistory('bloodPressure')">Mer historik</button>
+          <button type="button" class="btn standardButton btn-sm" (click)="goToHistory('bloodPressure')">Mer historik</button>
         </div>
       </div>
     </div>
@@ -213,7 +213,7 @@
 
       <div class="ml-auto">
         <div class="mt-4 p-2">
-          <button type="button" class="btn historikKnapp btn-sm" (click)="goToHistory('Pulse')">Mer historik</button>
+          <button type="button" class="btn standardButton btn-sm" (click)="goToHistory('Pulse')">Mer historik</button>
         </div>
       </div>
     </div>
@@ -295,12 +295,12 @@
         <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestAlertness}}</strong></button>
       </div>
       <!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
-      <label class="form-check-label" for="rls">RLS</label>
+      <label class="form-check-label" for="rls">RLS:</label>
       <input type="number" formControlName="rls" class="inputField col-2 ml-auto form-control-lg p-2 numbers">
 
       <div class="ml-auto">
         <div class="mt-4 p-2">
-          <button type="button" class="btn historikKnapp btn-sm ml-2" (click)="goToHistory('ACVPU')">Mer historik</button>
+          <button type="button" class="btn standardButton btn-sm ml-2" (click)="goToHistory('ACVPU')">Mer historik</button>
         </div>
       </div>
     </div>
@@ -336,7 +336,7 @@
         <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestTemperature}}°C</strong></button>
       </div>
       <div class="mt-4 p-2">
-        <button type="button" class="btn historikKnapp btn-sm mr-2" (click)="goToHistory('Temperature')">Mer historik</button>
+        <button type="button" class="btn standardButton btn-sm mr-2" (click)="goToHistory('Temperature')">Mer historik</button>
       </div>
     </div>
   </div>
