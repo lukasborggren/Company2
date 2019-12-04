@@ -11,3 +11,11 @@
 display: flex;
 justify-content: center;
 }
+
+.mat-dialog-title {
+  margin-bottom: 0;
+}
+
+.form-control {
+  padding: 0;
+}
