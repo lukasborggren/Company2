@@ -14,10 +14,12 @@ justify-content: center;
 
 .mat-dialog-title {
   margin-bottom: 0;
+  justify-content: center;
 }
 
 .form-control {
-  padding: 0;
+  padding: 2px;
+  padding-left: 4px;
 }
 
 ::ng-deep .mat-form-field-wrapper {
