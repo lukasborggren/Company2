@@ -55,11 +55,11 @@ export class HistoryComponent implements OnInit {
             pointBorderWidth: 7,
             pointStyle: 'triangle',
             fill: false,
-            borderColor: 'rgb(216, 216, 216)', // Change the color of the line
+            borderColor: 'rgb(242, 242, 242)', // Change the color of the line
             borderWidth: 2,
             pointRadius: 4,
-            pointBackgroundColor: 'rgb(216, 216, 216)', // Change the color of the point
-            pointBorderColor: 'rgb(216, 216, 216)',
+            pointBackgroundColor: 'rgb(242, 242, 242)', // Change the color of the point
+            pointBorderColor: 'rgb(242, 242, 242)',
         },
     ];
     public chartLabels: Label[] = [];
