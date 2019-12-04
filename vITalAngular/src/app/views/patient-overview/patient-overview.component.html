@@ -23,8 +23,8 @@
           <div class="latestTitle"><u>Senaste värde:</u></div>
           <div class="d-flex align-items-center">
             <div class="mr-auto">
-              <button type="button" class="btn btn-sm expandBtn"><strong>{{latestRespirationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
-              <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestRespiration}}/MIN</strong></button>
+              <button type="button" class="btn btn-sm expandBtn numbers"><strong>{{latestRespirationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
+              <button type="button" class="btn btn-sm expandBtn btn-block numbers"><strong>{{latestRespiration}}/min</strong></button>
             </div>
             <div class="ml-auto">
               <div class="mt-4 p-2">
@@ -62,8 +62,8 @@
         <div class="latestTitle"><u>Senaste värde:</u></div>
         <div class="d-flex align-items-center">
           <div>
-            <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
-            <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxidation}}%</strong></button>
+            <button type="button" class="btn btn-sm expandBtn numbers"><strong>{{latestOxidationTime| date:'dd/MM/yy HH:mm' }}</strong></button>
+            <button type="button" class="btn btn-sm expandBtn btn-block numbers"><strong>{{latestOxidation}}%</strong></button>
           </div>
           <div class="form-check form-check-inline radio-check mr-2" style="display: inline-block;">
             <div class = "mb-2 ml-2">
@@ -122,7 +122,7 @@
               <div class="latestTitle"><u>Senaste värde:</u></div>
               <div class="d-flex align-items-center">
                 <div class="mr-auto">
-                  <button type="button" class="btn btn-sm expandBtn"><strong>{{latestOxidationTime |date:'dd/MM/yy HH:mm'}}</strong></button>
+                  <button type="button" class="btn btn-sm expandBtn numbers"><strong>{{latestOxidationTime |date:'dd/MM/yy HH:mm'}}</strong></button>
                   <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestOxygen}}</strong></button>
                 </div>
                 <div class="ml-auto">
@@ -163,8 +163,8 @@
     <div class="latestTitle"><u>Senaste värde:</u></div>
     <div class="d-flex align-items-center">
       <div class="mr-auto">
-        <button type="button" class="btn btn-sm expandBtn"><strong>{{latestBPTime| date:'dd/MM/yy HH:mm'}}</strong></button>
-        <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestSystolic}}/{{latestDiastolic}} mmHg</strong></button>
+        <button type="button" class="btn btn-sm expandBtn numbers"><strong>{{latestBPTime| date:'dd/MM/yy HH:mm'}}</strong></button>
+        <button type="button" class="btn btn-sm expandBtn btn-block numbers"><strong>{{latestSystolic}}/{{latestDiastolic}} mmHg</strong></button>
       </div>
       <div class="ml-auto">
         <div class="mt-4 p-2">
@@ -199,8 +199,8 @@
     <div class="latestTitle"><u>Senaste värde:</u></div>
     <div class="d-flex align-items-center">
       <div>
-        <button type="button" class="btn btn-sm expandBtn"><strong>{{latestPulseTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
-        <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestPulse}}/min</strong></button>
+        <button type="button" class="btn btn-sm expandBtn numbers"><strong>{{latestPulseTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
+        <button type="button" class="btn btn-sm expandBtn btn-block numbers"><strong>{{latestPulse}}/min</strong></button>
       </div>
         <div class="form-check mr-2 " style="display: inline-block;">
           <div class = "mb-2 ml-2">
@@ -291,7 +291,7 @@
     <div class="latestTitle"><u>Senaste värde:</u></div>
     <div class="d-flex align-items-center">
       <div class="mr-2">
-        <button type="button" class="btn btn-sm expandBtn"><strong>{{latestAlertnessTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
+        <button type="button" class="btn btn-sm expandBtn numbers"><strong>{{latestAlertnessTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
         <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestAlertness}}</strong></button>
       </div>
       <!-- This part sometimes causes the latest measurement to not display correctly, the data is displayed correctly if this i removed-->
@@ -332,8 +332,8 @@
     <div class="latestTitle"><u>Senaste värde:</u></div>
     <div class="d-flex align-items-center">
       <div class="mr-auto">
-        <button type="button" class="btn btn-sm expandBtn"><strong>{{latestTemperatureTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
-        <button type="button" class="btn btn-sm expandBtn btn-block"><strong>{{latestTemperature}}°C</strong></button>
+        <button type="button" class="btn btn-sm expandBtn numbers"><strong>{{latestTemperatureTime | date: 'dd/MM/yy HH:mm'}}</strong></button>
+        <button type="button" class="btn btn-sm expandBtn btn-block numbers"><strong>{{latestTemperature}}°C</strong></button>
       </div>
       <div class="mt-4 p-2">
         <button type="button" class="btn standardButton btn-sm mr-2" (click)="goToHistory('Temperature')">Mer historik</button>
