@@ -251,7 +251,7 @@ export class HistoryComponent implements OnInit {
                     }
                 }
             });
-            this.chartData[0].label = 'Tillfört Syre';
+            this.chartData[0].label = 'Syrgas';
             this.setChartOptions(2, 0, 1, this.vitalSign);
             //--------------If the history for medvetandegrad is viewed the following code is run---------------
         } else if (this.vitalSign === 'ACVPU') {
