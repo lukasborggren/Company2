@@ -38,7 +38,7 @@
                     {{ time | date:'HH:mm'}}
                 </ul>
             </div>
-            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded'; else checkOxygen">
+            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded'; else elseblock">
                 <ul class="nameOfTable">
                     {{chartData[0].label}}
                 </ul>
