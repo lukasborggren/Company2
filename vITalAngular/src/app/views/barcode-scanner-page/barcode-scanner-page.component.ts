@@ -18,6 +18,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
   PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
   username: string;
+  showErrorMessage: boolean;
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -33,7 +34,7 @@ export class BarcodeScannerPageComponent implements OnInit {
       patientkey = null;
       sessionStorage.setItem('EHR_ID', patientkey);
     }
-    
+
     localStorage.removeItem('form');
     this.stopScanButtonVisible = false;
     this.barcodeScanner.barcodeObs.subscribe(barcode => {
@@ -89,15 +90,20 @@ export class BarcodeScannerPageComponent implements OnInit {
   }
 
   private validPidProvided(pid: string) {
+    this.showErrorMessage = false;
     sessionStorage.setItem('PID', pid);
     this.patientService.getPatientInformation(pid).subscribe(
-        response => {
+      response => {
+        try {
           const ehrId = response.parties[0].additionalInfo.ehrId;
           sessionStorage.setItem('EHR_ID', ehrId);
           sessionStorage.setItem('NAME', response.parties[0].firstNames + ' ' + response.parties[0].lastNames);
           this.router.navigate(['/pid/' + pid]);
-        },
-        error => console.log(error)
+        } catch (err) {
+          console.log('login failed')
+          this.showErrorMessage = true;
+        }
+      },
     );
   }
 

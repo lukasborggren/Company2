@@ -26,6 +26,11 @@
     <button type="button" name="manual" class="row largeButton"(click)="openDialog()">
       <img src="assets/img/skriv-in-manuellt.png" alt="" class="icon col-2" id="pen">
       <div class="buttonText col-8">Manuell inmatning</div>
+      <div *ngIf="showErrorMessage">
+        <font color="black">
+        Ogiltigt personnummer, försök igen.
+        </font>
+      </div>
       <div class="empty col-2"> </div>
     </button>
   </div>
