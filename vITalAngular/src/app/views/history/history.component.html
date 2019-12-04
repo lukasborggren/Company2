@@ -1,7 +1,7 @@
 
 <div class="containerHistoryGraph">
     <h2 class="historyTitle">Historik:</h2>
-    <div class="historyTableDiv numbers">
+    <div class="historyTableDiv">
         <div class="row">
             <div class="rowGraph">
                             <span style="float: right;">
@@ -26,7 +26,7 @@
                 <ul class="nameOfTable">
                     Datum
                 </ul>
-                <ul *ngFor="let time of timeArray">
+                <ul *ngFor="let time of timeArray" class="numbers">
                     {{ time | date:'dd/MM/yy'}}
                 </ul>
             </div>
@@ -34,7 +34,7 @@
                 <ul class="nameOfTable">
                     Tid
                 </ul>
-                <ul *ngFor="let time of timeArray">
+                <ul *ngFor="let time of timeArray" class="numbers">
                     {{ time | date:'HH:mm'}}
                 </ul>
             </div>
@@ -42,7 +42,7 @@
                 <ul class="nameOfTable">
                     {{chartData[0].label}}
                 </ul>
-                <ul *ngFor="let parameter of parameterArray">
+                <ul *ngFor="let parameter of parameterArray" class="numbers">
                     {{ parameter }}
                 </ul>
             </div>
@@ -51,7 +51,7 @@
                 <ul class="nameOfTable">
                     {{chartData[0].label}}
                 </ul>
-                <ul *ngFor="let vitalsign of vitalArray">
+                <ul *ngFor="let vitalsign of vitalArray" class="numbers">
                     {{ vitalsign }}
                 </ul>
             </div>
@@ -60,7 +60,7 @@
                 <ul class="nameOfTable">
                     {{chartData[1].label}}
                 </ul>
-                <ul *ngFor="let vitalsign of vitalArray2">
+                <ul *ngFor="let vitalsign of vitalArray2" class="numbers">
                     {{ vitalsign }}
                 </ul>
             </div>
@@ -68,7 +68,7 @@
                 <ul class="nameOfTable">
                     News2
                 </ul>
-                <ul *ngFor="let news of newsArray" [ngClass]="{'bg-white': news === 0, 'newsscore1': news === 1, 'newsscore2': news === 2, 'newsscore3': news === 3}">
+                <ul *ngFor="let news of newsArray" class="numbers" [ngClass]="{'bg-white': news === 0, 'newsscore1': news === 1, 'newsscore2': news === 2, 'newsscore3': news === 3}">
                    {{news}}
                 </ul>
             </div>
