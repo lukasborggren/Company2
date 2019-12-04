@@ -1,9 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+@font-face{
+    font-family:"high-tide-bold";
+    src: url("/assets/fonts/HighTide-Bold.ttf") format("truetype"), url("/assets/fonts/HighTide-Bold.woff") format("woff");
+}
+
+@font-face{
+    font-family:"high-tide-sans";
+    src:url("/assets/fonts/HighTideSans.ttf") format("truetype"), url("/assets/fonts/HighTideSans.woff") format("woff");
+}
+
+@font-face{
+    font-family:"Raleway-Bold";
+    src:url("/assets/fonts/Raleway-Bold.ttf") format("truetype"), url("/assets/fonts/Raleway-Bold.woff") format("woff");
+}
+
+
 html, body { height: 100%;
 background-color: #f2f2f2;}
-body { margin: 0; font-family: Raleway, "Raleway", sans-serif;}
+body {
+  margin: 0;
+  font-family: 'Raleway-Bold', sans-serif;
+}
 
 /*
 html, body { height: 100%; }
@@ -11,8 +30,8 @@ body { margin: 0; font-family: Raleway, "Raleway", sans-serif; font-weight: bold
 */
 
 .numbers {
-  font-family: HighTide, "HighTide", sans-serif;
-
+  font-family: 'high-tide-sans', sans-serif;
+  padding-top: -2px;
 }
 
 .standardButton {
