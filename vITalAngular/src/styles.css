@@ -30,7 +30,8 @@ body { margin: 0; font-family: Raleway, "Raleway", sans-serif; font-weight: bold
 */
 
 .numbers {
-  font-family: 'high-tide-sans', sans-serif;
+font-family: Roboto,"Helvetica Neue",sans-serif;
+/*  font-family: 'high-tide-sans', sans-serif; */
 }
 
 .standardButton {
