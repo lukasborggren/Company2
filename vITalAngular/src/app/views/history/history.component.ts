@@ -37,6 +37,7 @@ export class HistoryComponent implements OnInit {
             label: '',
             lineTension: 0,
             pointStyle: 'circle',
+            pointBorderWidth: 7,
             pointRotation: 180,
             fill: false,
             borderColor: 'rgb(0,0,0)', // Change the color of the line
@@ -50,6 +51,7 @@ export class HistoryComponent implements OnInit {
             data: this.vitalArray2,
             label: '',
             lineTension: 0,
+            pointBorderWidth: 7,
             pointStyle: 'triangle',
             fill: false,
             borderColor: 'rgb(216, 216, 216)', // Change the color of the line
@@ -61,16 +63,42 @@ export class HistoryComponent implements OnInit {
     ];
     public chartLabels: Label[] = [];
     public chartOptions: (ChartOptions /*& { annotation: any }*/);
-    public setChartOptions(max, min, steplength) {
+    public setChartOptions(max, min, steplength, parameter) {
         this.chartOptions = {
             plugins: {
                 datalabels: {
-                    anchor: 'end',
-                    align: 'end',
-                    color: 'black',
+                    anchor: 'center',
+                    color: 'white',
                     font: {
-                        weight: 'bold'
+                        size: 7,
+                        weight: 'bold',
                     },
+                    formatter: function(value, context) {
+                        if (parameter === 'ACVPU') {
+                            switch(value){
+                                case 0:
+                                    return null;
+                                case 1:
+                                    return 'U';
+                                case 2:
+                                    return 'P';
+                                case 3:
+                                    return 'C';
+                                case 4:
+                                    return 'V';
+                                case 5:
+                                    return 'A';
+                                case 6:
+                                    return null;
+                            }
+                        } else if (parameter === 'getHistoricRespirationAdded') {
+                            if (value) {
+                                return 'Ja'
+                            } else {
+                                return 'Nej'
+                            }
+                        } 
+                    }
                 }
             },
             responsive: true,
@@ -79,7 +107,38 @@ export class HistoryComponent implements OnInit {
                     ticks: {
                         max: max,
                         min: min,
-                        stepSize: steplength
+                        stepSize: steplength,
+                        callback: function(label, index, labels) {
+                            if (parameter === 'ACVPU') {
+                                switch(label){
+                                    case 0:
+                                        return null;
+                                    case 1:
+                                        return 'U';
+                                    case 2:
+                                        return 'P';
+                                    case 3:
+                                        return 'C';
+                                    case 4:
+                                        return 'V';
+                                    case 5:
+                                        return 'A';
+                                    case 6:
+                                        return null;
+                                }
+                            } else if (parameter === 'getHistoricRespirationAdded') {
+                                switch(label){
+                                    case 0:
+                                        return 'Nej';
+                                    case 1:
+                                        return 'Ja';
+                                    case 2:
+                                        return null;
+                                }
+                            }
+                        return label;
+                        }
+                        
                     }
                 }],
                 xAxes: [{
@@ -173,7 +232,7 @@ export class HistoryComponent implements OnInit {
             this.changeLineColor('rgb(5, 0, 140)', 0);
             this.changeLineColor('rgb(0, 0, 0)', 1);
             this.chartData[0].pointStyle = 'triangle';
-            this.setChartOptions(220, 50, 10);
+            this.setChartOptions(220, 50, 10, this.vitalSign);
             this.chartData[0].label = 'Systoliskt';
             this.chartData[1].label = 'Diastoliskt';
             //-------------If the history for syrgas is viewed the following code is run---------------
@@ -191,7 +250,7 @@ export class HistoryComponent implements OnInit {
                 }
             });
             this.chartData[0].label = 'Tillfört Syre';
-            this.setChartOptions(2, 0, 1);
+            this.setChartOptions(2, 0, 1, this.vitalSign);
             //--------------If the history for medvetandegrad is viewed the following code is run---------------
         } else if (this.vitalSign === 'ACVPU') {
             this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
@@ -217,7 +276,7 @@ export class HistoryComponent implements OnInit {
                 }
             });
             this.chartData[0].label = 'Medvetandegrad';
-            this.setChartOptions(6, 0, 1);
+            this.setChartOptions(6, 0, 1, this.vitalSign);
             //----------If the history for puls, temperatur, andningsfrekvens or syremättnad is viewed the following code is run-----------------
         } else {
             this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
@@ -228,27 +287,27 @@ export class HistoryComponent implements OnInit {
                 }
                 if (this.vitalSign === 'Respiration') {
                     this.chartData[0].label = 'Andningsfrekvens';
-                    this.setChartOptions(26, 7, 3);
+                    this.setChartOptions(26, 7, 3, this.vitalSign);
                     for (let i = 0; i < 4; i++) {
                         this.newsArray[i] = this.newsScoreCalculatorService.getRespiratoryScore(this.vitalArray[i]);
                     }
                 } else if (this.vitalSign === 'Temperature') {
                     this.chartData[0].label = 'Temperatur';
-                    this.setChartOptions(42, 33, 1);
+                    this.setChartOptions(42, 33, 1, this.vitalSign);
                     this.changeLineColor('rgb(6, 201, 58)', 0);
                     for (let i = 0; i < 4; i++) {
                         this.newsArray[i] = this.newsScoreCalculatorService.getTemperatureScore(this.vitalArray[i]);
                     }
                 } else if (this.vitalSign === 'Pulse') {
                     this.chartData[0].label = 'Pulsfrekvens';
-                    this.setChartOptions(160, 20, 10);
+                    this.setChartOptions(160, 20, 10, this.vitalSign);
                     this.changeLineColor('rgb(201, 7, 0)', 0);
                     for (let i = 0; i < 4; i++) {
                         this.newsArray[i] = this.newsScoreCalculatorService.getPulseScore(this.vitalArray[i]);
                     }
                 } else if (this.vitalSign === 'Oximetry') {
                     this.chartData[0].label = 'Syremättnad';
-                    this.setChartOptions(100, 82, 2);
+                    this.setChartOptions(100, 82, 2, this.vitalSign);
                     for (let i = 0; i < 4; i++) {
                         this.newsArray[i] = this.newsScoreCalculatorService.getSaturationScore(this.vitalArray[i]);
                     }
@@ -258,7 +317,6 @@ export class HistoryComponent implements OnInit {
     }
 
     private setCurrentData() {
-        console.log(localStorage.getItem('form'));
         const data = JSON.parse(localStorage.getItem('form'));
         let setCurrentData = false;
 
