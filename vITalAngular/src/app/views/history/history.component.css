@@ -68,3 +68,12 @@
 .newsscore3 {
     background-color: #F59681 !important;
 }
+
+.dropdown {
+    border: 1px solid #3A3938;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    color: #3A3938;
+    font-family: 'Raleway-Bold', sans-serif;
+}
