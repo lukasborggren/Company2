@@ -38,6 +38,15 @@
                     {{ time | date:'HH:mm'}}
                 </ul>
             </div>
+            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded'; else elseblock">
+                <ul class="nameOfTable">
+                    {{chartData[0].label}}
+                </ul>
+                <ul *ngFor="let parameter of parameterArray">
+                    {{ parameter }}
+                </ul>
+            </div>
+            <ng-template #elseblock>
             <div class="col">
                 <ul class="nameOfTable">
                     {{chartData[0].label}}
@@ -46,6 +55,7 @@
                     {{ vitalsign }}
                 </ul>
             </div>
+            </ng-template>
             <div class="col" *ngIf="vitalSign == 'bloodPressure'">
                 <ul class="nameOfTable">
                     {{chartData[1].label}}

@@ -26,10 +26,11 @@ export class HistoryComponent implements OnInit {
     public lineChartType = 'line';
     public lineChartPlugins = [pluginAnnotations, pluginlabels];
     private vitalSign: string;
-    vitalArray: any[] = [];
-    vitalArray2: any[] = [];
-    timeArray: any[] = [];
-    newsArray: any[] = [];
+    private vitalArray: any[] = [];
+    private vitalArray2: any[] = [];
+    private timeArray: any[] = [];
+    private newsArray: any[] = [];
+    private parameterArray: any[] = [];
 
     public chartData: ChartDataSets[] = [
         {
@@ -83,9 +84,9 @@ export class HistoryComponent implements OnInit {
                                 case 2:
                                     return 'P';
                                 case 3:
-                                    return 'C';
-                                case 4:
                                     return 'V';
+                                case 4:
+                                    return 'C';
                                 case 5:
                                     return 'A';
                                 case 6:
@@ -97,7 +98,7 @@ export class HistoryComponent implements OnInit {
                             } else {
                                 return 'Nej'
                             }
-                        } 
+                        }
                     }
                 }
             },
@@ -118,9 +119,9 @@ export class HistoryComponent implements OnInit {
                                     case 2:
                                         return 'P';
                                     case 3:
-                                        return 'C';
-                                    case 4:
                                         return 'V';
+                                    case 4:
+                                        return 'C';
                                     case 5:
                                         return 'A';
                                     case 6:
@@ -136,9 +137,8 @@ export class HistoryComponent implements OnInit {
                                         return null;
                                 }
                             }
-                        return label;
+                            return label;
                         }
-                        
                     }
                 }],
                 xAxes: [{
@@ -244,8 +244,10 @@ export class HistoryComponent implements OnInit {
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                     if ( this.vitalArray[i] === false) {
                         this.newsArray[i] = 0;
+                        this.parameterArray[i] = 'Nej';
                     } else {
                         this.newsArray[i] = 2;
+                        this.parameterArray[i] = 'Ja';
                     }
                 }
             });
@@ -260,18 +262,23 @@ export class HistoryComponent implements OnInit {
                     if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Alert') {
                         this.vitalArray[i] = 5;
                         this.newsArray[i] = 0;
+                        this.parameterArray[i] = 'Alert';
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Förvirring') {
                         this.vitalArray[i] = 4;
                         this.newsArray[i] = 3;
+                        this.parameterArray[i] = 'Confusion';
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Voice') {
                         this.vitalArray[i] = 3;
                         this.newsArray[i] = 3;
+                        this.parameterArray[i] = 'Voice';
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Pain') {
                         this.vitalArray[i] = 2;
                         this.newsArray[i] = 3;
+                        this.parameterArray[i] = 'Pain';
                     } else if (data.resultSet[(data.resultSet.length - 1) - i].acvpu === 'Unresponsive') {
                         this.vitalArray[i] = 1;
                         this.newsArray[i] = 3;
+                        this.parameterArray[i] = 'Unresponsive';
                     }
                 }
             });
@@ -334,18 +341,41 @@ export class HistoryComponent implements OnInit {
             if (data.supplementalOxygen === '2') {
                 this.vitalArray[4] = false;
                 this.newsArray[4] = 0;
+                this.parameterArray[4] = 'Nej';
                 setCurrentData = true;
             } else if (data.supplementalOxygen === '1') {
                 this.vitalArray[4] = true;
                 this.newsArray[4] = 2;
+                this.parameterArray[4] = 'Ja';
                 setCurrentData = true;
             }
         } else if (this.vitalSign === 'ACVPU' && data.consciousnessACVPU !== '' && data.consciousnessACVPU !== null) {
             this.vitalArray[4] = data.consciousnessACVPU;
             if (data.consciousnessACVPU === '5') {
+                this.vitalArray[4] = 5;
                 this.newsArray[4] = 0;
-            } else {
+                this.parameterArray[4] = 'Alert';
+                setCurrentData = true;
+            } else if ((data.consciousnessACVPU === '4')) {
+                this.vitalArray[4] = 4;
                 this.newsArray[4] = 3;
+                this.parameterArray[4] = 'Confusion';
+                setCurrentData = true;
+            } else if ((data.consciousnessACVPU === '3')) {
+                this.vitalArray[4] = 3;
+                this.newsArray[4] = 3;
+                this.parameterArray[4] = 'Voice';
+                setCurrentData = true;
+            } else if ((data.consciousnessACVPU === '2')) {
+                this.vitalArray[4] = 2;
+                this.newsArray[4] = 3;
+                this.parameterArray[4] = 'Pain';
+                setCurrentData = true;
+            } else if ((data.consciousnessACVPU === '1')) {
+                this.vitalArray[4] = 1;
+                this.newsArray[4] = 3;
+                this.parameterArray[4] = 'Unresponsive';
+                setCurrentData = true;
             }
             setCurrentData = true;
         } else if (this.vitalSign === 'Respiration' && data.respiratoryRate !== '' && data.respiratoryRate !== null) {
@@ -373,6 +403,7 @@ export class HistoryComponent implements OnInit {
             // this.chartLabels[4] = date.toTimeString().substring(0, 8);
         }
     }
+
     ngOnInit() {
         this.fetchDataApi();
         this.setCurrentData();
