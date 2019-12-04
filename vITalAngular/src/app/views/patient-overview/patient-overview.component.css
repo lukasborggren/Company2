@@ -84,7 +84,8 @@
     position: relative;
     padding: 1px;
     font-weight: 100;
-}
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+  }
 
 .newsscore1 {
   background-color: #FFF1AB;
