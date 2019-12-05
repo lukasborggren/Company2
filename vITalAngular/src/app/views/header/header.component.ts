@@ -38,6 +38,11 @@ export class HeaderComponent implements OnInit {
     this.feedData.nextPhilipsData(true);
   }
 
+  public goToHistory() {
+    localStorage.setItem('outputVitalParameter', 'News');
+    this.router.navigate(['history']);
+  }
+
   routeEvent() {
     this.router.events.subscribe(event => {
       this.pId = sessionStorage.getItem('PID');
