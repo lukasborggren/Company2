@@ -40,3 +40,15 @@ font-family: Roboto,"Helvetica Neue",sans-serif;
   color:black;
   border: none;
 }
+
+.mat-form-field-ripple {
+  background-color: #909090;
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: #909090;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #909090;
+}
