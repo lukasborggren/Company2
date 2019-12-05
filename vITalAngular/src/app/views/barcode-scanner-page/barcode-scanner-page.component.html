@@ -33,13 +33,13 @@
   <button type="button" name="logOut" class="row largeButton" (click)="goToLogout()">
     <img src="assets/img/logga-ut.png" alt="" class="icon col-2">
     <div class="buttonText col-8">Logga ut</div>
-    <div *ngIf="showErrorMessage">
-      <font color="red">
-      Ogiltigt personnummer, försök igen.
-      </font>
-    </div>
     <div class="empty col-2"> </div>
   </button>
+  <div *ngIf="showErrorMessage">
+    <font color="red">
+    Ogiltigt personnummer, försök igen.
+    </font>
+  </div>
 
   <label *ngIf="barcodeValue">Skannad streckkod = {{barcodeValue}}</label>
 
