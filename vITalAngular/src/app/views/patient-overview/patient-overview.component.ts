@@ -367,7 +367,7 @@ export class PatientOverviewComponent implements OnInit, OnDestroy {
     localStorage.setItem('TIMER_ACTIVE', 'F');
   }
 
-  @HostListener('window:scroll') onScroll() {
+  @HostListener('scroll') onScroll() {
     localStorage.setItem('TIMER_ACTIVE', 'F');
   }
 
