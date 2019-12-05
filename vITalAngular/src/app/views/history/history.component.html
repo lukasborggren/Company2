@@ -2,8 +2,10 @@
 <div class="containerHistoryGraph">
     <h2 class="historyTitle">Historik:</h2>
 
-    <button type="button" class="btn dropdown btn-primary dropdown-toggle" data-toggle="dropdown">{{this.parameterName[this.vitalSign]}}</button>
+    <button type="button" class="btn dropdown dropdown-toggle" data-toggle="dropdown">{{this.parameterName[this.vitalSign]}}</button>
     <div class="dropdown-menu">
+        <a (click)="changeParam('News')" class="dropdown-item">Total NEWS</a>
+        <div class="dropdown-divider"></div>
         <a (click)="changeParam('Respiration')" class="dropdown-item">Andningsfrekvens</a>
         <div class="dropdown-divider"></div>
         <a (click)="changeParam('Oximetry')" class="dropdown-item">Syremättnad</a>
@@ -56,7 +58,7 @@
                     {{ time | date:'HH:mm'}}
                 </ul>
             </div>
-            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded'; else elseblock">
+            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded' || vitalSign == 'News'; else elseblock">
                 <ul class="nameOfTable">
                     {{chartData[0].label}}
                 </ul>
@@ -82,7 +84,7 @@
                     {{ vitalsign }}
                 </ul>
             </div>
-            <div class="col">
+            <div class="col" *ngIf="vitalSign != 'News'">
                 <ul class="nameOfTable">
                     News2
                 </ul>
