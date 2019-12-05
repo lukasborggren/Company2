@@ -474,11 +474,9 @@ export class HistoryComponent implements OnInit {
       this.resetChart();
       localStorage.setItem('outputVitalParameter', param);
       this.fetchDataApi();
-      this.setCurrentData();
     }
 
     ngOnInit() {
         this.fetchDataApi();
-        this.setCurrentData();
     }
 }
