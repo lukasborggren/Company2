@@ -21,7 +21,6 @@ export class HistoryComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartPlugins = [pluginAnnotations, pluginlabels];
-<<<<<<< HEAD
   public vitalSign: string;
   public vitalArray: any[] = [];
   public vitalArray2: any[] = [];
@@ -29,16 +28,6 @@ export class HistoryComponent implements OnInit {
   public newsArray: any[] = [];
   public parameterArray: any[] = [];
   public parameterName: { [id: string] : string; } = {
-=======
-  private vitalSign: string;
-  private vitalArray: any[] = [];
-  private vitalArray2: any[] = [];
-  private timeArray: any[] = [];
-  private newsArray: any[] = [];
-  private parameterArray: any[] = [];
-  private parameterName: { [id: string] : string; } = {
-    'News': 'Total NEWS',
->>>>>>> 305955513cddc4934a7ce5438457bd75db7ea873
     'Respiration': 'Andningsfrekvens',
     'Oximetry': 'Syremättnad',
     'getHistoricRespirationAdded': 'Tillförd syrgas',
