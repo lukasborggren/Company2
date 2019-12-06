@@ -21,6 +21,7 @@ export class HistoryComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartPlugins = [pluginAnnotations, pluginlabels];
+<<<<<<< HEAD
   public vitalSign: string;
   public vitalArray: any[] = [];
   public vitalArray2: any[] = [];
@@ -28,6 +29,16 @@ export class HistoryComponent implements OnInit {
   public newsArray: any[] = [];
   public parameterArray: any[] = [];
   public parameterName: { [id: string] : string; } = {
+=======
+  private vitalSign: string;
+  private vitalArray: any[] = [];
+  private vitalArray2: any[] = [];
+  private timeArray: any[] = [];
+  private newsArray: any[] = [];
+  private parameterArray: any[] = [];
+  private parameterName: { [id: string] : string; } = {
+    'News': 'Total NEWS',
+>>>>>>> 305955513cddc4934a7ce5438457bd75db7ea873
     'Respiration': 'Andningsfrekvens',
     'Oximetry': 'Syremättnad',
     'getHistoricRespirationAdded': 'Tillförd syrgas',
@@ -70,10 +81,9 @@ export class HistoryComponent implements OnInit {
   public chartLabels: Label[] = [];
   public chartOptions: (ChartOptions /*& { annotation: any }*/);
 
-    constructor(private router: Router,
-                private patientservice: PatientService,
-                private newsScoreCalculatorService: NewsScoreCalculatorService) {
-    }
+  constructor(private router: Router,
+    private patientservice: PatientService,
+    private newsScoreCalculatorService: NewsScoreCalculatorService) { }
 
     resetChart() {
       this.chartType = 'line';
@@ -87,34 +97,34 @@ export class HistoryComponent implements OnInit {
       this.newsArray = [];
       this.parameterArray = [];
       this.chartData = [
-          {
-              data: this.vitalArray,
-              label: '',
-              lineTension: 0,
-              pointStyle: 'circle',
-              pointBorderWidth: 7,
-              pointRotation: 180,
-              fill: false,
-              borderColor: 'rgb(0,0,0)', // Change the color of the line
-              borderWidth: 2,
-              pointRadius: 4,
-              pointBackgroundColor: 'rgb(0, 0, 0)', // Change the color of the point
-              pointBorderColor: 'rgb(0, 0, 0)',
-              pointHoverBorderColor: 'rgb(0, 0, 0)'
-          },
-          {
-              data: this.vitalArray2,
-              label: '',
-              lineTension: 0,
-              pointBorderWidth: 7,
-              pointStyle: 'triangle',
-              fill: false,
-              borderColor: 'rgb(242, 242, 242)', // Change the color of the line
-              borderWidth: 2,
-              pointRadius: 4,
-              pointBackgroundColor: 'rgb(242, 242, 242)', // Change the color of the point
-              pointBorderColor: 'rgb(242, 242, 242)',
-          },
+        {
+          data: this.vitalArray,
+          label: '',
+          lineTension: 0,
+          pointStyle: 'circle',
+          pointBorderWidth: 7,
+          pointRotation: 180,
+          fill: false,
+          borderColor: 'rgb(0,0,0)', // Change the color of the line
+          borderWidth: 2,
+          pointRadius: 4,
+          pointBackgroundColor: 'rgb(0, 0, 0)', // Change the color of the point
+          pointBorderColor: 'rgb(0, 0, 0)',
+          pointHoverBorderColor: 'rgb(0, 0, 0)'
+        },
+        {
+          data: this.vitalArray2,
+          label: '',
+          lineTension: 0,
+          pointBorderWidth: 7,
+          pointStyle: 'triangle',
+          fill: false,
+          borderColor: 'rgb(242, 242, 242)', // Change the color of the line
+          borderWidth: 2,
+          pointRadius: 4,
+          pointBackgroundColor: 'rgb(242, 242, 242)', // Change the color of the point
+          pointBorderColor: 'rgb(242, 242, 242)',
+        },
       ];
       this.chartLabels = [];
     }
@@ -292,10 +302,9 @@ export class HistoryComponent implements OnInit {
             this.chartData[1].label = 'Diastoliskt';
             //-------------If the history for syrgas is viewed the following code is run---------------
         } else if (this.vitalSign === 'getHistoricRespirationAdded') {
-          console.log('respiration')
             this.patientservice.getGenericHistory('Respiration').subscribe( data => {
                 for (let i = 0; i < 4; i++) {
-                    this.vitalArray[i] = data.resultSet[i].syre;
+                    this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].syre;
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
                     this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
                     if ( this.vitalArray[i] === false) {
@@ -311,7 +320,6 @@ export class HistoryComponent implements OnInit {
             this.setChartOptions(2, 0, 1, this.vitalSign);
             //--------------If the history for medvetandegrad is viewed the following code is run---------------
         } else if (this.vitalSign === 'ACVPU') {
-          console.log('conscious')
             this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
                 for (let i = 0; i < 4; i++) {
                     this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
@@ -341,6 +349,17 @@ export class HistoryComponent implements OnInit {
             });
             this.chartData[0].label = 'Medvetandegrad';
             this.setChartOptions(6, 0, 1, this.vitalSign);
+          } else if (this.vitalSign == 'News') {
+              this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
+                for (let i = 0; i < 4; i++) {
+                  this.parameterArray[i] = data.resultSet[(data.resultSet.length - 1) - i].news2;
+                  this.vitalArray[i] = data.resultSet[(data.resultSet.length - 1) - i].news2;
+                  this.timeArray[i] = data.resultSet[(data.resultSet.length - 1) - i].time;
+                  this.chartLabels[i] = data.resultSet[(data.resultSet.length - 1) - i].time.substring(11, 19);
+                }
+              });
+              this.setChartOptions(12, 0, 1, this.vitalSign);
+              this.chartData[0].label = 'Total NEWS';
             //----------If the history for puls, temperatur, andningsfrekvens or syremättnad is viewed the following code is run-----------------
         } else {
             this.patientservice.getGenericHistory(this.vitalSign).subscribe( data => {
@@ -465,11 +484,9 @@ export class HistoryComponent implements OnInit {
       this.resetChart();
       localStorage.setItem('outputVitalParameter', param);
       this.fetchDataApi();
-      this.setCurrentData();
     }
 
     ngOnInit() {
         this.fetchDataApi();
-        this.setCurrentData();
     }
 }

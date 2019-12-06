@@ -2,21 +2,23 @@
 <div class="containerHistoryGraph">
     <h2 class="historyTitle">Historik:</h2>
 
-    <button type="button" class="btn dropdown btn-primary dropdown-toggle" data-toggle="dropdown">{{this.parameterName[this.vitalSign]}}</button>
+    <button type="button" class="btn dropdown dropdown-toggle" data-toggle="dropdown">{{this.parameterName[this.vitalSign]}}</button>
     <div class="dropdown-menu">
-        <a (click)="changeParam('Respiration')" class="dropdown-item">Andningsfrekvens</a>
+        <option (click)="changeParam('News')" class="dropdown-item">Total NEWS</option>
         <div class="dropdown-divider"></div>
-        <a (click)="changeParam('Oximetry')" class="dropdown-item">Syremättnad</a>
+        <option (click)="changeParam('Respiration')" class="dropdown-item">Andningsfrekvens</option>
         <div class="dropdown-divider"></div>
-        <a (click)="changeParam('getHistoricRespirationAdded')" class="dropdown-item">Tillförd syrgas</a>
+        <option (click)="changeParam('Oximetry')" class="dropdown-item">Syremättnad</option>
         <div class="dropdown-divider"></div>
-        <a (click)="changeParam('bloodPressure')" class="dropdown-item">Blodtryck</a>
+        <option (click)="changeParam('getHistoricRespirationAdded')" class="dropdown-item">Tillförd syrgas</option>
         <div class="dropdown-divider"></div>
-        <a (click)="changeParam('Pulse')" class="dropdown-item">Pulsfrekvens</a>
+        <option (click)="changeParam('bloodPressure')" class="dropdown-item">Blodtryck</option>
         <div class="dropdown-divider"></div>
-        <a (click)="changeParam('ACVPU')" class="dropdown-item">Medvetandegrad</a>
+        <option (click)="changeParam('Pulse')" class="dropdown-item">Pulsfrekvens</option>
         <div class="dropdown-divider"></div>
-        <a (click)="changeParam('Temperature')" class="dropdown-item">Temperatur</a>
+        <option (click)="changeParam('ACVPU')" class="dropdown-item">Medvetandegrad</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('Temperature')" class="dropdown-item">Temperatur</option>
     </div>
 
     <div class="historyTableDiv">
@@ -56,7 +58,7 @@
                     {{ time | date:'HH:mm'}}
                 </ul>
             </div>
-            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded'; else elseblock">
+            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded' || vitalSign == 'News'; else elseblock">
                 <ul class="nameOfTable">
                     {{chartData[0].label}}
                 </ul>
@@ -82,7 +84,7 @@
                     {{ vitalsign }}
                 </ul>
             </div>
-            <div class="col">
+            <div class="col" *ngIf="vitalSign != 'News'">
                 <ul class="nameOfTable">
                     News2
                 </ul>

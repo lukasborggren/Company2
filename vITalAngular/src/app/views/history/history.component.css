@@ -78,3 +78,18 @@
     color: #3A3938;
     font-family: 'Raleway-Bold', sans-serif;
 }
+
+.show>.btn.dropdown-toggle {
+  color: white;
+  background-color: #3A3938;
+  border-color: #3A3938;
+  box-shadow: none;
+}
+
+.btn:hover {
+  box-shadow: none;
+}
+
+.btn:not(:disabled):not(.disabled):active:focus {
+  box-shadow: none;
+}
