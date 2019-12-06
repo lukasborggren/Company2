@@ -48,14 +48,14 @@ export class PatientService {
             'vital-parameters/andning:0/ospecificerad_händelse:0/frekvens|magnitude': breathFreq,
             'vital-parameters/andning:0/ospecificerad_händelse:0/frekvens|unit': '/min'
           }, this.jsonComp);
-    }
 
-    if (onAir !== undefined && onAir !== null) {
-      paramCnt++;
-      this.jsonComp = Object.assign(
-          {
-            'vital-parameters/andning:0/ospecificerad_händelse:0/tillfört_syre/enbart_luft': onAir
-          }, this.jsonComp);
+      if (onAir !== undefined && onAir !== null) {
+        paramCnt++;
+        this.jsonComp = Object.assign(
+            {
+              'vital-parameters/andning:0/ospecificerad_händelse:0/tillfört_syre/enbart_luft': onAir
+            }, this.jsonComp);
+      }
     }
 
     if (oxSat !== '' && oxSat !== null) {
