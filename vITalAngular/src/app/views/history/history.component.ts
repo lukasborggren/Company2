@@ -21,20 +21,20 @@ export class HistoryComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
   public lineChartPlugins = [pluginAnnotations, pluginlabels];
-  private vitalSign: string;
-  private vitalArray: any[] = [];
-  private vitalArray2: any[] = [];
-  private timeArray: any[] = [];
-  private newsArray: any[] = [];
-  private parameterArray: any[] = [];
-  private parameterName: { [id: string] : string; } = {
+  public vitalSign: string;
+  public vitalArray: any[] = [];
+  public vitalArray2: any[] = [];
+  public timeArray: any[] = [];
+  public newsArray: any[] = [];
+  public parameterArray: any[] = [];
+  public parameterName: { [id: string] : string; } = {
     'Respiration': 'Andningsfrekvens',
     'Oximetry': 'Syremättnad',
     'getHistoricRespirationAdded': 'Tillförd syrgas',
     'bloodPressure': 'Blodtryck',
     'Pulse': 'Pulsfrekvens',
     'ACVPU': 'Medvetandegrad',
-    'Temperature': 'Temperatur'     
+    'Temperature': 'Temperatur'
   };
 
   public chartData: ChartDataSets[] = [
