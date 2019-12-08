@@ -85,6 +85,8 @@ export class BarcodeScannerPageComponent implements OnInit {
         data => {
           if (this.PERSONID_PATTERN.test(data.description)) {
             this.validPidProvided(data.description);
+          } else {
+            this.showErrorMessage = true;
           }
         });
   }

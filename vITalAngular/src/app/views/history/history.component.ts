@@ -28,6 +28,7 @@ export class HistoryComponent implements OnInit {
   public newsArray: any[] = [];
   public parameterArray: any[] = [];
   public parameterName: { [id: string] : string; } = {
+    'News': 'Total NEWS',
     'Respiration': 'Andningsfrekvens',
     'Oximetry': 'Syremättnad',
     'getHistoricRespirationAdded': 'Tillförd syrgas',
