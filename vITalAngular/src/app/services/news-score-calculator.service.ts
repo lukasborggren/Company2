@@ -94,7 +94,7 @@ export class NewsScoreCalculatorService {
   }
 
   getPulseScore(pulseRate: number) {
-    if (pulseRate <= 31 || pulseRate >= 131) {
+    if (pulseRate <= 40 || pulseRate >= 131) {
       return 3;
     } else if (pulseRate >= 111 && pulseRate <= 130) {
       return 2;
@@ -114,7 +114,7 @@ export class NewsScoreCalculatorService {
       return 2;
     } else if (temperature >= 38.1 && temperature <= 39) {
       return 1;
-    } else if (temperature >= 36 && temperature <= 35.1) {
+    } else if (temperature <= 36 && temperature >= 35.1) {
       return 1;
     } else {
       return 0;

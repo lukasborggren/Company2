@@ -1,9 +1,29 @@
 
 <div class="containerHistoryGraph">
     <h2 class="historyTitle">Historik:</h2>
-    <div class="historyTableDiv">  
+
+    <button type="button" class="btn dropdown dropdown-toggle" data-toggle="dropdown">{{this.parameterName[this.vitalSign]}}</button>
+    <div class="dropdown-menu">
+        <option (click)="changeParam('News')" class="dropdown-item">Total NEWS</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('Respiration')" class="dropdown-item">Andningsfrekvens</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('Oximetry')" class="dropdown-item">Syremättnad</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('getHistoricRespirationAdded')" class="dropdown-item">Tillförd syrgas</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('bloodPressure')" class="dropdown-item">Blodtryck</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('Pulse')" class="dropdown-item">Pulsfrekvens</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('ACVPU')" class="dropdown-item">Medvetandegrad</option>
+        <div class="dropdown-divider"></div>
+        <option (click)="changeParam('Temperature')" class="dropdown-item">Temperatur</option>
+    </div>
+
+    <div class="historyTableDiv">
         <div class="row">
-                <div class="rowGraph">
+            <div class="rowGraph">
                             <span style="float: right;">
                                 <div style="float: left; padding-top: 2px; padding-right: 3px;">
                                 News key
@@ -20,51 +40,61 @@
                                 <div class="floatBox" style="background-color: white;">
                                     0
                                 </div>
-                            </span>            
-                    </div>
+                            </span>
+            </div>
             <div class="col">
                 <ul class="nameOfTable">
                     Datum
                 </ul>
-                <ul *ngFor="let time of timeArray">
+                <ul *ngFor="let time of timeArray" class="numbers">
                     {{ time | date:'dd/MM/yy'}}
                 </ul>
             </div>
             <div class="col">
-                    <ul class="nameOfTable">
-                            Tid
-                        </ul>
-                <ul *ngFor="let time of timeArray">
+                <ul class="nameOfTable">
+                    Tid
+                </ul>
+                <ul *ngFor="let time of timeArray" class="numbers">
                     {{ time | date:'HH:mm'}}
                 </ul>
             </div>
+            <div class="col" *ngIf = "vitalSign == 'ACVPU' || vitalSign == 'getHistoricRespirationAdded' || vitalSign == 'News'; else elseblock">
+                <ul class="nameOfTable">
+                    {{chartData[0].label}}
+                </ul>
+                <ul *ngFor="let parameter of parameterArray" class="numbers">
+                    {{ parameter }}
+                </ul>
+            </div>
+            <ng-template #elseblock>
             <div class="col">
-                    <ul class="nameOfTable">
-                            Parameter 1
-                        </ul>
-                <ul *ngFor="let vitalsign of vitalArray">
+                <ul class="nameOfTable">
+                    {{chartData[0].label}}
+                </ul>
+                <ul *ngFor="let vitalsign of vitalArray" class="numbers">
                     {{ vitalsign }}
                 </ul>
             </div>
-            <div class="col" *ngIf="vitalSign == 'getHistoricBloodpressure'">
-                    <ul class="nameOfTable">
-                            Parameter 2
-                        </ul>
-                <ul *ngFor="let vitalsign of vitalArray2">
+            </ng-template>
+            <div class="col" *ngIf="vitalSign == 'bloodPressure'">
+                <ul class="nameOfTable">
+                    {{chartData[1].label}}
+                </ul>
+                <ul *ngFor="let vitalsign of vitalArray2" class="numbers">
                     {{ vitalsign }}
                 </ul>
             </div>
-            <div class="col">
-                    <ul class="nameOfTable">
-                            News2
-                        </ul>
-                <ul *ngFor="let vitalsign of vitalArray">
-                    values
+            <div class="col" *ngIf="vitalSign != 'News'">
+                <ul class="nameOfTable">
+                    News2
+                </ul>
+                <ul *ngFor="let news of newsArray" class="numbers" [ngClass]="{'bg-white': news === 0, 'newsscore1': news === 1, 'newsscore2': news === 2, 'newsscore3': news === 3}">
+                   {{news}}
                 </ul>
             </div>
         </div>
-        
-        
+
+
         <!--<table class="table history-table table-bordered" style = "max-width: 95%">
             <thead style="background-color: #d8d8d8; text-align: start ">
             <tr>
@@ -74,7 +104,7 @@
                 <th scope="col">News2</th>
             </tr>
             </thead>
-        
+
             <tbody>
             <tr>
                 <th scope = "row" >27-11-19</th>
@@ -93,7 +123,7 @@
                 <td>14:30</td>
                 <td>11</td>
                 <td style = "background-color: #FFF1AB ">1</td>
-        
+
             </tr>
             <tr>
             <th scope="row">27-11-19</th>
@@ -116,7 +146,7 @@
 
         <div style="display: block; max-width: 95vw; margin-left: 10px;" *ngIf="chartOptions">
             <canvas baseChart id="graphId" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions"
-                [chartType]="chartType">
+                    [chartType]="chartType">
             </canvas>
         </div>
     </div>

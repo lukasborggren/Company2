@@ -3,6 +3,13 @@
     font-size: 4vw;
 }
 
+.row {
+  margin-right: 0px;
+  margin-left: 0px;
+  display: grid;
+  position: relative;
+}
+
 .vertical {
     float: left;
 
@@ -17,16 +24,21 @@
 }
 
 .parameterRow {
-    background-color: #D8D8D8;
-    padding: .5rem .1rem .5rem 1rem;;
+    background-color: #f2f2f2;
+    padding: .5rem .1rem .5rem 1rem;
     border: 1px solid black;
+    display: grid;
     /* height: 70px; */
 }
+
+.latestTitle{
+    padding:3px;
+}
+
 .RLS-class {
   font-size: 100%;
   margin-bottom: 40px;
   margin-left:10px;
-  width: 500px;
   /*margin-left: 250px;*/
 }
 .inputField {
@@ -72,7 +84,8 @@
     position: relative;
     padding: 1px;
     font-weight: 100;
-}
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+  }
 
 .newsscore1 {
   background-color: #FFF1AB;
@@ -85,6 +98,10 @@
 .newsscore3 {
   background-color: #F59681;
 }
+
+body > app-root > div > div
+
+
 /*
 input[type=radio] {
   -ms-transform: scale(2);
@@ -108,4 +125,54 @@ input[type=radio] {
 
 .form-check-label2 {
    padding-right: 10px;
+}
+
+.accordionArrow {
+  color: #3F3F3F;
+}
+
+.wrap{
+    display: grid;
+    position: relative;
+    height: 100%;
+    width: 100%;
+   /* padding: 0px 0px 62px 0px; */
+
+}
+
+.wrappar {
+    overflow: scroll;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.consiousIphone {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+    .parameterTitle{
+        font-size: 35px;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+  .collapseField {
+    font-size: 4vw;
+  }
+
+  .btn {
+    font-size: 4vw;
+    padding: 2px;
+  }
+
+  .expandBtn {
+    font-size: 4vw;
+    padding: 2px;
+  }
+
+  .consiousIphone {
+    display: inline;
+  }
 }

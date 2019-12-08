@@ -67,3 +67,21 @@ opacity: 0.2;
 .newsscore3 {
   background-color: #F59681;
 }
+
+.standardButton {
+  width: 70px;
+}
+
+@media only screen and (max-width: 360px) {
+  .footer {
+    font-size: 4vw;
+  }
+
+  .totalNews {
+    margin-right: 5px;
+  }
+
+  .clinical {
+    margin-right: 5px;
+  }
+}

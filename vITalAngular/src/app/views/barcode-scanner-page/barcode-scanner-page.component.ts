@@ -18,6 +18,7 @@ export class BarcodeScannerPageComponent implements OnInit {
   BARCODE_PATTERN = /^([0-9]{8}[a-zA-Z]{1}[0-9]{4})$/;
   PERSONID_PATTERN = /^([0-9]{8}-[0-9]{4})$/;
   username: string;
+  showErrorMessage: boolean;
 
   constructor(
       private barcodeScanner: BarcodeScannerService,
@@ -27,6 +28,13 @@ export class BarcodeScannerPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    //Sets EHR_ID to null everytime scannerpages is redirected to. This is to disallow entering patient overview without entering a pid every time.
+    let patientkey = sessionStorage.getItem('EHR_ID');
+    if (patientkey !== null) {
+      patientkey = null;
+      sessionStorage.setItem('EHR_ID', patientkey);
+    }
+
     localStorage.removeItem('form');
     this.stopScanButtonVisible = false;
     this.barcodeScanner.barcodeObs.subscribe(barcode => {
@@ -76,21 +84,28 @@ export class BarcodeScannerPageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
         data => {
           if (this.PERSONID_PATTERN.test(data.description)) {
-            this.validPidProvided(data.description)
+            this.validPidProvided(data.description);
+          } else {
+            this.showErrorMessage = true;
           }
         });
   }
 
   private validPidProvided(pid: string) {
+    this.showErrorMessage = false;
     sessionStorage.setItem('PID', pid);
     this.patientService.getPatientInformation(pid).subscribe(
-        response => {
+      response => {
+        try {
           const ehrId = response.parties[0].additionalInfo.ehrId;
           sessionStorage.setItem('EHR_ID', ehrId);
           sessionStorage.setItem('NAME', response.parties[0].firstNames + ' ' + response.parties[0].lastNames);
           this.router.navigate(['/pid/' + pid]);
-        },
-        error => console.log(error)
+        } catch (err) {
+          console.log('login failed')
+          this.showErrorMessage = true;
+        }
+      },
     );
   }
 

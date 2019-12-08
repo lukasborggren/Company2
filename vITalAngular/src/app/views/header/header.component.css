@@ -47,4 +47,17 @@ p {
 .get-data {
   position: fixed;
   right: 10px;
+  top: 8px;
+}
+
+.get-data2 {
+  position: fixed;
+  right: 10px;
+  top: 40px;
+}
+
+@media only screen and (max-width: 360px) {
+  .header {
+    font-size: 4vw;
+  }
 }

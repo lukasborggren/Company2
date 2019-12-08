@@ -5,8 +5,9 @@
     <button type="button" class="btn fa fa-angle-left" (click)="goBack()" ></button>
     <div *ngIf="showPatient">
       <p class= "patient-name">{{name}}</p>
-      <p class = "person-number">{{pId}}</p>
+      <p class = "person-number numbers">{{pId}}</p>
     </div>
     <button type="button" class="standardButton get-data" *ngIf="patientOverview" (click)="philipsDataOn()">Hämta Philips-data</button>
+    <button type="button" class="standardButton get-data2" *ngIf="patientOverview" (click)="goToHistory()">NEWS Historik</button>
   </div>
 </header>

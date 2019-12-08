@@ -1,0 +1,32 @@
+#leftButton {
+  margin-right: 10px;
+}
+
+#rightButton {
+  margin-left: 10px;
+  width: 60px;
+}
+
+.mat-dialog-actions {
+display: flex;
+justify-content: center;
+}
+
+.mat-dialog-title {
+  margin-bottom: 0;
+  justify-content: center;
+}
+
+.form-control {
+  padding: 2px;
+  padding-left: 4px;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-top: 0px;
+  padding-bottom: 8px;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding: 0px;
+}

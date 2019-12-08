@@ -25,11 +25,6 @@ video {
     width: 100%;
 }
 
-#manualButton {
-  margin-top: 10px;
-  margin-bottom: 40px;
-}
-
 #logo {
   height: 150px;
   margin-bottom: 0;
@@ -41,4 +36,32 @@ video {
   bottom: 0;
   right: 0;
   margin: 10px;
+}
+
+.largeButton {
+  background-color: #909090;
+  height: 60px;
+  width: 75%;
+  margin: 1%;
+  font-weight: bold;
+  color: white;
+  align-items: center;
+}
+
+@media only screen and (min-width: 769px) {
+  .largeButton {
+    width: 40%;
+  }
+}
+
+img {
+padding: 0;
+object-fit: contain;
+max-height: 100%;
+width: auto;
+}
+
+/*Due to different sized image for pen*/
+#pen {
+  padding: 5px;
 }

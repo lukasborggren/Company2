@@ -2,16 +2,15 @@
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    background-color: rgb(216, 216, 216);
+    overflow: scroll;
 }
-
 
 .historyTableDiv  {
    font-size: small;
 }
 .historyTableDiv > .row {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     margin: 0px !important;
 }
 .historyTableDiv > .row > .rowGraph > span > .floatBox{
@@ -29,19 +28,20 @@
 
 .historyTableDiv > .row > .col > .nameOfTable{
     font-weight: bold;
-    background-color: rgb(216, 216, 216);
+
 }
 .historyTableDiv > .row > .col > ul {
     text-align: center;
     border: 1px solid black;
     background-color: white;
     margin: 0%;
-    padding-right: 20px;
-    padding-left: 20px;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 .historyTitle{
     padding-left: 1rem;
     padding-top: 1rem;
+    font-weight: bold;
 }
 .rowGraph{
     color: white;
@@ -55,5 +55,41 @@
 .GraphContainer{
     margin-top: 1rem;
     padding-bottom: 20px;
-    background-color: #D8D8D8;
+    background-color: #F2F2F2 !important;
+}
+
+.newsscore1 {
+    background-color: #FFF1AB !important;
+}
+
+.newsscore2 {
+    background-color: #FDC889 !important;
+}
+
+.newsscore3 {
+    background-color: #F59681 !important;
+}
+
+.dropdown {
+    border: 1px solid #3A3938;
+    margin-left: 15px;
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    color: #3A3938;
+    font-family: 'Raleway-Bold', sans-serif;
+}
+
+.show>.btn.dropdown-toggle {
+  color: white;
+  background-color: #3A3938;
+  border-color: #3A3938;
+  box-shadow: none;
+}
+
+.btn:hover {
+  box-shadow: none;
+}
+
+.btn:not(:disabled):not(.disabled):active:focus {
+  box-shadow: none;
 }

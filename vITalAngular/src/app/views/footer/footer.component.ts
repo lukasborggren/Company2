@@ -15,6 +15,7 @@ export class FooterComponent implements OnInit {
   @Output() mdSubmitChange = new EventEmitter<boolean>();
   patientOverview: boolean;
   history: boolean;
+  loading: boolean = false;
 
 
   constructor(
@@ -51,6 +52,7 @@ export class FooterComponent implements OnInit {
   }
 
   openPopup(errorMessage: string) {
+    this.loading = true;
     const submit = true;
     this.mdSubmitChange.emit(submit);
     const dialogConfig = new MatDialogConfig();
@@ -58,6 +60,9 @@ export class FooterComponent implements OnInit {
       dialogMessage: errorMessage,
     };
     const dialogRef = this.dialog.open(ConfirmSubmitComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(val => {
+      this.loading = val;
+    })
   }
 
   isSubmitActive(): boolean {
