@@ -48,6 +48,12 @@ video {
   align-items: center;
 }
 
+@media only screen and (min-width: 769px) {
+  .largeButton {
+    width: 40%;
+  }
+}
+
 img {
 padding: 0;
 object-fit: contain;
