@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test site</title>
+</head>
+<body>
+<p>Use /api/ehr/{ehrId} or /api/pid/{pid} to fetch patient JSON object</p>
+<p>To update patient data, use a PUT with /api/update/{ehrId} with the data formatted:<br>
+    { "pulse": 80, "oxygen_saturation": 40, "blood_pressure_systolic": 127,
+    "blood_pressure_diastolic": 67, "breathing_frequency": 17, "alertness": "awake", "body_temperature": 37.3 }</p>
+<p>To authenticate a login attempt, use a GET with /api/login with the data formatted:<br>
+    { "username": "useruser", "password": "passpass" }
+</p>
+<p>Use /patient_list or /staff_list to list all patients or staff members in the database</p>
+</body>
+</html>
