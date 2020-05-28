@@ -1,4 +1,4 @@
-# TDDC88 – Software Engineering | Linköping University
+# Company2
 
 This project is a proof of concept of a vital parameter entry web app developed as a student project in the course TDDC88 at Linköping University for Region Östergötland during the autumn semester 2019. The app is meant to digitize the entry of vital parameters taken in patient care and automate calculations of NEWS2 scores from these parameters.
 
